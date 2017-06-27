@@ -87,7 +87,16 @@ def wait_time(data = {'waitSeconds':None}):
         time.sleep(wait)
 
 def download_big_chuck(start_x, start_y, width, height):
-    return None
+    raw = get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (str(start_x), str(start_y)), stream = True).content
+    x = y = 0
+    MATRIX = [[0 for y in range(960)] for x in range(960)]
+    for index in range(0, len(raw), 2):
+        MATRIX[x][y] = ord(raw[index]) >> 4
+        MATRIX[x+1][y] = ord(raw[index]) & 0x0F
+        x += 1
+        if int(x) > 960:
+            x = 0
+            y += 1
 
 def connect_websocket(fingerprint):
     def on_message(ws, message):
@@ -191,8 +200,8 @@ if __name__ == '__main__':
 
     image = load_image(args.file)
 
-    canvas = download_big_chuck(args.start_x, args.start_y, image['width'], image['height'])
-
+    #canvas = download_big_chuck(args.start_x, args.start_y, image['width'], image['height'])
+    canvas = None
     setup_map(canvas, image['width'], image['height'], args.start_x, args.start_y)
 
     connect_websocket(args.fingerprint)
