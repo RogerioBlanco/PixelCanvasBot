@@ -36,7 +36,7 @@ Well, first you need Python 2.7 and install this:
 
 After you can execute the code like this:
 
-**./pixel_canvas_bot.py -i image.png -f $FINGERPRINT$ -x 0 -y 0 **
+* ./pixel_canvas_bot.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
 This bot is not finished yet, so every time you stop the program this will repeatedly check every pixel again. 
 
