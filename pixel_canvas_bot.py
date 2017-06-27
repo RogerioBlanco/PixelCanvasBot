@@ -44,7 +44,7 @@ COLORS_RGB = {
     (229, 217, 0): 'YELLOW',
     (148, 224, 68): 'CONIFER',
     (2, 190, 1): 'GREEN',
-    (0, 211, 221): 'DARK TURQUOISE',
+    (0, 211, 221): 'DARK_TURQUOISE',
     (0, 131, 199): 'PACIFIC_BLUE',
     (0, 0, 234): 'BLUE',
     (207, 110, 228): 'VIOLET',
@@ -69,20 +69,10 @@ def post(url, payload, headers =
               'Referer': URL_BASE
               }
          ):
-    response = requests.request('POST', url, data=payload, headers=headers, proxies = GLOBAL_PROXY)
-    
-    if response.status_code != 200:
-        raise Exception('Occurred an problem.\nMsg: ' + response.text)
-
-    return response
+    return requests.request('POST', url, data=payload, headers=headers, proxies = GLOBAL_PROXY)
 
 def get(url, stream = False, headers = {'User-agent':'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}):
-    response = requests.get(url, stream=stream, headers=headers, proxies = GLOBAL_PROXY)
-    
-    if response.status_code != 200:
-        raise Exception('Occurred an problem.\nMsg: ' + response.text)
-    
-    return response
+    return requests.get(url, stream=stream, headers=headers, proxies = GLOBAL_PROXY)
 
 def myself(fingerprint):
     return post(URL_BASE + 'api/me', '{"fingerprint":"%s"}' % fingerprint).json()
