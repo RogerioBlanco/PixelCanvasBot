@@ -5,10 +5,10 @@ This is a prototype of an bot for pixelcanvas.io, partially functional.
 # Why I am doing this? 
 Well, I think this is a fun game and I wanted learn another program language and challenge myself.
 
-#What you can do with this?
+# What you can do with this?
 Well, you can draw some image and try replicate in pixelcanvas.io. You can combine with your friends or clan, whatever for combine forces to draw more quickly or defend your 'territory'.
 
-#I can use any image and this bot will draw for me?
+# I can use any image and this bot will draw for me?
 Yes and no. You can use any image ** BUT ** for every pixel must to respect the RGBs below:
 
 * WHITE: (255, 255, 255),
@@ -28,7 +28,7 @@ Yes and no. You can use any image ** BUT ** for every pixel must to respect the 
 * VIOLET: (207, 110, 228)
 * PURPLE' : (130, 0, 128) 
 
-#How you can use this?
+# How you can use this?
 
 Well, first you need Python 2.7 and install this:
 * pip install websocket-client
@@ -40,7 +40,7 @@ After you can execute the code like this:
 
 This bot is not finished yet, so every time you stop the program this will repeatedly check every pixel again. 
 
-#What is each parameter? 
+# What is each parameter? 
 
 * **-i** or **--image** it is the image you want to draw.
 * **-f** or **--fingerprint** it is your unique code. You can get in the requisition when you open Chrome DevTools.
