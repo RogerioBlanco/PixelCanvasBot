@@ -13,42 +13,42 @@ from argparse import ArgumentParser
 from struct import unpack_from
 from PIL import Image
 
-COLORS_INDEX = {
-    'WHITE': 0,
-    'GAINSBORO': 1,
-    'GREY': 2,
-    'NERO': 3,
-    'CARNATION_PINK': 4,
-    'RED': 5,
-    'ORANGE': 6,
-    'BROWN': 7,
-    'YELLOW': 8,
-    'CONIFER': 9,
-    'GREEN': 10,
-    'DARK_TURQUOISE': 11,
-    'PACIFIC_BLUE': 12,
-    'BLUE': 13,
-    'VIOLET': 14,
-    'PURPLE': 15
-}
+COLORS_NAME = [
+    'WHITE',
+    'GAINSBORO',
+    'GREY',
+    'NERO',
+    'CARNATION PINK',
+    'RED',
+    'ORANGE',
+    'BROWN',
+    'YELLOW',
+    'CONIFER',
+    'GREEN',
+    'DARK_TURQUOISE',
+    'PACIFIC_BLUE',
+    'BLUE',
+    'VIOLET',
+    'PURPLE'
+]
 
 COLORS_RGB = {
-    (255, 255, 255): 'WHITE',
-    (228, 228, 228): 'GAINSBORO',
-    (136, 136, 136): 'GREY',
-    (34, 34, 34): 'NERO',
-    (255, 167, 209): 'CARNATION_PINK',
-    (229, 0, 0): 'RED',
-    (229, 149, 0): 'ORANGE',
-    (160, 106, 66): 'BROWN',
-    (229, 217, 0): 'YELLOW',
-    (148, 224, 68): 'CONIFER',
-    (2, 190, 1): 'GREEN',
-    (0, 211, 221): 'DARK_TURQUOISE',
-    (0, 131, 199): 'PACIFIC_BLUE',
-    (0, 0, 234): 'BLUE',
-    (207, 110, 228): 'VIOLET',
-    (130, 0, 128): 'PURPLE'
+    (255, 255, 255): 0,
+    (228, 228, 228): 1,
+    (136, 136, 136): 2,
+    (34, 34, 34): 3,
+    (255, 167, 209): 4,
+    (229, 0, 0): 5,
+    (229, 149, 0): 6,
+    (160, 106, 66): 7,
+    (229, 217, 0): 8,
+    (148, 224, 68): 9,
+    (2, 190, 1): 10,
+    (0, 211, 221): 11,
+    (0, 131, 199):12,
+    (0, 0, 234): 13,
+    (207, 110, 228): 14,
+    (130, 0, 128): 15
 }
 
 #WebSocket
@@ -78,25 +78,42 @@ def myself(fingerprint):
     return post(URL_BASE + 'api/me', '{"fingerprint":"%s"}' % fingerprint).json()
 
 def send_pixel(x, y, color, fingerprint):
-    return post(URL_BASE + 'api/pixel', '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color, fingerprint)).json()
+    response = post(URL_BASE + 'api/pixel', '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color, fingerprint))
 
+    if response.status_code == 422:
+        raise Exception('Oh no, it is need to provide a token. Wait a few minutes and try again.')
+
+    if response.status_code == 429:
+        raise Exception('Oh no, you tried hard. Rate limit exceeded')
+
+    return response.json()
 def wait_time(data = {'waitSeconds':None}):
     if data['waitSeconds'] is not None:
         wait = data['waitSeconds'] + randint(0, 9)
         print 'Waiting %s seconds' % str(wait)
         time.sleep(wait)
 
-def download_big_chuck(start_x, start_y, width, height):
-    raw = get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (str(start_x), str(start_y)), stream = True).content
-    x = y = 0
-    MATRIX = [[0 for y in range(960)] for x in range(960)]
-    for index in range(0, len(raw), 2):
-        MATRIX[x][y] = ord(raw[index]) >> 4
-        MATRIX[x+1][y] = ord(raw[index]) & 0x0F
-        x += 1
-        if int(x) > 960:
-            x = 0
-            y += 1
+def download_canvas(start_x, start_y):
+    point_x, point_y = int(math.floor((start_x / 64))), int(math.floor((start_y / 64)))
+
+    matrix = {}
+    for init_x in xrange((point_x * 64) - 480, (point_x * 64) + 480):
+        matrix[init_x] = {}
+        for init_y in xrange((point_y * 64) - 480, (point_y * 64) + 480):
+            matrix[init_x][init_y] = None
+
+    raw = get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (point_x, point_y), stream = True).content
+
+    index = 0
+    
+    for block_y in xrange(point_y - 7, point_y + 7):
+        for block_x in xrange(point_x - 7, point_x + 7):      
+            for y in xrange(block_y * 64, (1 + block_y) * 64):
+                for x in xrange(block_x * 64, (1 + block_x) * 64, 2):
+                    matrix[x][y] = ord(raw[index]) >> 4
+                    matrix[x+1][y] = ord(raw[index]) & 0x0F
+                    index += 1
+    return matrix
 
 def connect_websocket(fingerprint):
     def on_message(ws, message):
@@ -140,19 +157,21 @@ def load_image(file):
     return {'width':width, 'height': height, 'pix': pix}
 
 def draw_image(image, fingerprint, start_x, start_y, mode_defensive):
-    for y in range(0, image['height']):
-        for x in range(0, image['width']):
+    for y in xrange(0, image['height']):
+        for x in xrange(0, image['width']):
             color = COLORS_RGB[image['pix'][x, y]]
-            if color and MAP_PIXELS[x][y] != COLORS_INDEX[color]:
-                response = send_pixel(start_x + x, start_y + y, COLORS_INDEX[color], fingerprint)
-                while not response['success']:
-                    wait_time(response)
-                    print 'Oh no, an error occurred. Trying again.'
-                    response = send_pixel(start_x + x, start_y + y, COLORS_INDEX[color], fingerprint)
+            if color is not None and MAP_PIXELS[start_x + x][start_y + y] != color:
+                response = send_pixel(start_x + x, start_y + y, color, fingerprint)
 
+                while not response['success']:
+                    print 'Oh no, an error occurred. Trying again.'
+                    wait_time(response)
+                    response = send_pixel(start_x + x, start_y + y, color, fingerprint)
+
+                update_map(start_x + x, start_y + y, color)
+                
+                print 'Set pixel color %s in %s,%s' % (COLORS_NAME[color], str(start_x + x), str(start_y + y))
                 wait_time(response)
-                update_map(start_x + x, start_y + y, COLORS_INDEX[color])
-                print 'Set pixel color %s in %s,%s' % (color, str(start_x + x), str(start_y + y))
 
 def setup_global_proxy(proxy_url, proxy_auth):
     global GLOBAL_PROXY 
@@ -176,7 +195,17 @@ def update_map(x, y, color):
 
 def setup_map(canvas, width, height, start_x, start_y):
     global MAP_PIXELS
-    MAP_PIXELS = [[0 for y in range(start_y, start_y + height)] for x in range(start_x, start_x + width)]
+    end_x, end_y = (start_x + width), (height + start_y)
+
+    MAP_PIXELS = {}
+    for x in xrange(start_x, end_x):
+        MAP_PIXELS[x] = {}
+        for y in xrange(start_y, end_y):
+            MAP_PIXELS[x][y] = None
+
+    for y in range(start_y, end_y):
+        for x in range(start_x, end_x):
+            MAP_PIXELS[x][y] = canvas[x][y]
 
 def parse_args():
     parser = ArgumentParser()
@@ -200,9 +229,9 @@ if __name__ == '__main__':
 
     image = load_image(args.file)
 
-    #canvas = download_big_chuck(args.start_x, args.start_y, image['width'], image['height'])
-    canvas = None
-    setup_map(canvas, image['width'], image['height'], args.start_x, args.start_y)
+    canvas_complete = download_canvas(args.start_x, args.start_y)
+
+    setup_map(canvas_complete, image['width'], image['height'], args.start_x, args.start_y)
 
     connect_websocket(args.fingerprint)
     
