@@ -94,24 +94,24 @@ def wait_time(data = {'waitSeconds':None}):
         time.sleep(wait)
 
 def download_canvas(start_x, start_y):
-    point_x, point_y = int(math.floor((start_x / 64))), int(math.floor((start_y / 64)))
+    point_x, point_y = (start_x - (start_x % 64)) / 64, (start_y - (start_y % 64)) / 64
 
     matrix = {}
-    for init_x in xrange((point_x * 64) - 480, (point_x * 64) + 480):
+
+    for init_x in xrange((point_x - 7) * 64), ((point_x + 8) * 64)):
         matrix[init_x] = {}
-        for init_y in xrange((point_y * 64) - 480, (point_y * 64) + 480):
+        for init_y in xrange((point_y - 7) * 64), (point_y + 8) * 64)):
             matrix[init_x][init_y] = None
 
     raw = get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (point_x, point_y), stream = True).content
-
     index = 0
-    
-    for block_y in xrange(point_y - 7, point_y + 7):
-        for block_x in xrange(point_x - 7, point_x + 7):      
-            for y in xrange(block_y * 64, (1 + block_y) * 64):
-                for x in xrange(block_x * 64, (1 + block_x) * 64, 2):
-                    matrix[x][y] = ord(raw[index]) >> 4
-                    matrix[x+1][y] = ord(raw[index]) & 0x0F
+
+    for block_y in xrange(point_y - 7, point_y + 8):
+        for block_x in xrange(point_x - 7, point_x + 8):
+            for y in xrange(64):
+                for x in xrange(0, 64, 2):
+                    matrix[block_x * 64 + x][block_y * 64 + y] = ord(raw[index]) >> 4
+                    matrix[block_x * 64 + x+1][block_y * 64 + y] = ord(raw[index]) & 0x0F
                     index += 1
     return matrix
 
