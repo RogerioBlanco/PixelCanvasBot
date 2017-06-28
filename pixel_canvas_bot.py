@@ -98,9 +98,9 @@ def download_canvas(start_x, start_y):
 
     matrix = {}
 
-    for init_x in xrange((point_x - 7) * 64), ((point_x + 8) * 64)):
+    for init_x in xrange((point_x - 7) * 64, (point_x + 8) * 64):
         matrix[init_x] = {}
-        for init_y in xrange((point_y - 7) * 64), (point_y + 8) * 64)):
+        for init_y in xrange((point_y - 7) * 64, (point_y + 8) * 64):
             matrix[init_x][init_y] = None
 
     raw = get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (point_x, point_y), stream = True).content
