@@ -156,7 +156,7 @@ def load_image(file):
     pix = im.load()
     return {'width':width, 'height': height, 'pix': pix}
 
-def draw_image(image, fingerprint, start_x, start_y, mode_defensive):
+def draw_image(image, fingerprint, start_x, start_y):
     for y in xrange(0, image['height']):
         for x in xrange(0, image['width']):
             color = COLORS_RGB[image['pix'][x, y]]
@@ -172,6 +172,7 @@ def draw_image(image, fingerprint, start_x, start_y, mode_defensive):
                 
                 print 'Set pixel color %s in %s,%s' % (COLORS_NAME[color], str(start_x + x), str(start_y + y))
                 wait_time(response)
+    
 
 def setup_global_proxy(proxy_url, proxy_auth):
     global GLOBAL_PROXY 
@@ -239,4 +240,9 @@ if __name__ == '__main__':
 
     wait_time(myself)
     
-    draw_image(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive)
+    draw_image(image, args.fingerprint, args.start_x, args.start_y)
+    
+    if args.mode_defensive:
+        print 'Mode defensie ON'
+        while True:
+            draw_image(image, args.fingerprint, args.start_x, args.start_y)
