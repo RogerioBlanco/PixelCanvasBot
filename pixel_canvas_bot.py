@@ -80,13 +80,20 @@ def myself(fingerprint):
 def send_pixel(x, y, color, fingerprint):
     response = post(URL_BASE + 'api/pixel', '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color, fingerprint))
 
+    if response.status_code == 403:
+        raise Exception('Oh no, you are using a proxy')
+
     if response.status_code == 422:
         raise Exception('Oh no, it is need to provide a token. Wait a few minutes and try again.')
 
     if response.status_code == 429:
         raise Exception('Oh no, you tried hard. Rate limit exceeded')
 
-    return response.json()
+    try:
+        return response.json()
+    except Exception as e:
+        raise ('Oh no, %s with status code %s' %  (response.text, response.status_code))
+
 def wait_time(data = {'waitSeconds':None}):
     if data['waitSeconds'] is not None:
         wait = data['waitSeconds'] + randint(0, 9)
@@ -156,21 +163,20 @@ def load_image(file):
     pix = im.load()
     return {'width':width, 'height': height, 'pix': pix}
 
-def draw_image(image, fingerprint, start_x, start_y):
+def draw_image(image, fingerprint, start_x, start_y, colors_ignored):
     for y in xrange(0, image['height']):
         for x in xrange(0, image['width']):
             color = COLORS_RGB[image['pix'][x, y]]
-            if color is not None and MAP_PIXELS[start_x + x][start_y + y] != color:
+            if color is not None and MAP_PIXELS[start_x + x][start_y + y] != color and not color in colors_ignored:
                 response = send_pixel(start_x + x, start_y + y, color, fingerprint)
 
-                while not response['success']:
+                while response['success']:
                     print 'Oh no, an error occurred. Trying again.'
                     wait_time(response)
                     response = send_pixel(start_x + x, start_y + y, color, fingerprint)
 
-                update_map(start_x + x, start_y + y, color)
-                
                 print 'Set pixel color %s in %s,%s' % (COLORS_NAME[color], str(start_x + x), str(start_y + y))
+                update_map(start_x + x, start_y + y, color)                
                 wait_time(response)
     
 
@@ -215,7 +221,8 @@ def parse_args():
     parser.add_argument('-f','--fingerprint', required=True, dest='fingerprint', help='The fingerprint of your browser')
     parser.add_argument('-x','--start_x', required=True, type=int, dest='start_x', help='The point x axis that will start to draw')
     parser.add_argument('-y','--start_y', required=True, type=int, dest='start_y', help='The point y axis that will start to draw')
-    parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive', help='Not implemented yet.')
+    parser.add_argument('--colors_ignored', required=False, type=int, default = [], nargs='+', dest='colors_ignored', help='Colors of your image that will be ignored. Ex: 0 1 2 3 8 15')
+    parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive', help='Put the bot on mode defensive. This will run forever')
     parser.add_argument('--proxy_url', required=False, dest='proxy_url', help='Proxy url with port. ex: url:port')
     parser.add_argument('--proxy_auth', required=False, dest='proxy_auth', help='Proxy authentication. ex: user:pass')
 
@@ -240,9 +247,9 @@ if __name__ == '__main__':
 
     wait_time(myself)
     
-    draw_image(image, args.fingerprint, args.start_x, args.start_y)
+    draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
     
     if args.mode_defensive:
         print 'Mode defensie ON'
         while True:
-            draw_image(image, args.fingerprint, args.start_x, args.start_y)
+            draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
