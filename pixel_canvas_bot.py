@@ -170,7 +170,7 @@ def draw_image(image, fingerprint, start_x, start_y, colors_ignored):
             if color is not None and MAP_PIXELS[start_x + x][start_y + y] != color and not color in colors_ignored:
                 response = send_pixel(start_x + x, start_y + y, color, fingerprint)
 
-                while response['success']:
+                while not response['success']:
                     print 'Oh no, an error occurred. Trying again.'
                     wait_time(response)
                     response = send_pixel(start_x + x, start_y + y, color, fingerprint)
