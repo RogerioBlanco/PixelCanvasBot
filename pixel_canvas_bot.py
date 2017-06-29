@@ -92,7 +92,7 @@ def send_pixel(x, y, color, fingerprint):
     try:
         return response.json()
     except Exception as e:
-        raise ('Oh no, %s with status code %s' %  (response.text, response.status_code))
+        raise (response.text + '-' + response.status_code)
 
 def wait_time(data = {'waitSeconds':None}):
     if data['waitSeconds'] is not None:
@@ -250,8 +250,9 @@ def main():
     draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
     
     if args.mode_defensive:
-        print 'Mode defensie ON'
+        print 'Mode defensive ON'
         while True:
+            time.sleep(2)
             draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
 
 if __name__ == '__main__':
