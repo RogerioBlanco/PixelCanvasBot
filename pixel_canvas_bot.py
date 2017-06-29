@@ -229,7 +229,7 @@ def parse_args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
 
     if args.proxy_url or (args.proxy_url and args.proxy_auth):
@@ -243,9 +243,9 @@ if __name__ == '__main__':
 
     connect_websocket(args.fingerprint)
     
-    myself = myself(args.fingerprint)
+    my_self = myself(args.fingerprint)
 
-    wait_time(myself)
+    wait_time(my_self)
     
     draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
     
@@ -253,3 +253,9 @@ if __name__ == '__main__':
         print 'Mode defensie ON'
         while True:
             draw_image(image, args.fingerprint, args.start_x, args.start_y, args.colors_ignored)
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print 'Bye'
