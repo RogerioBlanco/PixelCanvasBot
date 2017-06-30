@@ -33,8 +33,21 @@ Yes and no. You can use any image **BUT** for every pixel must to respect the RG
 Well, first you need Python 2.7 and install this:
 * pip install websocket-client
 * pip install Pillow
+* pip install requests
 
-After you can execute the code like this:
+#### for windows
+if you needs pip 
+save from https://bootstrap.pypa.io/get-pip.py
+* python get-pip.py
+
+after pip installation
+
+* python -m pip install websocket-client
+* python -m pip install Pillow
+* python -m pip install requests
+
+
+#####After you can execute the code like this:
 
 * ./pixel_canvas_bot.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
