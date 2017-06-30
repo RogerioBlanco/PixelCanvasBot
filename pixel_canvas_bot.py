@@ -74,6 +74,18 @@ def post(url, payload, headers =
 def get(url, stream = False, headers = {'User-agent':'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}):
     return requests.get(url, stream=stream, headers=headers, proxies = GLOBAL_PROXY)
 
+
+def get_color(pix):
+    if pix in COLORS_RGB:
+        _color = COLORS_RGB[pix]
+        print 'colour name %s colour %s pix %s' % (COLORS_NAME[_color], _color, pix)
+    else:
+        print 'invalid colour = ' + str(pix)
+        #default white colour
+        # todo this colour nearest pixel colour to be converted
+        _color = COLORS_RGB[(255, 255, 255)] 
+    return _color
+
 def myself(fingerprint):
     return post(URL_BASE + 'api/me', '{"fingerprint":"%s"}' % fingerprint).json()
 
@@ -166,7 +178,7 @@ def load_image(file):
 def draw_image(image, fingerprint, start_x, start_y, colors_ignored):
     for y in xrange(0, image['height']):
         for x in xrange(0, image['width']):
-            color = COLORS_RGB[image['pix'][x, y]]
+            color = get_color(image['pix'][x, y])
             if color is not None and MAP_PIXELS[start_x + x][start_y + y] != color and not color in colors_ignored:
                 response = send_pixel(start_x + x, start_y + y, color, fingerprint)
 
