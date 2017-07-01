@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import requests, threading, websocket
+import requests, threading, websocket, math
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
 from Colors import EnumColor
+from Matrix import Matrix
 
 class PixelCanvasIO(object):
     
@@ -57,12 +58,19 @@ class PixelCanvasIO(object):
     def connect_websocket(self, canvas):
         def on_message(ws, message):
             if unpack_from('B', message, 0)[0] == 193:
-                number = unpack_from('!H', message, 5)[0]
-                x = unpack_from('!h', message, 1)[0] * 64 + ((number % 64 + 64) % 64)
-                y = unpack_from('!h', message, 3)[0] * 64 + math.floor(number / 64)
-                color = EnumColor.index(15 & number)
-                canvas.update(int(x), int(y), color)
-                print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
+                x = unpack_from('!h', message, 1)[0]
+                y = unpack_from('!h', message, 3)[0]
+                a = unpack_from('!H', message, 5)[0]
+                number = (65520 & a) >> 4
+                x = int(x * 64 + ((number % 64 + 64) % 64))
+                y = int(y * 64 + math.floor(number / 64))
+                color = EnumColor.index(15 & a)
+                try:
+                    canvas.matrix[x][y] = color
+                    print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
+                except Exception as e:
+                    pass
+                    
 
         def on_error(ws, error):
             ws.close()
@@ -75,11 +83,7 @@ class PixelCanvasIO(object):
             print "Websocket open"
 
         url = self.get_ws()
-        ws = websocket.WebSocketApp(url + '/?fingerprint=' + self.fingerprint)
-        ws.on_error = on_error
-        ws.on_close = on_close
-        ws.on_open = on_open
-        ws.on_message = on_message
+        ws = websocket.WebSocketApp(url + '/?fingerprint=' + self.fingerprint, on_message = on_message, on_open = on_open, on_close = on_close, on_error = on_error)
 
         def worker(ws, self):
             if self.proxy:
