@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import requests, random, threading, time, websocket, Colors
+import requests, threading, websocket
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
+from Colors import EnumColor
 
 class PixelCanvasIO(object):
     
@@ -29,8 +30,9 @@ class PixelCanvasIO(object):
     def myself(self):
         return self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint).json()
 
-    def pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color, fingerprint)
+    def send_pixel(self, x, y, color):
+        print color.index
+        payload = '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color.index, self.fingerprint)
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
@@ -44,16 +46,10 @@ class PixelCanvasIO(object):
         try:
             return response.json()
         except Exception as e:
-            raise (response.text + '-' + response.status_code)
-    
-    def wait_time(self, data = {'waitSeconds':None}):
-        if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + random.randint(0, 9)
-            print 'Waiting %s seconds' % str(wait)
-            time.sleep(wait)
+            raise Exception(str(response.text) + '-' + str(response.status_code))
     
     def download_canvas(self, center_x, center_y):
-        return self.get(URL_BASE + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream = True).content
+        return self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream = True).content
  
     def get_ws(self):
         return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
@@ -61,12 +57,12 @@ class PixelCanvasIO(object):
     def connect_websocket(self, canvas):
         def on_message(ws, message):
             if unpack_from('B', message, 0)[0] == 193:
-                print 'Ola'
                 number = unpack_from('!H', message, 5)[0]
                 x = unpack_from('!h', message, 1)[0] * 64 + ((number % 64 + 64) % 64)
                 y = unpack_from('!h', message, 3)[0] * 64 + math.floor(number / 64)
-                canvas.update(int(x), int(y), int(15 & number))
-                print("Somebody updated %s,%s with %s color" % (str(x), str(y), Colors.index[color]['name']))
+                color = EnumColor.index(15 & number)
+                canvas.update(int(x), int(y), color)
+                print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
 
         def on_error(ws, error):
             ws.close()

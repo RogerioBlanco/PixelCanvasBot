@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import Bot
+from Bot import Bot
+from Image import Image
 from argparse import ArgumentParser
 
 def parse_args():
@@ -30,7 +31,9 @@ def main():
 
     proxy = setup_proxy(args.proxy_url, args.proxy_auth)
 
-    bot = Bot(Image(args.file), args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, proxy)
+    image = Image(args.file)
+
+    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, proxy)
 
     bot.run()
     

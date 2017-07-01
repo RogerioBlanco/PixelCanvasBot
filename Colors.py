@@ -23,7 +23,7 @@ class EnumColor:
         Color(12,   'pacific blue',     (  0,131,199)),
         Color(13,   'blue',             (  0,  0,234)),
         Color(14,   'violet',           (207,110,228)),
-        Color(15,   'purple',           (130,  0,128)),
+        Color(15,   'purple',           (130,  0,128))
     ]
 
     
@@ -33,5 +33,14 @@ class EnumColor:
         for color in EnumColor.ENUM:
             if i == color.index:
                 return color
+        #White is default color
+        return EnumColor.ENUM[0]
+
+    @staticmethod
+    def rgb(rgb):
+        for color in EnumColor.ENUM:
+            if rgb == color.rgb:
+                return color
+
         #White is default color
         return EnumColor.ENUM[0]

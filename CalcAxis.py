@@ -2,11 +2,11 @@
 
 import math
 
-class Axis:
+class CalcAxis:
 
     @staticmethod
-    def get_centers(start_x, width, start_y, height):
-        return (x - (x % 64)) / 64, (y - (y % 64)) / 64
+    def calc_centers_axis(middle_x, middle_y):
+        return (middle_x - (middle_x % 64)) / 64, (middle_y - (middle_y % 64)) / 64
 
     @staticmethod
     def calc_radius(start_x, width, start_y, height):
@@ -16,9 +16,9 @@ class Axis:
         return (radius if radius % 2 else radius + 1)
 
     @staticmethod
-    def get_center_points(start_x, width, start_y, height):
+    def calc_middle_axis(start_x, width, start_y, height):
         return ((start_x + width) + start_x) / 2, ((start_y + height) + start_y) / 2
 
     @staticmethod
-    def get_iteration(radius):
+    def calc_iteration(radius):
         return int(math.ceil(radius / 2) * 15)
