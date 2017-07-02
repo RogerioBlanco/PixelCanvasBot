@@ -39,7 +39,7 @@ class PixelCanvasIO(object):
             raise Exception('Oh no, you are using a proxy')
 
         if response.status_code == 422:
-            raise Exception('Oh no, it is need to provide a token. Wait a few minutes and try again.')
+            raise Exception('Oh no, it is need to provide a token. You need to enter in pixelcanvas.io and click in an pixel.')
 
         if response.status_code == 429:
             raise Exception('Oh no, you tried hard. Rate limit exceeded')
