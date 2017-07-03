@@ -8,12 +8,13 @@ from Colors import EnumColor
 
 class Bot(object):
 
-    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, proxy = None):
+    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, proxy = None , draw_strategy = 'randomize'):
         self.image = image
         self.start_x = start_x
         self.start_y =  start_y
         self.mode_defensive = mode_defensive
         self.colors_ignored = [EnumColor.index(i) for i in colors_ignored]
+        self.draw_strategy = draw_strategy
         self.pixelio = PixelCanvasIO(fingerprint, proxy)
 
 
@@ -32,19 +33,41 @@ class Bot(object):
             time.sleep(2)
 
     def draw_image(self):
-        for y in xrange(self.image.height):
-            for x in xrange(self.image.height):
-                color = EnumColor.rgb(self.image.pix[x,y])
-                if self.canvas.get_color(self.start_x + x, self.start_y + y) != color and not color in self.colors_ignored:
-                    response = self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+        if self.draw_strategy == 'row_line':
+            for y in xrange(self.image.height):
+                #TODO hey 2 for loop x and y same value ?
+                #TODO all time print square canvas with image heigth
+                for x in xrange(self.image.height):
+                    color = EnumColor.rgb(self.image.pix[x,y])
+                    if self.canvas.get_color(self.start_x + x, self.start_y + y) != color and not color in self.colors_ignored:
+                        response = self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+                        while not 'success' in response:
+                            print 'Oh no, an error occurred. Trying again.'
+                            self.wait_time(response)
+                            self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+
+                        self.canvas.update(self.start_x + x, self.start_y + y, color)
+                        print 'You painted %s in the %s,%s' % (str(color.name), str(self.start_x + x), str(self.start_y + y))
+
+                        self.wait_time(response)
+
+        if self.draw_strategy == 'randomize':
+            #infinity loop
+            while True:
+                rnd_x = random.randint(self.start_x, self.start_x + self.image.width)
+                rnd_y = random.randint(self.start_y, self.start_y + self.image.height)
+
+                color = EnumColor.rgb(self.image.pix[rnd_x - self.start_x ,rnd_y - self.start_y])
+                if self.canvas.get_color(rnd_x, rnd_y) != color and not color in self.colors_ignored:
+                    response = self.pixelio.send_pixel(rnd_x, rnd_y, color)
                     while not 'success' in response:
                         print 'Oh no, an error occurred. Trying again.'
                         self.wait_time(response)
-                        self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+                        self.pixelio.send_pixel(rnd_x, rnd_y, color)
 
-                    self.canvas.update(self.start_x + x, self.start_y + y, color)
-                    print 'You painted %s in the %s,%s' % (str(color.name), str(self.start_x + x), str(self.start_y + y))
-                    
+                    self.canvas.update(rnd_x, rnd_y, color)
+                    print 'You painted %s in the %s,%s' % (str(color.name), str(rnd_x), str(rnd_y))
+
                     self.wait_time(response)
 
     def wait_time(self, data = {'waitSeconds':None}):
