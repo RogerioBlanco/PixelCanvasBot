@@ -49,9 +49,7 @@ after pip installation
 
 #####After you can execute the code like this:
 
-* ./pixel_canvas_bot.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
-
-This bot is not finished yet. 
+* ./Main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
 ### What is each parameter? 
 
@@ -59,6 +57,6 @@ This bot is not finished yet.
 * **-f** or **--fingerprint** it is your unique code. You can get in the requisition when you open Chrome DevTools.
 * **-x** or **--start_x**' it is the point X axis what you want to begin. Ex: 156
 * **-y** or **--start_y**' it is the point y axis what you want to begin. Ex: -4000
-* **--mode_defensive**' is not implemented yet.
+* **--mode_defensive**' is the mode who put the program mode deamon.
 * **--proxy_url** it is you proxy. Ex: proxy.yourcompany.com:8080
 * **--proxy_auth** it is your credentials for the proxy. Ex: username:password
