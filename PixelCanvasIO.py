@@ -18,7 +18,7 @@ class PixelCanvasIO(object):
             'Referer': URL 
         }
 
-    def __init__(self, fingerprint, proxy = None):
+    def __init__(self, fingerprint,  proxy = None):
         self.fingerprint = fingerprint
         self.proxy = proxy
 
@@ -54,7 +54,7 @@ class PixelCanvasIO(object):
     def get_ws(self):
         return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
 
-    def connect_websocket(self, canvas):
+    def connect_websocket(self, canvas, axis = {'start_x' : 0, 'end_x' : 0, 'start_y' : 0, 'end_y' : 0}, print_all_websocket_log = False):
         def on_message(ws, message):
             if unpack_from('B', message, 0)[0] == 193:
                 x = unpack_from('!h', message, 1)[0]
@@ -66,7 +66,8 @@ class PixelCanvasIO(object):
                 color = EnumColor.index(15 & a)
                 try:
                     canvas.matrix[x][y] = color
-                    print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
+                    if (x in xrange(axis['start_x'], axis['end_x'] + 1) and xrange(axis['start_y'], axis['end_y'])) or log_all_info:
+                        print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
                 except Exception as e:
                     pass
                     
