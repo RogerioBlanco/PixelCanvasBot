@@ -35,9 +35,7 @@ class Bot(object):
     def draw_image(self):
         if self.draw_strategy == 'row_line':
             for y in xrange(self.image.height):
-                #TODO hey 2 for loop x and y same value ?
-                #TODO all time print square canvas with image heigth
-                for x in xrange(self.image.height):
+                for x in xrange(self.image.width):
                     color = EnumColor.rgb(self.image.pix[x,y])
                     if self.canvas.get_color(self.start_x + x, self.start_y + y) != color and not color in self.colors_ignored:
                         response = self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
@@ -54,8 +52,8 @@ class Bot(object):
         if self.draw_strategy == 'randomize':
             #infinity loop
             while True:
-                rnd_x = random.randint(self.start_x, self.start_x + self.image.width)
-                rnd_y = random.randint(self.start_y, self.start_y + self.image.height)
+                rnd_x = random.randint(self.start_x, self.start_x + self.image.width-1)
+                rnd_y = random.randint(self.start_y, self.start_y + self.image.height-1)
 
                 color = EnumColor.rgb(self.image.pix[rnd_x - self.start_x ,rnd_y - self.start_y])
                 if self.canvas.get_color(rnd_x, rnd_y) != color and not color in self.colors_ignored:
