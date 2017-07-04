@@ -24,7 +24,6 @@ class Randomize(Strategy):
             color = EnumColor.rgb(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
             if self.bot.canvas.get_color(x, y) != color and not color in self.colors_ignored:
                 self.bot.paint(x, y, color)
-                print 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y))
             count += 1
             matrix.update(x, y, color)
                 
@@ -56,7 +55,6 @@ class Linear(Strategy):
                 color = EnumColor.rgb(self.image.pix[x,y])
                 if self.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     self.bot.paint(x,y, color)
-                    print 'You painted %s in the %s,%s' % (str(color.name), str(self.start_x + x), str(self.start_y + y))
                     
 class FactoryStrategy(object):
 
