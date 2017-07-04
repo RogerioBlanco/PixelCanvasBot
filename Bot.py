@@ -36,14 +36,14 @@ class Bot(object):
             time.sleep(2)
     
     def paint(self, x, y, color):        
-        response = self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+        response = self.pixelio.send_pixel(x, y, color)
         while not 'success' in response:
             print 'Oh no, an error occurred. Trying again.'
             self.wait_time(response)
             self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
 
-            self.canvas.update(self.start_x + x, self.start_y + y, color)
-        print 'You painted %s in the %s,%s' % (str(color.name), str(self.start_x + x), str(self.start_y + y))
+            self.canvas.update(x, y, color)
+        print 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y))
 
         self.wait_time(response)
 

@@ -54,7 +54,7 @@ class Linear(Strategy):
             for x in xrange(self.bot.image.width):
                 color = EnumColor.rgb(self.image.pix[x,y])
                 if self.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
-                    self.bot.paint(x,y, color)
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                     
 class FactoryStrategy(object):
 
