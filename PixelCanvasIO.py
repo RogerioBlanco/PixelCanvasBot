@@ -66,7 +66,7 @@ class PixelCanvasIO(object):
                 color = EnumColor.index(15 & a)
                 try:
                     canvas.matrix[x][y] = color
-                    if (x in xrange(axis['start_x'], axis['end_x'] + 1) and xrange(axis['start_y'], axis['end_y'])) or log_all_info:
+                    if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'], axis['end_y'])) or log_all_info:
                         print("Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
                 except Exception as e:
                     pass
