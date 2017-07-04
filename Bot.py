@@ -37,8 +37,6 @@ class Bot(object):
     
     def paint(self, x, y, color):        
         response = self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
-        print response
-        print x, y, color.name
         while not 'success' in response:
             print 'Oh no, an error occurred. Trying again.'
             self.wait_time(response)
