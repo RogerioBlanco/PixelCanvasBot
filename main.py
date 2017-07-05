@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from Bot import Bot
-from Image import Image
+from src.bot import Bot
+from src.image import Image
 from argparse import ArgumentParser
 
 def parse_args():

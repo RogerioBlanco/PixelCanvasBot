@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import time, random
-from PixelCanvasIO import PixelCanvasIO
-from CalcAxis import CalcAxis
-from Matrix import Matrix
-from Colors import EnumColor
-from Strategy import FactoryStrategy
+from pixelcanvasio import PixelCanvasIO
+from calc_axis import CalcAxis
+from matrix import Matrix
+from colors import EnumColor
+from strategy import FactoryStrategy
         
 class Bot(object):
 
@@ -40,7 +40,7 @@ class Bot(object):
         while not 'success' in response:
             print 'Oh no, an error occurred. Trying again.'
             self.wait_time(response)
-            self.pixelio.send_pixel(self.start_x + x, self.start_y + y, color)
+            self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
         print 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y))
