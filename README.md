@@ -47,18 +47,19 @@ after pip installation
 * python -m pip install requests
 
 
-#####After you can execute the code like this:
+####After you can execute the code like this:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
 ### What is each parameter? 
-
+    Need to help?
+    Try it 'python ./main.py --help' maybe more usefull.
 * **-i** or **--image** it is the image you want to draw.
 * **-f** or **--fingerprint** it is your unique code. You can get in the requisition when you open Chrome DevTools.
 * **-x** or **--start_x** it is the point X axis what you want to begin. Ex: 156
 * **-y** or **--start_y** it is the point y axis what you want to begin. Ex: -4000
 * **--colors_ignored** Colors of your image that will be ignored. Ex: 0 1 2 3 8 15
-* **--draw_strategy** Optional draw strategy default by *randomize* avaiable strategy list : *linear*, *randomize*).: Default: randomize
+* **--draw_strategy** Optional draw strategy. Avaiable strategy list : *lineer*, *randomize*).: Default: randomize
 * **--mode_defensive** is the mode who put the program mode deamon. Default: True
 * **--proxy_url** it is you proxy. Ex: proxy.yourcompany.com:8080
 * **--proxy_auth** it is your credentials for the proxy. Ex: username:password
