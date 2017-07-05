@@ -22,7 +22,7 @@ class Bot(object):
     def run(self):
         self.canvas = self.setup_canvas()
         
-        interest_area = {'start_x' : self.start_x, 'end_x' : self.start_x + self.image.width, 'start_y' : self.start_y, 'end_y' : self.start_x + self.image.height}
+        interest_area = {'start_x' : self.start_x, 'end_x' : self.start_x + self.image.width, 'start_y' : self.start_y, 'end_y' : self.start_y + self.image.height}
         self.pixelio.connect_websocket(self.canvas, interest_area, self.print_all_websocket_log)
 
         me = self.pixelio.myself()
