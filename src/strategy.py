@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import random
-from CalcAxis import CalcAxis
-from Matrix import Matrix
-from Colors import EnumColor
+from calc_axis import CalcAxis
+from matrix import Matrix
+from colors import EnumColor
 
 class Strategy(object):
     def apply(self):

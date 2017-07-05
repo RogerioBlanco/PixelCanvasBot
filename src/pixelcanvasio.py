@@ -3,8 +3,8 @@
 import requests, threading, websocket, math
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
-from Colors import EnumColor
-from Matrix import Matrix
+from colors import EnumColor
+from matrix import Matrix
 
 class PixelCanvasIO(object):
     
@@ -85,9 +85,9 @@ class PixelCanvasIO(object):
         url = self.get_ws()
         ws = websocket.WebSocketApp(url + '/?fingerprint=' + self.fingerprint, on_message = on_message, on_open = on_open, on_close = on_close, on_error = on_error)
 
-        def worker(ws, self):
-            if self.proxy:
-                proxy = urlparse(proxy['http'])
+        def worker(ws, pixel):
+            if pixel.proxy:
+                proxy = urlparse(pixel.proxy['http'])
                 proxy_auth = None
                 if proxy.username and proxy.password:
                     proxy_auth = [proxy.username, proxy.password]
