@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import random
+import time, random
 from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
@@ -52,9 +52,29 @@ class Linear(Strategy):
     def apply(self):
         for y in xrange(self.bot.image.height):
             for x in xrange(self.bot.image.width):
-                color = EnumColor.rgb(self.image.pix[x,y])
-                if self.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+                    
+                    
+class Status(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+        
+    def apply(self):
+        time.sleep(10)
+        px_total = self.bot.image.height * self.bot.image.width
+        px_ok = 0
+        px_not_yet = 0
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                px_ok = px_ok + 1
+                if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
+                    px_not_yet = px_not_yet + 1
+                    px_ok = px_ok - 1
+        print 'Total image pixel count: %s, Allready painted pixel : %s Not painted pixel: %s' % (str(px_total), str(px_ok), str(px_not_yet))
                     
 class FactoryStrategy(object):
 
@@ -65,5 +85,8 @@ class FactoryStrategy(object):
         
         if strategy == 'linear':
             return Linear(bot, colors_ignored)
+        
+        if strategy == 'status':
+            return Status(bot, colors_ignored)
             
         return Randomize(bot, colors_ignored)#Default strategy

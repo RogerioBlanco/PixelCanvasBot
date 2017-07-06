@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument('-x','--start_x', required=True, type=int, dest='start_x', help='The point x axis that will start to draw')
     parser.add_argument('-y','--start_y', required=True, type=int, dest='start_y', help='The point y axis that will start to draw')
     parser.add_argument('--colors_ignored', required=False, type=int, default = [], nargs='+', dest='colors_ignored', help='Colors of your image that will be ignored. Ex: 0 1 2 3 8 15')
-    parser.add_argument('--draw_strategy', required=False, default='randomize', dest='draw_strategy', help='Optional draw strategy avaiable strategy list [lineer, randomize] default: randomize')
+    parser.add_argument('--draw_strategy', required=False, default='randomize', dest='draw_strategy', help='Optional draw strategy avaiable strategy list [lineer, randomize, status] default: randomize')
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive', help='Put the bot on mode defensive. This will run forever')
     parser.add_argument('--proxy_url', required=False, dest='proxy_url', help='Proxy url with port. ex: url:port')
     parser.add_argument('--proxy_auth', required=False, dest='proxy_auth', help='Proxy authentication. ex: user:pass')
