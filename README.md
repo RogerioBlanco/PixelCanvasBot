@@ -59,7 +59,7 @@ after pip installation
 * **-x** or **--start_x** it is the point X axis what you want to begin. Ex: 156
 * **-y** or **--start_y** it is the point y axis what you want to begin. Ex: -4000
 * **--colors_ignored** Colors of your image that will be ignored. Ex: 0 1 2 3 8 15
-* **--draw_strategy** Optional draw strategy. Avaiable strategy list : *lineer*, *randomize*).: Default: randomize
+* **--draw_strategy** Optional draw strategy. Avaiable strategy list : *linear* : line by line paint, *randomize* : pixel paint random coordinates, *status* : not painted only list paint status).: Default: randomize
 * **--mode_defensive** is the mode who put the program mode deamon. Default: True
 * **--proxy_url** it is you proxy. Ex: proxy.yourcompany.com:8080
 * **--proxy_auth** it is your credentials for the proxy. Ex: username:password
