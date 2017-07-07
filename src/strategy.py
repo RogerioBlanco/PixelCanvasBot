@@ -63,7 +63,7 @@ class Status(Strategy):
         self.colors_ignored = colors_ignored
         
     def apply(self):
-        time.sleep(10)
+        time.sleep(60)
         px_total = self.bot.image.height * self.bot.image.width
         px_ok = 0
         px_not_yet = 0
