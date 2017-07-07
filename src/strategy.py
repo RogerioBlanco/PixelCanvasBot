@@ -63,7 +63,6 @@ class Status(Strategy):
         self.colors_ignored = colors_ignored
         
     def apply(self):
-        time.sleep(10)
         px_total = self.bot.image.height * self.bot.image.width
         px_ok = 0
         px_not_yet = 0
@@ -74,8 +73,9 @@ class Status(Strategy):
                 if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     px_not_yet = px_not_yet + 1
                     px_ok = px_ok - 1
-        print 'Total image pixel count: %s, Allready painted pixel : %s Not painted pixel: %s' % (str(px_total), str(px_ok), str(px_not_yet))
-                    
+        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Total image pixel count: %s, Allready painted pixel : %s Not painted pixel: %s' % (str(px_total), str(px_ok), str(px_not_yet))
+        time.sleep(60)
+
 class FactoryStrategy(object):
 
     @staticmethod

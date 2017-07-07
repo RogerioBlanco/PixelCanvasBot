@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import time
 from src.bot import Bot
 from src.image import Image
 from argparse import ArgumentParser
@@ -42,4 +43,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print 'Bye'
+        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Bye'
