@@ -17,29 +17,20 @@ class Randomize(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        matrix = self.setup_matrix()
         count = 0
         while count <= self.size_limit:
-            x, y = self.roll_dice(matrix)
-            color = EnumColor.rgb(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
+            x, y, color = self.roll_dice(self.bot.canvas)
             if self.bot.canvas.get_color(x, y) != color and not color in self.colors_ignored:
                 self.bot.paint(x, y, color)
             count += 1
-            matrix.update(x, y, color)
                 
-    def setup_matrix(self):
-        point_x, point_y = CalcAxis.calc_middle_axis(self.bot.start_x, self.bot.image.width, self.bot.start_y, self.bot.image.height)
-        radius = CalcAxis.calc_radius(self.bot.start_x, self.bot.image.width, self.bot.start_y, self.bot.image.height)
-        iteration = CalcAxis.calc_iteration(radius)
-        axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
-        return Matrix(iteration, axis_x, axis_y)
-
-    def roll_dice(self, matrix):
+    def roll_dice(self, canvas):
         rnd_x = self.random(self.bot.start_x, self.bot.start_x + self.bot.image.width  - 1)
         rnd_y = self.random(self.bot.start_y, self.bot.start_y + self.bot.image.height - 1)
-        if matrix.get_color(rnd_x, rnd_y) is not None:
-            return self.roll_dice(matrix)
-        return rnd_x, rnd_y
+        color = EnumColor.rgb(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y])
+        if canvas.get_color(rnd_x, rnd_y) == color:
+            return self.roll_dice(canvas)
+        return rnd_x, rnd_y, color
         
     def random(self, start, end):
         return random.randint(start, end)
