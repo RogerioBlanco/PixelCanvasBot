@@ -76,25 +76,28 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            #TODO: reopen connetion
             print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###"
+            open_connection()
         
         def on_open(ws):
             print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open"
 
-        url = self.get_ws()
-        ws = websocket.WebSocketApp(url + '/?fingerprint=' + self.fingerprint, on_message = on_message, on_open = on_open, on_close = on_close, on_error = on_error)
+        def open_connection():
+            url = self.get_ws()
+            ws = websocket.WebSocketApp(url + '/?fingerprint=' + self.fingerprint, on_message = on_message, on_open = on_open, on_close = on_close, on_error = on_error)
+            
+            def worker(ws, pixel):
+                if pixel.proxy:
+                    proxy = urlparse(pixel.proxy['http'])
+                    proxy_auth = None
+                    if proxy.username and proxy.password:
+                        proxy_auth = [proxy.username, proxy.password]
+                    ws.run_forever(http_proxy_host=proxy.hostname, http_proxy_port=proxy.port, http_proxy_auth=proxy_auth)
+                else:
+                    ws.run_forever()
 
-        def worker(ws, pixel):
-            if pixel.proxy:
-                proxy = urlparse(pixel.proxy['http'])
-                proxy_auth = None
-                if proxy.username and proxy.password:
-                    proxy_auth = [proxy.username, proxy.password]
-                ws.run_forever(http_proxy_host=proxy.hostname, http_proxy_port=proxy.port, http_proxy_auth=proxy_auth)
-            else:
-                ws.run_forever()
-
-        thread = threading.Thread(target=worker, args=(ws, self))
-        thread.setDaemon(True)
-        thread.start()
+            thread = threading.Thread(target=worker, args=(ws, self))
+            thread.setDaemon(True)
+            thread.start()
+        
+        open_connection()
