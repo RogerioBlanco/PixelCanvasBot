@@ -67,7 +67,7 @@ class PixelCanvasIO(object):
                 try:
                     canvas.matrix[x][y] = color
                     if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'], axis['end_y'])) or log_all_info:
-                        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "Somebody updated %s,%s with %s color" % (str(x), str(y), color.name)
+                        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
                 except Exception as e:
                     pass
                     
@@ -76,11 +76,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###"
+            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###")
             open_connection()
         
         def on_open(ws):
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open"
+            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open")
 
         def open_connection():
             url = self.get_ws()

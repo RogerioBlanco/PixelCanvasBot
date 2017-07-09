@@ -43,14 +43,14 @@ class Bot(object):
             self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
-        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y))
+        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y)))
 
         self.wait_time(response)
 
     def wait_time(self, data = {'waitSeconds':None}):
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + random.randint(0, 9)
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Waiting %s seconds' % str(wait)
+            wait = data['waitSeconds']
+            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Waiting %s seconds' % str(wait))
             time.sleep(wait)
     
     def setup_canvas(self):

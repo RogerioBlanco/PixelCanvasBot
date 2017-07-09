@@ -43,4 +43,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Bye'
+        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Bye')
