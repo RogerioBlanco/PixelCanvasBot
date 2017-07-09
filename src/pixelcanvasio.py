@@ -89,7 +89,7 @@ class PixelCanvasIO(object):
             def worker(ws, pixel):
                 if pixel.proxy:
                     proxy = urlparse(pixel.proxy['http'])
-                    proxy_auth = None
+                    proxy_auth = ''
                     if proxy.username and proxy.password:
                         proxy_auth = [proxy.username, proxy.password]
                     ws.run_forever(http_proxy_host=proxy.hostname, http_proxy_port=proxy.port, http_proxy_auth=proxy_auth)

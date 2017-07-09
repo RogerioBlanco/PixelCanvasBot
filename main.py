@@ -20,9 +20,11 @@ def parse_args():
     return parser.parse_args()
 
 def setup_proxy(proxy_url, proxy_auth):
+    if proxy_auth is None:
+        proxy_auth = ''
     if proxy_url and proxy_auth:
         proxy_auth = proxy_auth + '@'
-
+    
     if proxy_url:
         return {'http': 'http://%s%s' % (proxy_auth, proxy_url)}
 
