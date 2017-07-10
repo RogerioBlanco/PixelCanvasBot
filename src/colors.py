@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import math, time
 
 class EnumColor:
     class Color(object):
@@ -42,5 +43,17 @@ class EnumColor:
             if rgb == color.rgb:
                 return color
 
-        #White is default color
-        return EnumColor.ENUM[0]
+        #if that colors not in standart colors list
+        diff_min = [(255,255,255), 441.7] # sqrt(255*255 + 255*255 + 255*255) = 441.67295593 --> Default white
+
+        for color in EnumColor.ENUM:
+            #formula that sqrt( (x1 - x2)2 + (y1 - y2)2 + (z1 - z2)2 )
+            diffys = math.sqrt( (rgb[0] - color.rgb[0]) * (rgb[0] - color.rgb[0]) + (rgb[1] - color.rgb[1]) * (rgb[1] - color.rgb[1]) + (rgb[2] - color.rgb[2]) * (rgb[2] - color.rgb[2]))
+
+            if diffys < diff_min[1]:
+                diff_min[1] = diffys
+                diff_min[0] = color.rgb
+
+        #return rounding colour
+        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + ' %s colours rounded %s ' % (str(rgb) , str(diff_min[0])))
+        return EnumColor.rgb(diff_min[0])
