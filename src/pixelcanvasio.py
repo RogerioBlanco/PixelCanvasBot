@@ -67,7 +67,7 @@ class PixelCanvasIO(object):
                 try:
                     canvas.matrix[x][y] = color
                     if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'], axis['end_y'])) or log_all_info:
-                        print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "Somebody updated %s,%s with %s color" % (str(x), str(y), color.name)
+                        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
                 except Exception as e:
                     pass
                     
@@ -76,11 +76,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###"
+            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###")
             open_connection()
         
         def on_open(ws):
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open"
+            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open")
 
         def open_connection():
             url = self.get_ws()
@@ -89,7 +89,7 @@ class PixelCanvasIO(object):
             def worker(ws, pixel):
                 if pixel.proxy:
                     proxy = urlparse(pixel.proxy['http'])
-                    proxy_auth = None
+                    proxy_auth = ''
                     if proxy.username and proxy.password:
                         proxy_auth = [proxy.username, proxy.password]
                     ws.run_forever(http_proxy_host=proxy.hostname, http_proxy_port=proxy.port, http_proxy_auth=proxy_auth)
