@@ -11,7 +11,7 @@ class PixelCanvasIO(object):
     URL = 'http://pixelcanvas.io/'
     HEADER_USER_AGENT = {'User-agent':'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
     HEADERS = {
-            'User-agent':'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
+            'User-agent':'Mozilla/5.0 (Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36)',
             'accept': 'application/json',
             'content-type': 'application/json',
             'Origin': URL,
@@ -32,7 +32,7 @@ class PixelCanvasIO(object):
         return self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint).json()
 
     def send_pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, color.index, self.fingerprint)
+        payload = '{"x":%s,"y":%s,"z":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, x + y, color.index, self.fingerprint)
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
