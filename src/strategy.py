@@ -4,6 +4,8 @@ import time, random
 from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
+from i18n import I18n
+
 
 class Strategy(object):
     def apply(self):
@@ -64,7 +66,7 @@ class Status(Strategy):
                 if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     px_not_yet = px_not_yet + 1
                     px_ok = px_ok - 1
-        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Total image pixel count: %s, Allready painted pixel : %s Not painted pixel: %s' % (str(px_total), str(px_ok), str(px_not_yet)))
+        print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
         time.sleep(60)
 
 class FactoryStrategy(object):

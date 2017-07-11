@@ -6,6 +6,8 @@ from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
 from strategy import FactoryStrategy
+from i18n import I18n
+
         
 class Bot(object):
 
@@ -38,19 +40,19 @@ class Bot(object):
     def paint(self, x, y, color):        
         response = self.pixelio.send_pixel(x, y, color)
         while not response['success']:
-            print '>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Oh no, an error occurred. Trying again.'
+            print(I18n.get('try_again'))
             self.wait_time(response)
             self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
-        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'You painted %s in the %s,%s' % (str(color.name), str(x), str(y)))
+        print(I18n.get('You painted %s in the %s,%s') % (str(color.name), str(x), str(y)))
 
         self.wait_time(response)
 
     def wait_time(self, data = {'waitSeconds':None}):
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds']
-            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Waiting %s seconds' % str(wait))
+            print(I18n.get('Waiting %s seconds') % str(wait))
             time.sleep(wait)
     
     def setup_canvas(self):

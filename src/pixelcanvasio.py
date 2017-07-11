@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-import requests, threading, websocket, math, time
+import requests, threading, websocket, math
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
 from colors import EnumColor
 from matrix import Matrix
+from i18n import I18n
+
 
 class PixelCanvasIO(object):
     
@@ -36,17 +38,17 @@ class PixelCanvasIO(object):
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
-            raise Exception('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Oh no, you are using a proxy')
+            raise Exception(I18n.get('Oh no, you are using a proxy'))
 
         if response.status_code == 422:
-            raise Exception('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Oh no, it is need to provide a token. You need to enter in pixelcanvas.io and click in an pixel.')
+            raise Exception(I18n.get('refresh_token'))
 
         if response.status_code == 429:
-            raise Exception('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Oh no, you tried hard. Rate limit exceeded')
+            raise Exception(I18n.get('Rate_limit_exceeded'))
         try:
             return response.json()
         except Exception as e:
-            raise Exception('>> ' + time.strftime("%H:%M:%S") + ' ->' + str(response.text) + '-' + str(response.status_code))
+            raise Exception(I18n.get('only_time') + str(response.text) + '-' + str(response.status_code))
     
     def download_canvas(self, center_x, center_y):
         return self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream = True).content
@@ -67,7 +69,7 @@ class PixelCanvasIO(object):
                 try:
                     canvas.matrix[x][y] = color
                     if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'], axis['end_y'])) or log_all_info:
-                        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Somebody updated %s,%s with %s color" % (str(x), str(y), color.name))
+                        print(I18n.get('Somebody updated %s,%s with %s color') % (str(x), str(y), color.name))
                 except Exception as e:
                     pass
                     
@@ -76,11 +78,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "### closed ###")
+            print(I18n.get("### closed ###"))
             open_connection()
         
         def on_open(ws):
-            print('>> ' + time.strftime("%H:%M:%S") + ' ->' + "Websocket open")
+            print(I18n.get("Websocket open"))
 
         def open_connection():
             url = self.get_ws()
