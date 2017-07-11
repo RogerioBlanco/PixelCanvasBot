@@ -22,8 +22,26 @@ class I18n(object):
             'Rate_limit_exceeded':'Oh no, you tried hard. Rate limit exceeded',
             'Somebody updated %s,%s with %s color':'Somebody updated %s,%s with %s color',
             '### closed ###':'### closed ###',
-            'Websocket open':'Websocket open'
-            },
+            'Websocket open':'Websocket open',
+            ##   colors
+            'white':'white',
+            'gainsboro':'gainsboro',
+            'grey':'grey',
+            'nero':'nero',
+            'carnation pink':'carnation pink',
+            'red':'red',
+            'orange':'orange',
+            'brown':'brown',
+            'yellow':'yellow',
+            'conifer':'conifer',
+            'green':'green',
+            'dark turquoise':'dark turquoise',
+            'pacific blue':'pacific blue',
+            'blue':'blue',
+            'violet':'violet',
+            'purple':'purple',
+        },
+
     }
 
     lang_code = locale.getdefaultlocale()[0]
