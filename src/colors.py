@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import math, time
+
+import math
+from i18n import I18n
+
 
 class EnumColor:
     class Color(object):
@@ -55,5 +58,5 @@ class EnumColor:
                 diff_min[0] = color.rgb
 
         #return rounding colour
-        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + ' %s colours rounded %s ' % (str(rgb) , str(diff_min[0])))
+        print(I18n.get(' %s colours rounded %s ') % (str(rgb) , str(diff_min[0])))
         return EnumColor.rgb(diff_min[0])
