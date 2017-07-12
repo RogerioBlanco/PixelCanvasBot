@@ -34,7 +34,7 @@ class PixelCanvasIO(object):
         return self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint).json()
 
     def send_pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"z":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, x + y, color.index, self.fingerprint)
+        payload = '{"x":%s,"y":%s,"h":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, x + y + 42, color.index, self.fingerprint)
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
