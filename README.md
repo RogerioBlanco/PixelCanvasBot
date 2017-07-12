@@ -1,6 +1,6 @@
 # PixelCanvasBot
 
-This is a prototype of an bot for pixelcanvas.io, functional.
+This is a functional bot for pixelcanvas.io.
 
 #### Why I am doing this? 
 Well, I think this is a fun game and I wanted learn another program language and challenge myself.
@@ -9,7 +9,9 @@ Well, I think this is a fun game and I wanted learn another program language and
 Well, you can draw some image and try replicate in pixelcanvas.io. You can combine with your friends or clan, whatever for combine forces to draw more quickly or defend your 'territory'.
 
 #### I can use any image and this bot will draw for me?
-Yes and no. You can use any image **BUT** for every pixel must to respect the RGBs below:
+**YES READY.** You can use any image. Converted to the nearest PixelCanvas.io color for every pixel 
+
+#### Wherw standart color palete ?
 
 * WHITE: (255, 255, 255),
 * GAINSBORO: (228, 228, 228)
@@ -26,7 +28,7 @@ Yes and no. You can use any image **BUT** for every pixel must to respect the RG
 * PACIFIC_BLUE: (0, 131, 199)
 * BLUE: (0, 0, 234)
 * VIOLET: (207, 110, 228)
-* PURPLE' : (130, 0, 128) 
+* PURPLE' : (130, 0, 128)
 
 #### How you can use this?
 
@@ -35,7 +37,7 @@ Well, first you need Python 2.7 and install this:
 * pip install Pillow
 * pip install requests
 
-##### for windows
+#### For windows
 if you needs pip 
 save from https://bootstrap.pypa.io/get-pip.py
 * python get-pip.py
@@ -47,7 +49,7 @@ after pip installation
 * python -m pip install requests
 
 
-####After you can execute the code like this:
+#### After you can execute the code like this:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 

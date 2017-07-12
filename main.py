@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import time
 from src.bot import Bot
 from src.image import Image
+from src.i18n import I18n
 from argparse import ArgumentParser
 
 def parse_args():
@@ -45,4 +45,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print('>> ' + time.strftime("%H:%M:%S") + ' ->' + 'Bye')
+        print(I18n.get('Bye'))
