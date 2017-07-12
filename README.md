@@ -1,6 +1,6 @@
 # PixelCanvasBot
 
-This is a prototype of an bot for pixelcanvas.io, functional.
+This is a functional bot for pixelcanvas.io.
 
 #### Why I am doing this? 
 Well, I think this is a fun game and I wanted learn another program language and challenge myself.

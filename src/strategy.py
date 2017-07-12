@@ -20,7 +20,7 @@ class Randomize(Strategy):
 
     def apply(self):
         count = 0
-        while count <= self.size_limit:
+        while not self.match(self.bot.canvas, self.bot.image):
             x, y, color = self.roll_dice(self.bot.canvas)
             if self.bot.canvas.get_color(x, y) != color and not color in self.colors_ignored:
                 self.bot.paint(x, y, color)
@@ -36,6 +36,13 @@ class Randomize(Strategy):
         
     def random(self, start, end):
         return random.randint(start, end)
+    
+    def match(self, canvas, image):
+        for x in xrange(0, image.width):
+            for y in xrange(0, image.height):
+                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgb(self.bot.image.pix[x,y]):
+                    return False
+        return True
 
 class Linear(Strategy):
     def __init__(self, bot, colors_ignored):
