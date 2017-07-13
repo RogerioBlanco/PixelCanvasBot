@@ -11,6 +11,8 @@ Well, you can draw some image and try replicate in pixelcanvas.io. You can combi
 #### I can use any image and this bot will draw for me?
 **YES READY.** You can use any image. Converted to the nearest PixelCanvas.io color for every pixel 
 
+# Installation
+
 #### How you can use this?
 
 Well, first you need Python 2.7 and install this:
@@ -29,7 +31,18 @@ after pip installation
 * python -m pip install Pillow
 * python -m pip install requests
 
-#### After you can execute the code like this:
+# Using
+
+#### Geting yours fingerprint Chrome or chromium
+* go http://pixelcanvas.io/@0,0
+* press **F12**
+* open **network** tab
+* in **filter** input paste '**pixel**'
+* put yours pixel any coordinates
+* click request name *pixel*
+* open **headers** tab
+* your fingerprint is under **Request Playload**
+## Easy to use only required parameters:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
