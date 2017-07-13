@@ -55,7 +55,58 @@ class Linear(Strategy):
                 color = EnumColor.rgb(self.bot.image.pix[x,y])
                 if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
-                    
+
+class Sketch(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+
+        # From left to right, from top to bottom,
+        near_color = 0;
+
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if color != near_color and old_color != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+                near_color = color
+
+        # From right to left, from top to bottom,
+        near_color = 0;
+
+        for y in xrange(self.bot.image.height):
+            for x in reversed(xrange(self.bot.image.width)):
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if color != near_color and old_color != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+                near_color = color
+
+        # From top to bottom, from left to right,
+        near_color = 0;
+
+        for x in xrange(self.bot.image.width):
+            for y in xrange(self.bot.image.height):
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if color != near_color and old_color != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+                near_color = color
+
+        # From bottom to top, from left to right,
+        near_color = 0;
+
+        for x in xrange(self.bot.image.width):
+            for y in reversed(xrange(self.bot.image.height)):
+                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if color != near_color and old_color != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+                near_color = color
+
                     
 class Status(Strategy):
     def __init__(self, bot, colors_ignored):
@@ -88,5 +139,8 @@ class FactoryStrategy(object):
         
         if strategy == 'status':
             return Status(bot, colors_ignored)
+
+        if strategy == 'sketch':
+            return Sketch(bot, colors_ignored)
             
         return Randomize(bot, colors_ignored)#Default strategy
