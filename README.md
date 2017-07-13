@@ -21,7 +21,7 @@ Well, first you need Python 2.7 and install this:
 * pip install requests
 
 #### For windows
-if you needs pip 
+if you needs pip (for old versions of python)
 save from https://bootstrap.pypa.io/get-pip.py
 * python get-pip.py
 
@@ -45,6 +45,7 @@ after pip installation
 ## Easy to use only required parameters:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
+Exemple: python main.py -i curuminha.png -f a3bc981db3f64e2852d39c566321de13 -x 2000 -y -300 --draw_strategy randomize --mode_defensive false
 
 ### What is each parameter? 
     Need to help?
