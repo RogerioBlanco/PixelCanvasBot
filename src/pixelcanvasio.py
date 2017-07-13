@@ -23,20 +23,17 @@ class PixelCanvasIO(object):
     def __init__(self, fingerprint,  proxy = None):
         self.fingerprint = fingerprint
         self.proxy = proxy
-        self.headers = PixelCanvasIO.HEADERS
+        self.cookies = ''
 
     def post(self, url, payload):
-        return requests.request('POST', url, data=payload, headers=self.headers, proxies = self.proxy)
+        return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies = self.proxy, cookies = self.cookies)
 
     def get(self, url, stream = False):
         return requests.get(url, stream=stream, headers=PixelCanvasIO.HEADER_USER_AGENT, proxies = self.proxy)
     
     def myself(self):
         response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
-        cookies = ''
-        for c in response.cookies:
-            cookies += c.name + '=' + c.value + ';'
-        self.headers['Cookies']  = cookies
+        self.cookies = response.cookies
         return response.json()
 
     def send_pixel(self, x, y, color):
