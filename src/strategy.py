@@ -73,9 +73,10 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
+            near_color = 0
 
         # From right to left, from top to bottom,
-        near_color = 0;
+        near_color = 0
 
         for y in xrange(self.bot.image.height):
             for x in reversed(xrange(self.bot.image.width)):
@@ -84,6 +85,7 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
+            near_color = 0
 
         # From top to bottom, from left to right,
         near_color = 0;
@@ -95,6 +97,7 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
+            near_color = 0
 
         # From bottom to top, from left to right,
         near_color = 0;
@@ -106,7 +109,7 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
-
+            near_color = 0
                     
 class Status(Strategy):
     def __init__(self, bot, colors_ignored):
