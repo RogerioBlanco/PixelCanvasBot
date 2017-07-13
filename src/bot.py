@@ -51,7 +51,7 @@ class Bot(object):
 
     def wait_time(self, data = {'waitSeconds':None}):
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds']
+            wait = data['waitSeconds'] + random.randint(0, 5)
             print(I18n.get('Waiting %s seconds') % str(wait))
             time.sleep(wait)
     

@@ -17,7 +17,8 @@ class PixelCanvasIO(object):
             'accept': 'application/json',
             'content-type': 'application/json',
             'Origin': URL,
-            'Referer': URL 
+            'Referer': URL,
+            'Cookie': 'DUCK=42'
         }
 
     def __init__(self, fingerprint,  proxy = None):
