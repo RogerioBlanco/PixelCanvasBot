@@ -17,22 +17,27 @@ class PixelCanvasIO(object):
             'accept': 'application/json',
             'content-type': 'application/json',
             'Origin': URL,
-            'Referer': URL,
-            'Cookie': 'DUCK=42'
+            'Referer': URL
         }
-
+    
     def __init__(self, fingerprint,  proxy = None):
         self.fingerprint = fingerprint
         self.proxy = proxy
+        self.headers = PixelCanvasIO.HEADERS
 
     def post(self, url, payload):
-        return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies = self.proxy)
+        return requests.request('POST', url, data=payload, headers=self.headers, proxies = self.proxy)
 
     def get(self, url, stream = False):
         return requests.get(url, stream=stream, headers=PixelCanvasIO.HEADER_USER_AGENT, proxies = self.proxy)
     
     def myself(self):
-        return self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint).json()
+        response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
+        cookies = ''
+        for c in response.cookies:
+            cookies += c.name + '=' + c.value + ';'
+        self.headers['Cookies']  = cookies
+        return response.json()
 
     def send_pixel(self, x, y, color):
         payload = '{"x":%s,"y":%s,"h":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, x + y + 42, color.index, self.fingerprint)
