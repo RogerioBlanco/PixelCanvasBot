@@ -23,7 +23,8 @@ class PixelCanvasIO(object):
     def __init__(self, fingerprint,  proxy = None):
         self.fingerprint = fingerprint
         self.proxy = proxy
-        self.cookies = ''
+        self.cookies = None
+        self.duck = 'h'
 
     def post(self, url, payload):
         return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies = self.proxy, cookies = self.cookies)
@@ -33,11 +34,12 @@ class PixelCanvasIO(object):
     
     def myself(self):
         response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
+        self.duck = ('h' if response.cookies['DUCK'] is None else response.cookies['DUCK'])
         self.cookies = response.cookies
         return response.json()
 
     def send_pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"h":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, x + y + 42, color.index, self.fingerprint)
+        payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, self.duck, x + y + 22, color.index, self.fingerprint)
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
