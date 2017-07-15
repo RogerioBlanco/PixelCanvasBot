@@ -13,6 +13,15 @@ Well, you can draw some image and try replicate in pixelcanvas.io. You can combi
 
 # Installation
 
+#### why git?
+
+PixelCanvas.io frequently changes the API validation system.
+We are updated after we notice. It can be a bit late, we can not guarantee it in any way. Recommend GIT for the current use
+
+* get git and install from https://git-scm.com/downloads
+* git clone -b master --single-branch --depth 10 https://github.com/RogerioBlanco/PixelCanvasBot.git
+* git pull --ff origin master (update)
+
 #### How you can use this?
 
 Well, first you need Python 2.7 and install this:
