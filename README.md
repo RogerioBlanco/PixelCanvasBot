@@ -51,6 +51,9 @@ after pip installation
 * click request name *pixel*
 * open **headers** tab
 * your fingerprint is under **Request Playload**
+
+![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
+
 ## Easy to use only required parameters:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0

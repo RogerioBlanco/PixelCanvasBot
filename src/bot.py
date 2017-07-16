@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import time, random
+import time, random, sys
 from pixelcanvasio import PixelCanvasIO
 from calc_axis import CalcAxis
 from matrix import Matrix
@@ -53,8 +53,34 @@ class Bot(object):
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds'] + random.randint(0, 5)
             print(I18n.get('Waiting %s seconds') % str(wait))
-            time.sleep(wait)
-    
+
+            max_length = int (wait)
+            at_length = max_length
+            empty = "-"
+            used = "+"
+
+            bar = empty * max_length
+
+            for i in range(0, max_length):
+                at_length -= 1
+
+                #setting empty and full spots
+                bar = used * i
+                bar = bar+empty * at_length
+
+                #\r is carriage return(sets cursor position in terminal to start of line)
+                #\0 character escape
+
+                sys.stdout.write("[{}]\0\r".format(bar))
+                sys.stdout.flush()
+
+                #do your stuff here instead of time.sleep
+                time.sleep(1)
+
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+            #time.sleep(wait)
+
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
         radius = CalcAxis.calc_radius(self.start_x, self.image.width, self.start_y, self.image.height)

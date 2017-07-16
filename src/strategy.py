@@ -128,7 +128,7 @@ class Status(Strategy):
                     px_not_yet = px_not_yet + 1
                     px_ok = px_ok - 1
         print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
-        time.sleep(60)
+        self.bot.wait_time({'waitSeconds':60})
 
 class FactoryStrategy(object):
 
