@@ -34,13 +34,15 @@ class PixelCanvasIO(object):
     
     def myself(self):
         response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
+        self.duck = 'a'
+
         if ('duck' in response.cookies):
             self.duck = ('h' if response.cookies['DUCK'] is None else response.cookies['DUCK'])
         self.cookies = response.cookies
         return response.json()
 
     def send_pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, self.duck, x + y + 2, color.index, self.fingerprint)
+        payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (x, y, self.duck, x + y + 8, color.index, self.fingerprint)
         response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
 
         if response.status_code == 403:
