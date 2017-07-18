@@ -24,7 +24,7 @@ class PixelCanvasIO(object):
         self.fingerprint = fingerprint
         self.proxy = proxy
         self.cookies = None
-        self.duck = 'h'
+        self.duck = 'z'
 
     def post(self, url, payload):
         return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies = self.proxy, cookies = self.cookies)
@@ -35,6 +35,7 @@ class PixelCanvasIO(object):
     def myself(self):
         response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
         self.duck = 'a'
+
         if ('duck' in response.cookies):
             self.duck = ('h' if response.cookies['DUCK'] is None else response.cookies['DUCK'])
         self.cookies = response.cookies

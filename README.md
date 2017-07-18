@@ -30,7 +30,7 @@ Well, first you need Python 2.7 and install this:
 * pip install requests
 
 #### For windows
-if you needs pip 
+you needs pip for other installations 
 save from https://bootstrap.pypa.io/get-pip.py
 * python get-pip.py
 
@@ -42,7 +42,7 @@ after pip installation
 
 # Using
 
-#### Geting yours fingerprint Chrome or chromium
+### Geting yours fingerprint Chrome or chromium
 * go http://pixelcanvas.io/@0,0
 * press **F12**
 * open **network** tab
@@ -51,7 +51,10 @@ after pip installation
 * click request name *pixel*
 * open **headers** tab
 * your fingerprint is under **Request Playload**
-## Easy to use only required parameters:
+
+![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
+
+## Easy to use, only required parameters:
 
 * ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
@@ -67,28 +70,7 @@ after pip installation
     * *linear* : line by line paint, 
     * *randomize* : pixel paint random coordinates, 
     * *status* : not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
-    * *sketch* : Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6 **Not Finshed Only Avaiable Dev Branch**
+    * *sketch* : Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
 * **--mode_defensive** is the mode who put the program mode deamon. Default: True
 * **--proxy_url** it is you proxy. Ex: proxy.yourcompany.com:8080
 * **--proxy_auth** it is your credentials for the proxy. Ex: username:password
-
-
-### EXTRA
-#### pixelcanvas.io standart colors list don't require but better than normal image for work progress on big image
-
-* WHITE: (255, 255, 255),
-* GAINSBORO: (228, 228, 228)
-* GREY: (136, 136, 136)
-* NERO: (34, 34, 34)
-* CARNATION_PINK: (255, 167, 209)
-* RED: (229, 0, 0)
-* ORANGE: (229, 149, 0)
-* BROWN: (160, 106, 66)
-* YELLOW: (229, 217, 0)
-* CONIFER: (148, 224, 68)
-* GREEN: (2, 190, 1)
-* DARK_TURQUOISE: (0, 211, 221)
-* PACIFIC_BLUE: (0, 131, 199)
-* BLUE: (0, 0, 234)
-* VIOLET: (207, 110, 228)
-* PURPLE' : (130, 0, 128)
