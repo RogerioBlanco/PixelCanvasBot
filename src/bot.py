@@ -51,7 +51,7 @@ class Bot(object):
 
     def wait_time(self, data = {'waitSeconds':None}):
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + random.randint(0, int(data['waitSeconds'] / 10) + 1)
+            wait = data['waitSeconds'] + random.uniform(0, 1)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
             max_length = int (wait)
