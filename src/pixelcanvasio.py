@@ -56,7 +56,7 @@ class PixelCanvasIO(object):
 
         if response.status_code == 504:
             print '[debug]504 retry to 60 seconds'
-            return {'succes':false,'waitSeconds':120}
+            return {'succes':'false','waitSeconds':'120'}
         try:
             return response.json()
         except Exception as e:
