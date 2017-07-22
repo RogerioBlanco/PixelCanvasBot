@@ -45,7 +45,7 @@ class Bot(object):
             self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
-        print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name)), str(x), str(y)))
+        print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name),'true'), str(x), str(y)))
 
         self.wait_time(response)
 

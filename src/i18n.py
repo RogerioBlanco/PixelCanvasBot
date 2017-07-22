@@ -5,8 +5,11 @@ import locale, time
 class I18n(object):
 
     @staticmethod
-    def get(key):
-        return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n.lang_code][key]
+    def get(key,inline = 'false'):
+        if (inline == 'true'):
+            return I18n._all[I18n.lang_code][key]
+        else:
+            return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n.lang_code][key]
 
     _all = {
         'en_GB':{
@@ -23,7 +26,9 @@ class I18n(object):
             'Somebody updated %s,%s with %s color':'Somebody updated %s,%s with %s color',
             '### closed ###':'### closed ###',
             'Websocket open':'Websocket open',
+
             ##   colors
+
             'white':'white',
             'gainsboro':'gainsboro',
             'grey':'grey',
@@ -55,7 +60,9 @@ class I18n(object):
             'Somebody updated %s,%s with %s color':'Birisi %s,%s burayi %s renge boyadi',
             '### closed ###':'### Baglanti Kesildi ###',
             'Websocket open':'Websockete baglanildi',
+
             ##   colors
+
             'white':'beyaz',
             'gainsboro':'Gainsboro',
             'grey':'Gri',
