@@ -80,7 +80,7 @@ class PixelCanvasIO(object):
                 try:
                     canvas.matrix[x][y] = color
                     if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'], axis['end_y'])) or log_all_info:
-                        print(I18n.get('Somebody updated %s,%s with %s color') % (str(x), str(y), I18n.get(color.name, false)))
+                        print(I18n.get('Somebody updated %s,%s with %s color') % (str(x), str(y), I18n.get(color.name, 'true')))
                 except Exception as e:
                     pass
                     
