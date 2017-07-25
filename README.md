@@ -1,6 +1,9 @@
 # PixelCanvasBot
 
 This is a functional bot for pixelcanvas.io.
+We will not provide you with a faster drawing.
+It does not allow you to easily draw your image. You need to spend some effort.
+This bot can draw images that you can't normally draw on your place.
 
 #### Why I am doing this? 
 Well, I think this is a fun game and I wanted learn another program language and challenge myself.
