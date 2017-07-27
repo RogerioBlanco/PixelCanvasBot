@@ -7,7 +7,6 @@ from matrix import Matrix
 from colors import EnumColor
 from strategy import FactoryStrategy
 from i18n import I18n
-
         
 class Bot(object):
 
@@ -51,35 +50,19 @@ class Bot(object):
 
     def wait_time(self, data = {'waitSeconds':None}):
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + random.uniform(0, 1)
+            wait = data['waitSeconds'] + (random.randint(0, 9) / 10.0)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
-            max_length = int (wait)
-            at_length = max_length
-            empty = "-"
-            used = "+"
-
-            bar = empty * max_length
-
-            for i in range(0, max_length):
-                at_length -= 1
-
-                #setting empty and full spots
-                bar = used * i
-                bar = bar+empty * at_length
-
-                #\r is carriage return(sets cursor position in terminal to start of line)
-                #\0 character escape
-
-                sys.stdout.write("[{}]\0\r".format(bar))
+            complete = count = 0
+            bar_length = 21
+            while complete < bar_length:
+                complete = int(((100 * (float(count) / float(wait))) * bar_length) / 100)
+                sys.stdout.write("[{}]\0\r".format('+' * complete + '-' * (bar_length - complete)))
                 sys.stdout.flush()
-
-                #do your stuff here instead of time.sleep
                 time.sleep(1)
-
+                count += 1
             sys.stdout.write("\n")
             sys.stdout.flush()
-            #time.sleep(wait)
 
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
