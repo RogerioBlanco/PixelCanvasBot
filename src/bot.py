@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import time, random, sys
+import time, random
+from sys import stdout as out
 from pixelcanvasio import PixelCanvasIO
 from calc_axis import CalcAxis
 from matrix import Matrix
@@ -49,20 +50,22 @@ class Bot(object):
         self.wait_time(response)
 
     def wait_time(self, data = {'waitSeconds':None}):
+        def complete(i, wait):
+            return ((100 * (float(i) / float(wait))) * 20) / 100
+
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds'] + (random.randint(0, 9) / 10.0)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
-            complete = count = 0
-            bar_length = 21
-            while complete < bar_length:
-                complete = int(((100 * (float(count) / float(wait))) * bar_length) / 100)
-                sys.stdout.write("[{}]\0\r".format('+' * complete + '-' * (bar_length - complete)))
-                sys.stdout.flush()
-                time.sleep(1)
-                count += 1
-            sys.stdout.write("\n")
-            sys.stdout.flush()
+            c = i = 0
+            while c < 20:
+                c = complete(i, wait)
+                time.sleep(wait - i if i == int(wait) else 1)
+                out.write("[{}]\0\r".format('+' * int(c) + '-' * (20 - int(c))))
+                out.flush()
+                i += 1
+            out.write("\n")
+            out.flush()
 
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
