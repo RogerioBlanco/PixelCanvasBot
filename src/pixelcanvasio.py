@@ -6,7 +6,7 @@ from struct import unpack_from
 from colors import EnumColor
 from matrix import Matrix
 from i18n import I18n
-
+from custom_exception import NeedUserInteraction
 
 class PixelCanvasIO(object):
     
@@ -49,8 +49,7 @@ class PixelCanvasIO(object):
             raise Exception(I18n.get('Oh no, you are using a proxy'))
 
         if response.status_code == 422:
-            print('\a' * 30)
-            raise Exception(I18n.get('refresh_token'))
+            raise NeedUserInteraction(I18n.get('refresh_token'))
 
         if response.status_code == 429:
             raise Exception(I18n.get('Rate_limit_exceeded'))

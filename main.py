@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from src.custom_exception import *
 from src.bot import Bot
 from src.image import Image
 from src.i18n import I18n
@@ -31,6 +32,9 @@ def setup_proxy(proxy_url, proxy_auth):
 
     return None
 
+def alert(exception):
+    print(('\a' * 5) + exception.message)
+
 def main():
     args = parse_args()
 
@@ -40,7 +44,16 @@ def main():
 
     bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, proxy, args.draw_strategy)
 
-    bot.run()
+    bot.init()
+
+    def run():
+        try:
+            bot.run()
+        except NeedUserInteraction as exception:
+            alert(exception)
+            if raw_input(I18n.get('token_resolved')) == 'y':
+                run()
+    run()
     
 if __name__ == '__main__':
     try:
