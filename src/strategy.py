@@ -27,11 +27,12 @@ class Randomize(Strategy):
             count += 1
                 
     def roll_dice(self, canvas):
-        rnd_x = self.random(self.bot.start_x, self.bot.start_x + self.bot.image.width  - 1)
-        rnd_y = self.random(self.bot.start_y, self.bot.start_y + self.bot.image.height - 1)
+        rnd_x = rnd_y = color = None
+        while all(v is None for v in [rnd_x, rnd_y, color]) or canvas.get_color(rnd_x, rnd_y) == color:
+            rnd_x = self.random(self.bot.start_x, self.bot.start_x + self.bot.image.width  - 1)
+            rnd_y = self.random(self.bot.start_y, self.bot.start_y + self.bot.image.height - 1)
+            color = EnumColor.rgb(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y], True)
         color = EnumColor.rgb(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y])
-        if canvas.get_color(rnd_x, rnd_y) == color:
-            return self.roll_dice(canvas)
         return rnd_x, rnd_y, color
         
     def random(self, start, end):
@@ -40,7 +41,7 @@ class Randomize(Strategy):
     def match(self, canvas, image):
         for x in xrange(0, image.width):
             for y in xrange(0, image.height):
-                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgb(self.bot.image.pix[x,y]):
+                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgb(self.bot.image.pix[x,y], True):
                     return False
         return True
 
@@ -52,7 +53,7 @@ class Linear(Strategy):
     def apply(self):
         for y in xrange(self.bot.image.height):
             for x in xrange(self.bot.image.width):
-                color = EnumColor.rgb(self.bot.image.pix[x,y])
+                color = EnumColor.rgb(self.bot.image.pix[x,y], True)
                 if self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y) != color and not color in self.colors_ignored:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
 

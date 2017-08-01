@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import time, random, sys
+import time, random
+from sys import stdout as out
 from pixelcanvasio import PixelCanvasIO
 from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
 from strategy import FactoryStrategy
 from i18n import I18n
-
         
 class Bot(object):
 
@@ -20,13 +20,13 @@ class Bot(object):
         self.pixelio = PixelCanvasIO(fingerprint, proxy)
         self.print_all_websocket_log = False#TODO make an argument
 
-
-    def run(self):
+    def init(self):
         self.canvas = self.setup_canvas()
-        
+
         interest_area = {'start_x' : self.start_x, 'end_x' : self.start_x + self.image.width, 'start_y' : self.start_y, 'end_y' : self.start_y + self.image.height}
         self.pixelio.connect_websocket(self.canvas, interest_area, self.print_all_websocket_log)
 
+    def run(self):
         me = self.pixelio.myself()
 
         self.wait_time(me)
@@ -50,36 +50,22 @@ class Bot(object):
         self.wait_time(response)
 
     def wait_time(self, data = {'waitSeconds':None}):
+        def complete(i, wait):
+            return ((100 * (float(i) / float(wait))) * 20) / 100
+
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + random.uniform(0, 1)
+            wait = data['waitSeconds'] + (random.randint(0, 9) / 10.0)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
-            max_length = int (wait)
-            at_length = max_length
-            empty = "-"
-            used = "+"
-
-            bar = empty * max_length
-
-            for i in range(0, max_length):
-                at_length -= 1
-
-                #setting empty and full spots
-                bar = used * i
-                bar = bar+empty * at_length
-
-                #\r is carriage return(sets cursor position in terminal to start of line)
-                #\0 character escape
-
-                sys.stdout.write("[{}]\0\r".format(bar))
-                sys.stdout.flush()
-
-                #do your stuff here instead of time.sleep
-                time.sleep(1)
-
-            sys.stdout.write("\n")
-            sys.stdout.flush()
-            #time.sleep(wait)
+            c = i = 0
+            while c < 20:
+                c = complete(i, wait)
+                time.sleep(wait - i if i == int(wait) else 1)
+                out.write("[{}]\0\r".format('+' * int(c) + '-' * (20 - int(c))))
+                out.flush()
+                i += 1
+            out.write("\n")
+            out.flush()
 
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
