@@ -12,15 +12,18 @@ class Image(object):
         self.pix = self.image.load()
 
     def load_image(self, file):
+        tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
-        if (os.path.isfile(os.getcwd() + '/img/.cache/' + self.checksum + '.png')):
-            print self.checksum
-        if (os.path.isfile(file)):
-            print 'generatin Temp image for ' + os.getcwd() + '/img/.cache/' + self.checksum + '.png'
-            new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
-            self.save_image(new_image, 'img/.cache/' + self.checksum + '.png')
+        if (os.path.isfile(tmb_full_path)):
+            print "Load cached image"
+            return pillow.open(tmb_full_path).convert('RGB')
 
-        return pillow.open(file).convert('RGB')
+        print 'generating converted image here : ' + tmb_full_path
+        new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
+        self.save_image(new_image, tmb_full_path)
+
+        print 'Saved cache image and loading...'
+        return pillow.open(tmb_full_path).convert('RGB')
 
     def md5(self,fname):
         hash_md5 = hashlib.md5()
@@ -57,7 +60,7 @@ class Image(object):
         for i in range(width):
             for j in range(height):
                 pixel = self.get_pixel(image, i, j)
-                new_color = EnumColor.rgb(pixel, True, True)
+                new_color = EnumColor.rgb(pixel, True)
                 pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]))
 
         return new
