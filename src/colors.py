@@ -41,7 +41,7 @@ class EnumColor:
         return EnumColor.ENUM[0]
 
     @staticmethod
-    def rgb(rgb, silent = False):
+    def rgb(rgb, silent = False, buildImage = False):
         for color in EnumColor.ENUM:
             if rgb == color.rgb:
                 return color

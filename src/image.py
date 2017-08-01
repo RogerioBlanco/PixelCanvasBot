@@ -13,12 +13,12 @@ class Image(object):
 
     def load_image(self, file):
 
-        if (os.path.isfile(os.getcwd() + '/img/.cache/' + self.checksum + '.jpg')):
+        if (os.path.isfile(os.getcwd() + '/img/.cache/' + self.checksum + '.png')):
             print self.checksum
         if (os.path.isfile(file)):
-            print 'generatin Temp image for ' + os.getcwd() + '/img/.cache/' + self.checksum + '.jpg'
+            print 'generatin Temp image for ' + os.getcwd() + '/img/.cache/' + self.checksum + '.png'
             new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
-            self.save_image(new_image, 'img/.cache/' + self.checksum + '.jpg')
+            self.save_image(new_image, 'img/.cache/' + self.checksum + '.png')
 
         return pillow.open(file).convert('RGB')
 
@@ -32,7 +32,7 @@ class Image(object):
     #refUrl: https://www.codementor.io/isaib.cicourel/image-manipulation-in-python-du1089j1u
 
     def save_image(self, image, path):
-        image.save(path, 'jpeg')
+        image.save(path, 'png')
 
     # Create a new image with the given size
     def create_image(self,i, j):
