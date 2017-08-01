@@ -58,6 +58,7 @@ class EnumColor:
                 diff_min[0] = color.rgb
 
         #return rounding colour
+
         if not silent:
             print(I18n.get(' %s colours rounded %s (%s) ') % (str(rgb) , str(diff_min[0]), I18n.get(str(EnumColor.rgb(diff_min[0]).name), 'true')))
         return EnumColor.rgb(diff_min[0])
