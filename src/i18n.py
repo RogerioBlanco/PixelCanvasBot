@@ -5,8 +5,11 @@ import locale, time
 class I18n(object):
 
     @staticmethod
-    def get(key):
-        return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n.lang_code][key]
+    def get(key,inline = 'false'):
+        if (inline == 'true'):
+            return I18n._all[I18n.lang_code][key]
+        else:
+            return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n.lang_code][key]
 
     _all = {
         'en_GB':{
@@ -19,11 +22,14 @@ class I18n(object):
             ' %s colours rounded %s (%s) ':'%s colours rounded %s (%s)',
             'Oh no, you are using a proxy':'Oh no, you are using a proxy',
             'refresh_token':'Oh no, it is need to provide a token. You need to enter in pixelcanvas.io and click in an pixel.',
+            'token_resolved': '"Have you already clicked on a pixel in pixelcanvas.io? y/n:',
             'Rate_limit_exceeded':'Oh no, you tried hard. Rate limit exceeded',
             'Somebody updated %s,%s with %s color':'Somebody updated %s,%s with %s color',
             '### closed ###':'### closed ###',
             'Websocket open':'Websocket open',
+
             ##   colors
+
             'white':'white',
             'gainsboro':'gainsboro',
             'grey':'grey',
@@ -51,11 +57,14 @@ class I18n(object):
             ' %s colours rounded %s (%s) ':'%s rengi %s (%s) renge cevrildi',
             'Oh no, you are using a proxy':'Hata proxy kullanildigi icin islem yapilamiyor',
             'refresh_token':'Token degeri gecersiz oldu. Sorunu duzeltmek icin pixelcanvas.io sitesine girin ve 1 tane pixel birakarak dogrulayin.',
+            'token_resolved': '"Have you already clicked on a pixel in pixelcanvas.io? y/n:',
             'Rate_limit_exceeded':'Hata istek limiti asildi',
             'Somebody updated %s,%s with %s color':'Birisi %s,%s burayi %s renge boyadi',
             '### closed ###':'### Baglanti Kesildi ###',
             'Websocket open':'Websockete baglanildi',
+
             ##   colors
+
             'white':'beyaz',
             'gainsboro':'Gainsboro',
             'grey':'Gri',
