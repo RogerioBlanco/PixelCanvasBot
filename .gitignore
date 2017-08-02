@@ -1,6 +1,7 @@
-/img/
+/img/*
 !/img/.gitkeep
-/img/.cache
+!/img/.cache/
+/img/.cache/*
 !/img/.cache/.gitkeep
 /.idea/
 /*/*.pyc
