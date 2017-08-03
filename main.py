@@ -32,8 +32,8 @@ def setup_proxy(proxy_url, proxy_auth):
 
     return None
 
-def alert(exception):
-    print(('\a' * 5) + exception.message)
+def alert(message = ''):
+    print(('\a' * 5) + message)
 
 def main():
     args = parse_args()
@@ -50,7 +50,7 @@ def main():
         try:
             bot.run()
         except NeedUserInteraction as exception:
-            alert(exception)
+            alert(exception.message)
             if raw_input(I18n.get('token_resolved')) == 'y':
                 run()
     run()
