@@ -1,4 +1,11 @@
-/img/
+/img/*
+!/img/.gitkeep
+!/img/.cache/
+
+/img/.cache/*
+!/img/.cache/.gitkeep
+
+!/img/rgb_specktrum.jpg
 /.idea/
 /*/*.pyc
 *.pyc
