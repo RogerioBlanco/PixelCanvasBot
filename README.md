@@ -77,3 +77,5 @@ after pip installation
 * **--mode_defensive** is the mode who put the program mode deamon. Default: True
 * **--proxy_url** it is you proxy. Ex: proxy.yourcompany.com:8080
 * **--proxy_auth** it is your credentials for the proxy. Ex: username:password
+* **--round_sensitive** it is color rounding sensitive option. Need this number > 0 ex: 3
+* **--image_brightness** it is change image brignets, Support negative values ex: 15 or -15
