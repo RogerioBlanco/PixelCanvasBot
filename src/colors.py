@@ -41,7 +41,7 @@ class EnumColor:
         return EnumColor.ENUM[0]
 
     @staticmethod
-    def rgb(rgb, silent = False):
+    def rgb(rgb, silent = False, sensitive = 1, brightness = 0):
         for color in EnumColor.ENUM:
             if rgb == color.rgb:
                 return color
@@ -52,8 +52,6 @@ class EnumColor:
         for color in EnumColor.ENUM:
             #formula that sqrt( (x1 - x2)2 + (y1 - y2)2 + (z1 - z2)2 )
 
-            #todo brightness value add argument
-            brightness = 15
             diff_r = ((rgb[0] + brightness) - color.rgb[0]) * ((rgb[0] + brightness) - color.rgb[0])
             diff_g = ((rgb[1] + brightness) - color.rgb[1]) * ((rgb[1] + brightness) - color.rgb[1])
             diff_b = ((rgb[2] + brightness) - color.rgb[2]) * ((rgb[2] + brightness) - color.rgb[2])
@@ -61,9 +59,6 @@ class EnumColor:
             x = min(diff_r, diff_g, diff_b)
             z = max(diff_r, diff_g, diff_r)
             y = (diff_r + diff_g + diff_b) - (x + z)
-
-            #todo sensitive value add argument
-            sensitive = 3
 
             x = x / sensitive
             z = z * sensitive
