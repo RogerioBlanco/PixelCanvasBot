@@ -5,7 +5,9 @@ from colors import EnumColor
 import hashlib, os
 
 class Image(object):
-    def __init__(self, file):
+    def __init__(self, file, sens, brig):
+        self.sensitive = sens
+        self.brightness = brig
         self.checksum = self.md5(file);
         self.image = self.load_image(file)
         self.width, self.height = self.image.size
@@ -22,7 +24,7 @@ class Image(object):
         new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
         self.save_image(new_image, tmb_full_path)
 
-        print 'Saved cache image and loading...'
+        print 'Saved image cache file, Loading Now...'
         return pillow.open(tmb_full_path).convert('RGB')
 
     def md5(self,fname):
@@ -60,7 +62,7 @@ class Image(object):
         for i in range(width):
             for j in range(height):
                 pixel = self.get_pixel(image, i, j)
-                new_color = EnumColor.rgb(pixel, True)
+                new_color = EnumColor.rgb(pixel, True , self.sensitive , self.brightness)
                 pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]))
 
         return new

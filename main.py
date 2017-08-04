@@ -18,6 +18,8 @@ def parse_args():
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive', help='Put the bot on mode defensive. This will run forever')
     parser.add_argument('--proxy_url', required=False, dest='proxy_url', help='Proxy url with port. ex: url:port')
     parser.add_argument('--proxy_auth', required=False, dest='proxy_auth', help='Proxy authentication. ex: user:pass')
+    parser.add_argument('--round_sensitive', required=False, type=int, default=3, dest='round_sensitive', help='Color rounding sensitive option. Need this number > 0 ex: 3')
+    parser.add_argument('--image_brightness', required=False, type=int, default=15, dest='image_brightness', help='Change image brignets, Support negative values ex: 15 or -15')
 
     return parser.parse_args()
 
@@ -40,7 +42,7 @@ def main():
 
     proxy = setup_proxy(args.proxy_url, args.proxy_auth)
 
-    image = Image(args.file)
+    image = Image(args.file, args.round_sensitive, args.image_brightness)
 
     bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, proxy, args.draw_strategy)
 
