@@ -25,26 +25,15 @@ PixelCanvas.io frequently changes the API validation system.
 We are updated after we notice. It can be a bit late, we can not guarantee it in any way. Recommend GIT for the current use
 
 * get git and install from https://git-scm.com/downloads
+
 * git clone -b master --single-branch --depth 10 https://github.com/RogerioBlanco/PixelCanvasBot.git
-* git pull --ff origin master (update)
+* git pull --ff origin master (optional update command)
 
 #### How you can use this?
 
-Well, first you need Python 2.7 and install this:
-* pip install websocket-client
-* pip install Pillow
-* pip install requests
-
-#### For windows
-you needs pip for other installations 
-save from https://bootstrap.pypa.io/get-pip.py
-* python get-pip.py
-
-after pip installation
-
-* python -m pip install websocket-client
-* python -m pip install Pillow
-* python -m pip install requests
+Well, first you need Python 2.7 and install required packages:
+* cd PixelCanvasBot
+* python ./setup.py
 
 # Using
 
@@ -62,7 +51,7 @@ after pip installation
 
 ## Easy to use, only required parameters:
 
-* ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
+* python ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
 ### What is each parameter? 
     Need to help?
