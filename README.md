@@ -19,6 +19,9 @@ see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 
 # Installation
 
+## get python
+install pytho for yours OS in here https://www.python.org/downloads/release/python-2713/
+
 #### why git?
 
 PixelCanvas.io frequently changes the API validation system.
@@ -56,18 +59,27 @@ Well, first you need Python 2.7 and install required packages:
 ### What is each parameter? 
     Need to help?
     Try it 'python ./main.py --help' maybe more usefull.
-* **-i** or **--image** [required] it is the image you want to draw.
-* **-f** or **--fingerprint** [required] it is your unique code. You can get in the requisition when you open Chrome DevTools.
-* **-x** or **--start_x** [required] it is the point X axis what you want to begin. Ex: 156
-* **-y** or **--start_y** [required] it is the point y axis what you want to begin. Ex: -4000
-* **--colors_ignored** [optional] Colors of your image that will be ignored. Ex: 0 1 2 3 8 15
-* **--draw_strategy** [optional] draw strategy default by: *randomize* Avaiable strategy list : 
-    * *linear* : line by line paint, 
+* [required] **-i** or **--image**          it is the image you want to draw.
+
+* [required] **-f** or **--fingerprint**    it is your unique code. You can get in the requisition when you open Chrome DevTools.
+
+* [required] **-x** or **--start_x**        it is the point X axis what you want to begin. Ex: 156
+
+* [required] **-y** or **--start_y**        it is the point y axis what you want to begin. Ex: -4000
+
+* [optional] **--colors_ignored**           Colors of your image that will be ignored. Ex: 0 1 2 3 8 15
+
+* [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list : 
+    * *linear* :    line by line paint, 
     * *randomize* : pixel paint random coordinates, 
-    * *status* : not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
-    * *sketch* : Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
-* **--mode_defensive** [optional] is the mode who put the program mode deamon. Default: True
-* **--proxy_url** [optional] it is you proxy. Ex: proxy.yourcompany.com:8080
-* **--proxy_auth** [optional] it is your credentials for the proxy. Ex: username:password
-* **--round_sensitive** [optional] it is color rounding sensitive option. Need this number > 0 ex: 3
-* **--image_brightness** [optional] it is change image brignets, Support negative values ex: 15 or -15
+    * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
+    * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
+* [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
+
+* [optional] **--proxy_url**                it is you proxy. Ex: proxy.yourcompany.com:8080
+
+* [optional] **--proxy_auth**               it is your credentials for the proxy. Ex: username:password
+
+* [optional] **--round_sensitive**          it is color rounding sensitive option. Need this number > 0 ex: 3
+
+* [optional] **--image_brightness**         it is change image brignets, Support negative values ex: 15 or -15
