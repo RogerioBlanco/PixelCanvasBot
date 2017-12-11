@@ -69,7 +69,7 @@ class Sketch(Strategy):
 
     def apply(self):
 
-        # From left to right, from top to bottom,
+        print '# From left to right, from top to bottom,'
         near_color = 0;
 
         for y in xrange(self.bot.image.height):
@@ -81,7 +81,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # From right to left, from top to bottom,
+        print '# From right to left, from top to bottom,'
         near_color = 0
 
         for y in xrange(self.bot.image.height):
@@ -93,7 +93,8 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # From top to bottom, from left to right,
+
+        print '# From top to bottom, from left to right,'
         near_color = 0;
 
         for x in xrange(self.bot.image.width):
@@ -105,7 +106,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # From bottom to top, from left to right,
+        print '# From bottom to top, from left to right,'
         near_color = 0;
 
         for x in xrange(self.bot.image.width):
