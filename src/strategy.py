@@ -149,8 +149,8 @@ class TopLeftCorner(Strategy):
         _startX = 0
         _startY = 0
 
-        _endX = self.bot.image.width
-        _endY = self.bot.image.height
+        _endX = self.bot.image.width -1
+        _endY = self.bot.image.height -1
 
         _dirX = 1
         _dirY = 1
@@ -183,11 +183,11 @@ class TopRightCorner(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width
+        _startX = self.bot.image.width -1
         _startY = 0
 
         _endX = 0
-        _endY = self.bot.image.height
+        _endY = self.bot.image.height -1
 
         _dirX = -1
         _dirY = 1
@@ -221,9 +221,9 @@ class BottomLeftCorner(Strategy):
 
     def apply(self):
         _startX = 0
-        _startY = self.bot.image.height
+        _startY = self.bot.image.height -1
 
-        _endX = self.bot.image.width
+        _endX = self.bot.image.width -1
         _endY = 0
 
         _dirX = 1
@@ -257,8 +257,8 @@ class BottomRightCorner(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width
-        _startY = self.bot.image.height
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
 
         _endX = 0
         _endY = 0
