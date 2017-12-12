@@ -140,6 +140,7 @@ class Status(Strategy):
         self.bot.wait_time({'waitSeconds': 60})
 
 class TopLeftCorner(Strategy):
+
     def __init__(self, bot, colors_ignored):
         self.bot = bot
         self.colors_ignored = colors_ignored
@@ -157,9 +158,9 @@ class TopLeftCorner(Strategy):
         _currentX = _startX
         _currentY = _startY
 
-        while true:
+        while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
@@ -173,9 +174,9 @@ class TopLeftCorner(Strategy):
             if _currentX == _endX or _currentY == _endY:
                 _currentX = _startX
                 _currentY = _startY
-
 
 class TopRightCorner(Strategy):
+
     def __init__(self, bot, colors_ignored):
         self.bot = bot
         self.colors_ignored = colors_ignored
@@ -193,12 +194,13 @@ class TopRightCorner(Strategy):
         _currentX = _startX
         _currentY = _startY
 
-        while true:
+        while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+
 
             if (random.random() < 0.5):
                 _currentX += _dirX
@@ -208,9 +210,9 @@ class TopRightCorner(Strategy):
             if _currentX == _endX or _currentY == _endY:
                 _currentX = _startX
                 _currentY = _startY
-
 
 class BottomLeftCorner(Strategy):
+
     def __init__(self, bot, colors_ignored):
         self.bot = bot
         self.colors_ignored = colors_ignored
@@ -228,12 +230,13 @@ class BottomLeftCorner(Strategy):
         _currentX = _startX
         _currentY = _startY
 
-        while true:
+        while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+
 
             if (random.random() < 0.5):
                 _currentX += _dirX
@@ -244,8 +247,8 @@ class BottomLeftCorner(Strategy):
                 _currentX = _startX
                 _currentY = _startY
 
-
 class BottomRightCorner(Strategy):
+    
     def __init__(self, bot, colors_ignored):
         self.bot = bot
         self.colors_ignored = colors_ignored
@@ -263,12 +266,13 @@ class BottomRightCorner(Strategy):
         _currentX = _startX
         _currentY = _startY
 
-        while true:
+        while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+
 
             if (random.random() < 0.5):
                 _currentX += _dirX
