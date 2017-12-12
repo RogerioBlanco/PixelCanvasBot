@@ -139,6 +139,60 @@ class Status(Strategy):
         print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
         self.bot.wait_time({'waitSeconds': 60})
 
+class TopLeftCorner(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                if self.bot.canvas.get_color(self.bot.start_x + x,
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+
+
+class TopRightCorner(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                if self.bot.canvas.get_color(self.bot.start_x + x,
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+
+
+class BottomLeftCorner(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                if self.bot.canvas.get_color(self.bot.start_x + x,
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+
+
+class BottomRightCorner(Strategy):
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                if self.bot.canvas.get_color(self.bot.start_x + x,
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
 
 class FactoryStrategy(object):
 
@@ -155,5 +209,17 @@ class FactoryStrategy(object):
 
         if strategy == 'sketch':
             return Sketch(bot, colors_ignored)
+
+        if strategy == 'tlc':
+            return TopLeftCorner(bot, colors_ignored)
+
+        if strategy == 'trc':
+            return TopRightCorner(bot, colors_ignored)
+
+        if strategy == 'blc':
+            return BottomLeftCorner(bot, colors_ignored)
+
+        if strategy == 'brc':
+            return BottomRightCorner(bot, colors_ignored)
 
         return Randomize(bot, colors_ignored)  # Default strategy
