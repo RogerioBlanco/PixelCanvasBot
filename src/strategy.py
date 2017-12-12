@@ -164,7 +164,8 @@ class TopLeftCorner(Strategy):
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
-
+                _currentX = _startX
+                _currentY = _startY
 
             if (random.random() < 0.5):
                 _currentX += _dirX
@@ -200,7 +201,8 @@ class TopRightCorner(Strategy):
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
-
+                _currentX = _startX
+                _currentY = _startY
 
             if (random.random() < 0.5):
                 _currentX += _dirX
@@ -236,7 +238,8 @@ class BottomLeftCorner(Strategy):
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
-
+                _currentX = _startX
+                _currentY = _startY
 
             if (random.random() < 0.5):
                 _currentX += _dirX
@@ -272,7 +275,8 @@ class BottomRightCorner(Strategy):
             if self.bot.canvas.get_color(self.bot.start_x + _currentX,
                                          self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
-
+                _currentX = _startX
+                _currentY = _startY
 
             if (random.random() < 0.5):
                 _currentX += _dirX
