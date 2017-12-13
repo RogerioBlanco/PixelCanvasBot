@@ -54,17 +54,17 @@ class Bot(object):
 
     def wait_time(self, data={'waitSeconds': None}):
         def complete(i, wait):
-            return ((100 * (float(i) / float(wait))) * 40) / 100
+            return ((100 * (float(i) / float(wait))) * 50) / 100
 
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds'] + (random.randint(1, 10) / 3.33)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
             c = i = 0
-            while c < 40:
+            while c < 50:
                 c = complete(i, wait)
                 time.sleep(wait - i if i == int(wait) else 1)
-                out.write("[{}]\0\r".format('+' * int(c) + '-' * (40 - int(c))))
+                out.write("[{}]\0\r".format('+' * int(c) + '-' * (50 - int(c))))
                 out.flush()
                 i += 1
             out.write("\n")
