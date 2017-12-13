@@ -86,13 +86,17 @@ go bot directory
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
     
-    * *tlc* : ,     Print start fill Top Left Corner -randomize select all pixel start with corner-
+    * *tlc* :       Print start fill Top Left Corner -randomize select all pixel start with corner-
         
-    * *trc* : ,     Print start fill TopRightCorner -randomize select all pixel start with corner-
+    * *trc* :       Print start fill TopRightCorner -randomize select all pixel start with corner-
         
-    * *blc* : ,     Print start fill BottomLeftCorner -randomize select all pixel start with corner-
+    * *blc* :       Print start fill BottomLeftCorner -randomize select all pixel start with corner-
         
-    * *brc* : ,     Print start fill BottomRightCorner -randomize select all pixel start with corner-
+    * *brc* :       Print start fill BottomRightCorner -randomize select all pixel start with corner-
+
+#### Note:
+The Corner based strategyes are defined using a number of reference points shown in the figure below:
+![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
     
     
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
@@ -115,5 +119,5 @@ see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 * git reset --hard
 ### Update from server server
 * git pull -ff
-# External credential
+# External: thanks for reference
 https://github.com/possatti/pixelbot/blob/master/README.md 
