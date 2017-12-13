@@ -4,7 +4,7 @@ This is a functional bot for pixelcanvas.io.
 We will not provide you with a faster drawing.
 It does not allow you to easily draw your image. You need to spend some effort.
 This bot can draw images that you can't normally draw on your place.
-
+ 
 ### What you can do with this?
 Well, you can draw some image and try replicate in pixelcanvas.io. You can combine with your friends or clan, whatever for combine forces to draw more quickly or defend your 'territory'.
 
