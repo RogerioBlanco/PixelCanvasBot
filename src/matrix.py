@@ -25,7 +25,7 @@ class Matrix:
         return True
 
     def get_color(self, x, y):
-        if self.exist_axis(x,y):
+        if self.exist_axis(x, y):
             return self.matrix[x][y]
 
         return None

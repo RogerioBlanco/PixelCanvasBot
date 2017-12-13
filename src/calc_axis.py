@@ -2,6 +2,7 @@
 
 import math
 
+
 class CalcAxis:
 
     @staticmethod

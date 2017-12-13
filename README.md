@@ -86,6 +86,15 @@ go bot directory
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
     
+    * *tlc* : ,     Print start fill Top Left Corner -randomize select all pixel start with corner-
+        
+    * *trc* : ,     Print start fill TopRightCorner -randomize select all pixel start with corner-
+        
+    * *blc* : ,     Print start fill BottomLeftCorner -randomize select all pixel start with corner-
+        
+    * *brc* : ,     Print start fill BottomRightCorner -randomize select all pixel start with corner-
+    
+    
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
 
 * [optional] **--proxy_url**                it is you proxy. Ex: proxy.yourcompany.com:8080
