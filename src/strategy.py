@@ -68,7 +68,7 @@ class Sketch(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-
+        # todo make I18N
         print '# From left to right, from top to bottom,'
         near_color = 0;
 
@@ -81,6 +81,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
+        # todo make I18N
         print '# From right to left, from top to bottom,'
         near_color = 0
 
@@ -93,7 +94,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-
+        # todo make I18N
         print '# From top to bottom, from left to right,'
         near_color = 0;
 
@@ -106,6 +107,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
+        # todo make I18N
         print '# From bottom to top, from left to right,'
         near_color = 0;
 
