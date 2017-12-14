@@ -86,18 +86,29 @@ go bot directory
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
     
-    * *tlc* :       Print start fill Top Left Corner -randomize select all pixel start with corner-
+    * *tlc* :       Print start fill Top Left Corner -randomize tracking select all pixel-
         
-    * *trc* :       Print start fill TopRightCorner -randomize select all pixel start with corner-
+    * *trc* :       Print start fill Top Right Corner -randomize tracking select all pixel-
         
-    * *blc* :       Print start fill BottomLeftCorner -randomize select all pixel start with corner-
+    * *blc* :       Print start fill Bottom Left Corner -randomize tracking select all pixel-
         
-    * *brc* :       Print start fill BottomRightCorner -randomize select all pixel start with corner-
+    * *brc* :       Print start fill Bottom Right Corner -randomize tracking select all pixel-
+
+    * *cnb* :       Print start fill Centre North Boundary -randomize tracking select all pixel-
+
+    * *csb* :       Print start fill Centre South Boundary -randomize tracking select all pixel-
+
+    * *cwb* :       Print start fill Centre West Boundary -randomize tracking select all pixel-
+
+    * *ceb* :       Print start fill Centre East Boundary -randomize tracking select all pixel-
+
+    * *cpd* :       Print start fill Centre Point Domain -randomize tracking select all pixel-
 
 #### Note:
 The Corner based strategyes are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
-    
+
+Good and half randomize drawing but maybe a big image bad performance problems.  
     
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
 
