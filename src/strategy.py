@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import time, random
+import time, random, math
 from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
@@ -296,8 +296,8 @@ class CentreNorthBoundary(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width -1
-        _startY = self.bot.image.height -1
+        _startX = int(math.floor((self.bot.image.width -1)/2))
+        _startY = 0
 
         _currentX = _startX
         _currentY = _startY
@@ -333,7 +333,7 @@ class CentreSouthBoundary(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width -1
+        _startX = int(math.floor((self.bot.image.width -1)/2))
         _startY = self.bot.image.height -1
 
         _currentX = _startX
@@ -370,8 +370,8 @@ class CentreWestBoundary(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width -1
-        _startY = self.bot.image.height -1
+        _startX = 0
+        _startY = int(math.floor((self.bot.image.height -1)/2))
 
         _currentX = _startX
         _currentY = _startY
@@ -408,7 +408,7 @@ class CentreEastBoundary(Strategy):
 
     def apply(self):
         _startX = self.bot.image.width -1
-        _startY = self.bot.image.height -1
+        _startY = int(math.floor((self.bot.image.height -1)/2))
 
         _currentX = _startX
         _currentY = _startY
@@ -444,8 +444,8 @@ class CentrePointDomain(Strategy):
         self.colors_ignored = colors_ignored
 
     def apply(self):
-        _startX = self.bot.image.width -1
-        _startY = self.bot.image.height -1
+        _startX = int(math.floor((self.bot.image.width -1)/2))
+        _startY = int(math.floor((self.bot.image.height -1)/2))
 
         _currentX = _startX
         _currentY = _startY
