@@ -518,4 +518,5 @@ class FactoryStrategy(object):
         if strategy == 'cpd':
             return CentrePointDomain(bot, colors_ignored)
 
+        print('not fonud strategy "' + strategy + '" select default Randomize')
         return Randomize(bot, colors_ignored)  # Default strategy
