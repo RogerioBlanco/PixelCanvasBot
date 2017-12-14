@@ -289,6 +289,191 @@ class BottomRightCorner(Strategy):
                 _currentX = _startX
                 _currentY = _startY
 
+class CentreNorthBoundary(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
+
+        _endX = 0
+        _endY = 0
+
+        _dirX = -1
+        _dirY = -1
+
+        _currentX = _startX
+        _currentY = _startY
+
+        while True:
+
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            if self.bot.canvas.get_color(self.bot.start_x + _currentX,
+                                         self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
+                self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+                _currentX = _startX
+                _currentY = _startY
+
+            if (random.random() < 0.5):
+                _currentX += _dirX
+            else:
+                _currentY += _dirY
+
+            if _currentX == _endX or _currentY == _endY:
+                _currentX = _startX
+                _currentY = _startY
+
+class CentreSouthBoundary(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
+
+        _endX = 0
+        _endY = 0
+
+        _dirX = -1
+        _dirY = -1
+
+        _currentX = _startX
+        _currentY = _startY
+
+        while True:
+
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            if self.bot.canvas.get_color(self.bot.start_x + _currentX,
+                                         self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
+                self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+                _currentX = _startX
+                _currentY = _startY
+
+            if (random.random() < 0.5):
+                _currentX += _dirX
+            else:
+                _currentY += _dirY
+
+            if _currentX == _endX or _currentY == _endY:
+                _currentX = _startX
+                _currentY = _startY
+
+class CentreWestBoundary(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
+
+        _endX = 0
+        _endY = 0
+
+        _dirX = -1
+        _dirY = -1
+
+        _currentX = _startX
+        _currentY = _startY
+
+        while True:
+
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            if self.bot.canvas.get_color(self.bot.start_x + _currentX,
+                                         self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
+                self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+                _currentX = _startX
+                _currentY = _startY
+
+            if (random.random() < 0.5):
+                _currentX += _dirX
+            else:
+                _currentY += _dirY
+
+            if _currentX == _endX or _currentY == _endY:
+                _currentX = _startX
+                _currentY = _startY
+
+class CentreEastBoundary(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
+
+        _endX = 0
+        _endY = 0
+
+        _dirX = -1
+        _dirY = -1
+
+        _currentX = _startX
+        _currentY = _startY
+
+        while True:
+
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            if self.bot.canvas.get_color(self.bot.start_x + _currentX,
+                                         self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
+                self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+                _currentX = _startX
+                _currentY = _startY
+
+            if (random.random() < 0.5):
+                _currentX += _dirX
+            else:
+                _currentY += _dirY
+
+            if _currentX == _endX or _currentY == _endY:
+                _currentX = _startX
+                _currentY = _startY
+
+class CentrePointDomain(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        _startX = self.bot.image.width -1
+        _startY = self.bot.image.height -1
+
+        _endX = 0
+        _endY = 0
+
+        _dirX = -1
+        _dirY = -1
+
+        _currentX = _startX
+        _currentY = _startY
+
+        while True:
+
+            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            if self.bot.canvas.get_color(self.bot.start_x + _currentX,
+                                         self.bot.start_y + _currentY) != color and not color in self.colors_ignored:
+                self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
+                _currentX = _startX
+                _currentY = _startY
+
+            if (random.random() < 0.5):
+                _currentX += _dirX
+            else:
+                _currentY += _dirY
+
+            if _currentX == _endX or _currentY == _endY:
+                _currentX = _startX
+                _currentY = _startY
+
 
 class FactoryStrategy(object):
 
@@ -317,5 +502,20 @@ class FactoryStrategy(object):
 
         if strategy == 'brc':
             return BottomRightCorner(bot, colors_ignored)
+
+        if strategy == 'cnb':
+            return CentreNorthBoundary(bot, colors_ignored)
+
+        if strategy == 'csb':
+            return CentreSouthBoundary(bot, colors_ignored)
+
+        if strategy == 'cwb':
+            return CentreWestBoundary(bot, colors_ignored)
+
+        if strategy == 'ceb':
+            return CentreEastBoundary(bot, colors_ignored)
+
+        if strategy == 'cpd':
+            return CentrePointDomain(bot, colors_ignored)
 
         return Randomize(bot, colors_ignored)  # Default strategy
