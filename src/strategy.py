@@ -151,12 +151,6 @@ class TopLeftCorner(Strategy):
         _startX = 0
         _startY = 0
 
-        _endX = self.bot.image.width -1
-        _endY = self.bot.image.height -1
-
-        _dirX = 1
-        _dirY = 1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -170,11 +164,17 @@ class TopLeftCorner(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -188,12 +188,6 @@ class TopRightCorner(Strategy):
         _startX = self.bot.image.width -1
         _startY = 0
 
-        _endX = 0
-        _endY = self.bot.image.height -1
-
-        _dirX = -1
-        _dirY = 1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -207,11 +201,17 @@ class TopRightCorner(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -225,12 +225,6 @@ class BottomLeftCorner(Strategy):
         _startX = 0
         _startY = self.bot.image.height -1
 
-        _endX = self.bot.image.width -1
-        _endY = 0
-
-        _dirX = 1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -244,11 +238,17 @@ class BottomLeftCorner(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -262,12 +262,6 @@ class BottomRightCorner(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -281,11 +275,17 @@ class BottomRightCorner(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -299,12 +299,6 @@ class CentreNorthBoundary(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -318,11 +312,17 @@ class CentreNorthBoundary(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -336,12 +336,6 @@ class CentreSouthBoundary(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -355,11 +349,17 @@ class CentreSouthBoundary(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -373,12 +373,6 @@ class CentreWestBoundary(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -392,11 +386,17 @@ class CentreWestBoundary(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -410,12 +410,6 @@ class CentreEastBoundary(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -429,11 +423,17 @@ class CentreEastBoundary(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
@@ -447,12 +447,6 @@ class CentrePointDomain(Strategy):
         _startX = self.bot.image.width -1
         _startY = self.bot.image.height -1
 
-        _endX = 0
-        _endY = 0
-
-        _dirX = -1
-        _dirY = -1
-
         _currentX = _startX
         _currentY = _startY
 
@@ -466,11 +460,17 @@ class CentrePointDomain(Strategy):
                 _currentY = _startY
 
             if (random.random() < 0.5):
-                _currentX += _dirX
+                if (random.random() < 0.5):
+                    _currentX += 1
+                else:
+                    _currentX += -1
             else:
-                _currentY += _dirY
+                if (random.random() < 0.5):
+                    _currentY += 1
+                else:
+                    _currentY += -1
 
-            if _currentX == _endX or _currentY == _endY:
+            if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
 
