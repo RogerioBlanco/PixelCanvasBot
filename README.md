@@ -136,6 +136,10 @@ see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 #### Note:
 *--detect_area_min_range* *--detect_area_max_range* parameters only work at *detect* strategyes
 
+* [optional] **--QR_text**     Your url or some text value Generate PNG image this bots ./img/QRcode.png images And drawing new generatied image to other parameters.
+Important this value changing image file and ignoring *-i* parameters value For example '-i j:\\asfdas --QR_text http://github.com' Working with QRcode image. 
+
+* [optional] **--QR_scale**    Qr image size Default 3 this value pxel based. '1' to min image size 
 
 # Update bot with last changes
 ### Clear local changes (if you changes source code) 

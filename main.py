@@ -38,7 +38,7 @@ def parse_args():
 
     parser.add_argument('--QR_text', required=False, default="", dest='QR_text',
                         help='url or some text')
-    parser.add_argument('--QR_scale', required=False, type=int, default=1, dest='QR_scale',
+    parser.add_argument('--QR_scale', required=False, type=int, default=3, dest='QR_scale',
                         help='QR code pixel length')
 
     return parser.parse_args()
