@@ -36,6 +36,11 @@ def parse_args():
     parser.add_argument('--detect_area_max_range', required=False, type=int, default=5000, dest='max_range',
                         help='Support negative values ex: 3000 or -3000')
 
+    parser.add_argument('--QR_text', required=False, default="", dest='QR_text',
+                        help='url or some text')
+    parser.add_argument('--QR_scale', required=False, type=int, default=1, dest='QR_scale',
+                        help='QR code pixel length')
+
     return parser.parse_args()
 
 
@@ -59,6 +64,11 @@ def main():
     args = parse_args()
 
     proxy = setup_proxy(args.proxy_url, args.proxy_auth)
+
+
+    if not args.QR_text == "":
+        args.file = "./img/QRcode.png"
+        Image.create_QR_image(args.QR_text, args.QR_scale)
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
