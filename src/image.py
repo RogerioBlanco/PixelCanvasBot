@@ -2,7 +2,7 @@
 
 from PIL import Image as pillow
 from colors import EnumColor
-import hashlib, os
+import hashlib, os, pyqrcode
 
 
 class Image(object):
@@ -67,3 +67,11 @@ class Image(object):
                 pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]))
 
         return new
+
+    @staticmethod
+    def create_QR_image(text, scale):
+        full_QR_path = os.getcwd() + '/img/QRcode.png'
+        url = pyqrcode.create(text)
+        url.png(full_QR_path, scale)
+        print('Create QR Code succes in here: ' + full_QR_path)
+        print(url.text())
