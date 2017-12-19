@@ -85,6 +85,10 @@ go bot directory
     * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
+#### This mode maybe useful 2 parameters. RANDOM COLORS BOMP For example
+this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
+visit at http://pixelcanvas.io/@4800,4800
+
     
     * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates evry time. Ignore start point and ignore image. this strategy return wait time in any coordinates with pixelcanvas.io
     
@@ -105,12 +109,11 @@ go bot directory
     * *ceb* :       Print start fill Centre East Boundary -randomize tracking select all pixel-
 
     * *cpd* :       Print start fill Centre Point Domain -randomize tracking select all pixel-
-
 #### Note:
 The rcm-domain based strategyes are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
-
 Good and half randomize drawing but maybe a big image bad performance problems.  
+    
     
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
 
@@ -121,18 +124,18 @@ Good and half randomize drawing but maybe a big image bad performance problems.
 * [optional] **--round_sensitive**          it is color rounding sensitive option. Need this number > 0 ex: 3
 
 * [optional] **--image_brightness**         it is change image brignets, Support negative values ex: 15 or -15
-
 #### Note:
 *--round_sensitive* *--image_brightness* parameters to You can change the degree of rounding precision,
 or you can make the picture that is to be drawn darker - lighter.
 see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 
+
 * [optional] **--detect_area_min_range**     Support negative values ex: 3000 or -3000 Default -3000 max avaliable value 999999 / -999999
 
 * [optional] **--detect_area_max_range**     Support negative values ex: 3000 or -3000 Default 3000 max avaliable value 999999 / -999999
-
 #### Note:
 *--detect_area_min_range* *--detect_area_max_range* parameters only work at *detect* strategyes
+
 
 # Update bot with last changes
 ### Clear local changes (if you changes source code) 
