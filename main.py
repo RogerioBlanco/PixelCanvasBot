@@ -31,6 +31,11 @@ def parse_args():
     parser.add_argument('--image_brightness', required=False, type=int, default=15, dest='image_brightness',
                         help='Change image brignets, Support negative values ex: 15 or -15')
 
+    parser.add_argument('--detect_area_min_range', required=False, type=int, default=-5000, dest='min_range',
+                        help='Support negative values ex: 3000 or -3000')
+    parser.add_argument('--detect_area_max_range', required=False, type=int, default=5000, dest='max_range',
+                        help='Support negative values ex: 3000 or -3000')
+
     return parser.parse_args()
 
 
@@ -57,7 +62,7 @@ def main():
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
-    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, proxy,
+    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.min_range, args.max_range, proxy,
               args.draw_strategy)
 
     bot.init()

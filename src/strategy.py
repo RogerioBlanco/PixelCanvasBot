@@ -474,6 +474,36 @@ class CentrePointDomain(Strategy):
                 _currentX = _startX
                 _currentY = _startY
 
+class DetectMinTime(Strategy):
+
+    def __init__(self, bot, colors_ignored):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+    def apply(self):
+        timeList = []
+
+        while True:
+
+            color = random.choice(EnumColor.ENUM)
+            # -999999 / 999999 max range
+            coord_x = random.randint(self.bot.min_range, self.bot.max_range)
+            coord_y = random.randint(self.bot.min_range, self.bot.max_range)
+
+            self.bot.start_x = coord_x
+            self.bot.start_y = coord_y
+
+            self.bot.canvas = self.bot.setup_canvas()
+
+            while self.bot.canvas.get_color(coord_x, coord_y) == color:
+                color = random.choice(EnumColor.ENUM)
+
+            _wait = self.bot.paint(coord_x, coord_y, color)
+            timeList.append([_wait, coord_x, coord_y])
+
+            print(sorted(timeList, key=lambda x: x[0]))
+
+
 
 class FactoryStrategy(object):
 
@@ -517,6 +547,9 @@ class FactoryStrategy(object):
 
         if strategy == 'cpd':
             return CentrePointDomain(bot, colors_ignored)
+
+        if strategy == 'detect':
+            return DetectMinTime(bot, colors_ignored)
 
         print('not fonud strategy "' + strategy + '" auto selected randomize')
         return Randomize(bot, colors_ignored)  # Default strategy

@@ -12,7 +12,7 @@ from i18n import I18n
 
 class Bot(object):
 
-    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, proxy=None,
+    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, min_range, max_range, proxy=None,
                  draw_strategy='randomize'):
         self.image = image
         self.start_x = start_x
@@ -21,6 +21,8 @@ class Bot(object):
         self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored])
         self.pixelio = PixelCanvasIO(fingerprint, proxy)
         self.print_all_websocket_log = False  # TODO make an argument
+        self.min_range = min_range
+        self.max_range = max_range
 
     def init(self):
         self.canvas = self.setup_canvas()
@@ -50,7 +52,7 @@ class Bot(object):
             self.canvas.update(x, y, color)
         print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
 
-        self.wait_time(response)
+        return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):
         def complete(i, wait):
@@ -69,6 +71,8 @@ class Bot(object):
                 i += 1
             out.write("\n")
             out.flush()
+            return data['waitSeconds']
+        return 99999999
 
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
