@@ -59,7 +59,7 @@ class Bot(object):
             return ((100 * (float(i) / float(wait))) * 50) / 100
 
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + (random.randint(1, 10) / 3.33)
+            wait = data['waitSeconds'] + (random.randint(2, 4) / 3.33)
             print(I18n.get('Waiting %s seconds') % str(wait))
 
             c = i = 0
