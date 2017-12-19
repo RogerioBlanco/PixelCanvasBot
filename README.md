@@ -85,8 +85,8 @@ go bot directory
     * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
-#### This mode maybe useful 2 parameters. RANDOM COLORS BOMP For example
-this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
+#### This mode maybe Alternative using. RANDOM COLOR BOMP, need 2 parameters
+For example this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
 visit at http://pixelcanvas.io/@4800,4800
 
     
@@ -139,7 +139,7 @@ see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 * [optional] **--QR_text**     Your url or some text value Generate PNG image this bots ./img/QRcode.png images And drawing new generatied image to other parameters.
 Important this value changing image file and ignoring *-i* parameters value For example '-i j:\\asfdas --QR_text http://github.com' Working with QRcode image. 
 
-* [optional] **--QR_scale**    Qr image size Default 3 this value pxel based. '1' to min image size 
+* [optional] **--QR_scale**    QRcode image size Default 3 this value pxel based. '1' to min image size 
 
 # Update bot with last changes
 ### Clear local changes (if you changes source code) 
