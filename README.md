@@ -86,6 +86,8 @@ go bot directory
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
     
+    * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates evry time. Ignore start point and ignore image. this strategy return wait time in any coordinates with pixelcanvas.io
+    
     * *tlc* :       Print start fill Top Left Corner -randomize tracking select all pixel-
         
     * *trc* :       Print start fill Top Right Corner -randomize tracking select all pixel-
@@ -105,7 +107,7 @@ go bot directory
     * *cpd* :       Print start fill Centre Point Domain -randomize tracking select all pixel-
 
 #### Note:
-The Corner based strategyes are defined using a number of reference points shown in the figure below:
+The rcm-domain based strategyes are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
 
 Good and half randomize drawing but maybe a big image bad performance problems.  
@@ -124,6 +126,13 @@ Good and half randomize drawing but maybe a big image bad performance problems.
 *--round_sensitive* *--image_brightness* parameters to You can change the degree of rounding precision,
 or you can make the picture that is to be drawn darker - lighter.
 see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
+
+* [optional] **--detect_area_min_range**     Support negative values ex: 3000 or -3000 Default -3000 max avaliable value 999999 / -999999
+
+* [optional] **--detect_area_max_range**     Support negative values ex: 3000 or -3000 Default 3000 max avaliable value 999999 / -999999
+
+#### Note:
+*--detect_area_min_range* *--detect_area_max_range* parameters only work at *detect* strategyes
 
 # Update bot with last changes
 ### Clear local changes (if you changes source code) 
