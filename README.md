@@ -85,10 +85,6 @@ go bot directory
     * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
     
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
-#### This mode maybe Alternative using. RANDOM COLOR BOMP, need 2 parameters
-For example this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
-visit at http://pixelcanvas.io/@4800,4800
-
     
     * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates evry time. Ignore start point and ignore image. this strategy return wait time in any coordinates with pixelcanvas.io
     
@@ -113,7 +109,10 @@ visit at http://pixelcanvas.io/@4800,4800
 The rcm-domain based strategyes are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
 Good and half randomize drawing but maybe a big image bad performance problems.  
-    
+
+#### Detect mode maybe alternative using. RANDOM COLOR BOMP, need 2 parameters
+For example this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
+visit at http://pixelcanvas.io/@4800,4800    
     
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
 
