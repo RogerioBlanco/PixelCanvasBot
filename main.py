@@ -19,7 +19,9 @@ def parse_args():
     parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
                         help='The point y axis that will start to draw')
     parser.add_argument('--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
-                        help='Colors of your image that will be ignored. Ex: 0 1 2 3 8 15')
+                        help='Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15')
+    parser.add_argument('--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
+                        help='Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15')
     parser.add_argument('--draw_strategy', required=False, default='randomize', dest='draw_strategy',
                         help='Optional draw strategy avaiable strategy list [lineer, randomize, status, sketch] default: randomize')
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
@@ -72,7 +74,7 @@ def main():
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
-    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.min_range, args.max_range, proxy,
+    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
               args.draw_strategy)
 
     bot.init()

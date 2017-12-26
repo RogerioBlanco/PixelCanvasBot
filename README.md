@@ -74,7 +74,9 @@ go bot directory
 
 * [required] **-y** or **--start_y**        it is the point y axis what you want to begin. Ex: -4000
 
-* [optional] **--colors_ignored**           Colors of your image that will be ignored. Ex: 0 1 2 3 8 15
+* [optional] **--colors_ignored**           Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15
+
+* [optional] **--colors_not_overwrite**     Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15
 
 * [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list : 
 

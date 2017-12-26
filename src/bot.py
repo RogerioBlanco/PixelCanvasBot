@@ -12,17 +12,18 @@ from i18n import I18n
 
 class Bot(object):
 
-    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, min_range, max_range, proxy=None,
+    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
                  draw_strategy='randomize'):
         self.image = image
         self.start_x = start_x
         self.start_y = start_y
         self.mode_defensive = mode_defensive
-        self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored])
+        self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored],[EnumColor.index(i) for i in colors_not_overwrite])
         self.pixelio = PixelCanvasIO(fingerprint, proxy)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
         self.max_range = max_range
+        self.colors_not_overwrite = colors_not_overwrite
 
     def init(self):
         self.canvas = self.setup_canvas()
