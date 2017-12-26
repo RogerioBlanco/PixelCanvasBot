@@ -495,7 +495,13 @@ class DetectMinTime(Strategy):
 
             self.bot.canvas = self.bot.setup_canvas()
 
-            while self.bot.canvas.get_color(coord_x, coord_y) == color or color in self.colors_ignore or self.bot.canvas.get_color(coord_x, coord_y) == EnumColor.ENUM[0]:
+            while self.bot.canvas.get_color(coord_x, coord_y) == EnumColor.ENUM[0]:
+                self.bot.start_x = coord_x
+                self.bot.start_y = coord_y
+
+                self.bot.canvas = self.bot.setup_canvas()
+
+            while self.bot.canvas.get_color(coord_x, coord_y) == color or color in self.colors_ignored:
                 color = random.choice(EnumColor.ENUM)
 
             _wait = self.bot.paint(coord_x, coord_y, color)
