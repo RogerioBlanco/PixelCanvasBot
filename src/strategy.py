@@ -151,7 +151,9 @@ class Status(Strategy):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 px_ok = px_ok + 1
                 if self.bot.canvas.get_color(self.bot.start_x + x,
-                                             self.bot.start_y + y) != color and not color in self.colors_ignored:
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(
+                    self.bot.start_x + x,
+                    self.bot.start_y + y) not in self.colors_not_overwrite:
                     px_not_yet = px_not_yet + 1
                     px_ok = px_ok - 1
         print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
@@ -592,54 +594,41 @@ class FactoryStrategy(object):
         if strategy == 'randomize':
             return Randomize(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'status':
             return Status(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'sketch':
             return Sketch(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'tlc':
             return TopLeftCorner(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'trc':
             return TopRightCorner(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'blc':
             return BottomLeftCorner(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'brc':
             return BottomRightCorner(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'cnb':
             return CentreNorthBoundary(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'csb':
             return CentreSouthBoundary(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'cwb':
             return CentreWestBoundary(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'ceb':
             return CentreEastBoundary(bot, colors_ignored, colors_not_overwrite)
 
-
         if strategy == 'cpd':
             return CentrePointDomain(bot, colors_ignored, colors_not_overwrite)
-
 
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
