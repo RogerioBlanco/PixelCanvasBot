@@ -633,5 +633,6 @@ class FactoryStrategy(object):
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
+        #todo make I18N
         print('not fonud strategy "' + strategy + '" auto selected randomize')
         return Randomize(bot, colors_ignored, colors_not_overwrite)  # Default strategy

@@ -18,13 +18,16 @@ class Image(object):
         tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
         if (os.path.isfile(tmb_full_path)):
+            # todo make I18N
             print "Load cached image"
             return pillow.open(tmb_full_path).convert('RGB')
 
+        # todo make I18N
         print 'generating converted image here : ' + tmb_full_path
         new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
         self.save_image(new_image, tmb_full_path)
 
+        # todo make I18N
         print 'Saved image cache file, Loading Now...'
         return pillow.open(tmb_full_path).convert('RGB')
 
@@ -73,5 +76,6 @@ class Image(object):
         full_QR_path = os.getcwd() + '/img/QRcode.png'
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
+        # todo make I18N
         print('Create QR Code succes in here: ' + full_QR_path)
         print(url.text())
