@@ -2,7 +2,8 @@
 
 from PIL import Image as pillow
 from colors import EnumColor
-import hashlib, os
+import hashlib, os, pyqrcode
+
 
 class Image(object):
     def __init__(self, file, sens, brig):
@@ -27,24 +28,24 @@ class Image(object):
         print 'Saved image cache file, Loading Now...'
         return pillow.open(tmb_full_path).convert('RGB')
 
-    def md5(self,fname):
+    def md5(self, fname):
         hash_md5 = hashlib.md5()
         with open(fname, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
 
-    #refUrl: https://www.codementor.io/isaib.cicourel/image-manipulation-in-python-du1089j1u
+    # refUrl: https://www.codementor.io/isaib.cicourel/image-manipulation-in-python-du1089j1u
 
     def save_image(self, image, path):
         image.save(path, 'png')
 
     # Create a new image with the given size
-    def create_image(self,i, j):
+    def create_image(self, i, j):
         image = pillow.new("RGB", (i, j), "white")
         return image
 
-    def get_pixel(self,image, i, j):
+    def get_pixel(self, image, i, j):
         # Inside image bounds?
         width, height = image.size
         if i > width or j > height:
@@ -62,7 +63,15 @@ class Image(object):
         for i in range(width):
             for j in range(height):
                 pixel = self.get_pixel(image, i, j)
-                new_color = EnumColor.rgb(pixel, True , self.sensitive , self.brightness)
+                new_color = EnumColor.rgb(pixel, True, self.sensitive, self.brightness)
                 pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]))
 
         return new
+
+    @staticmethod
+    def create_QR_image(text, scale):
+        full_QR_path = os.getcwd() + '/img/QRcode.png'
+        url = pyqrcode.create(text)
+        url.png(full_QR_path, scale)
+        print('Create QR Code succes in here: ' + full_QR_path)
+        print(url.text())

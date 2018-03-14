@@ -10,7 +10,7 @@ except ImportError, e:
     import pip
 
 print "Checking required packages"
-pkgs = ['websocket-client', 'Pillow', 'requests']
+pkgs = ['websocket-client', 'Pillow', 'requests', 'pyqrcode', 'pypng']
 for package in pkgs:
     try:
         import package
