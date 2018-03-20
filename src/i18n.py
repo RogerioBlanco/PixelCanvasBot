@@ -58,7 +58,7 @@ class I18n(object):
             ' %s colours rounded %s (%s) ': '%s rengi %s (%s) renge cevrildi',
             'Oh no, you are using a proxy': 'Hata proxy kullanildigi icin islem yapilamiyor',
             'refresh_token': 'Token degeri gecersiz oldu. Sorunu duzeltmek icin pixelcanvas.io sitesine girin ve 1 tane pixel birakarak dogrulayin.',
-            'token_resolved': '"pixelcanvasa girip pixel koyup doğruladın mı, koyduysan y koymadıysan n y/n:',
+            'token_resolved': '"pixelcanvasa girip pixel koyup dogruladin mi y/n:',
             'Rate_limit_exceeded': 'Hata istek limiti asildi',
             'Somebody updated %s,%s with %s color': 'Birisi %s,%s burayi %s renge boyadi',
             '### closed ###': '### Baglanti Kesildi ###',
