@@ -29,6 +29,36 @@ class I18n(object):
             '### closed ###': '### closed ###',
             'Websocket open': 'Websocket open',
 
+            ## external
+            'Load cached image': 'Load cached image',
+            'generating converted image here : %s': 'generating converted image here : %s',
+            'Saved image cache file, Loading Now...': 'Saved image cache file, Loading Now...',
+            'Create QR Code succes in here: %s': 'Create QR Code succes in here: %s',
+            '# From left to right, from top to bottom,': '# From left to right, from top to bottom,',
+            '# From right to left, from top to bottom,': '# From right to left, from top to bottom,',
+            '# From top to bottom, from left to right,': '# From top to bottom, from left to right,',
+            '# From bottom to top, from left to right,': '# From bottom to top, from left to right,',
+            'not fonud strategy %s auto selected randomize': 'not fonud strategy %s auto selected randomize',
+
+            ##  Arguments
+
+            '--image': 'The image file containing the desired drawing, respecting the pallets of RGBs: ',
+            '--fingerprint': 'The fingerprint of your browser',
+            '--start_x': 'The point x axis that will start to draw',
+            '--start_y': 'The point y axis that will start to draw',
+            '--colors_ignored': 'Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15',
+            '--colors_not_overwrite': 'Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15',
+            '--draw_strategy': 'Optional draw strategy avaiable strategy list [lineer, randomize, status, sketch] default: randomize',
+            '--mode_defensive': 'Put the bot on mode defensive. This will run forever',
+            '--proxy_url': 'Proxy url with port. ex: url:port',
+            '--proxy_auth': 'Proxy authentication. ex: user:pass',
+            '--round_sensitive': 'Color rounding sensitive option. Need this number > 0 ex: 3',
+            '--image_brightness': 'Change image brignets, Support negative values ex: 15 or -15',
+            '--detect_area_min_range': 'Support negative values ex: 3000 or -3000',
+            '--detect_area_max_range': 'Support negative values ex: 3000 or -3000',
+            '--QR_text': 'url or some text',
+            '--QR_scale': 'QR code pixel length',
+
             ##   colors
 
             'white': 'white',
@@ -63,6 +93,36 @@ class I18n(object):
             'Somebody updated %s,%s with %s color': 'Birisi %s,%s burayi %s renge boyadi',
             '### closed ###': '### Baglanti Kesildi ###',
             'Websocket open': 'Websockete baglanildi',
+
+            ## external
+            'Load cached image': 'Load cached image',
+            'generating converted image here : %s': 'generating converted image here : %s',
+            'Saved image cache file, Loading Now...': 'Saved image cache file, Loading Now...',
+            'Create QR Code succes in here: %s': 'Create QR Code succes in here: %s',
+            '# From left to right, from top to bottom,': '# From left to right, from top to bottom,',
+            '# From right to left, from top to bottom,': '# From right to left, from top to bottom,',
+            '# From top to bottom, from left to right,': '# From top to bottom, from left to right,',
+            '# From bottom to top, from left to right,': '# From bottom to top, from left to right,',
+            'not fonud strategy %s auto selected randomize': 'not fonud strategy %s auto selected randomize',
+
+            ##  Arguments
+
+            '--image': 'The image file containing the desired drawing, respecting the pallets of RGBs: ',
+            '--fingerprint': 'The fingerprint of your browser',
+            '--start_x': 'The point x axis that will start to draw',
+            '--start_y': 'The point y axis that will start to draw',
+            '--colors_ignored': 'Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15',
+            '--colors_not_overwrite': 'Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15',
+            '--draw_strategy': 'Optional draw strategy avaiable strategy list [lineer, randomize, status, sketch] default: randomize',
+            '--mode_defensive': 'Put the bot on mode defensive. This will run forever',
+            '--proxy_url': 'Proxy url with port. ex: url:port',
+            '--proxy_auth': 'Proxy authentication. ex: user:pass',
+            '--round_sensitive': 'Color rounding sensitive option. Need this number > 0 ex: 3',
+            '--image_brightness': 'Change image brignets, Support negative values ex: 15 or -15',
+            '--detect_area_min_range': 'Support negative values ex: 3000 or -3000',
+            '--detect_area_max_range': 'Support negative values ex: 3000 or -3000',
+            '--QR_text': 'url or some text',
+            '--QR_scale': 'QR code pixel length',
 
             ##   colors
 

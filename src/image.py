@@ -2,6 +2,7 @@
 
 from PIL import Image as pillow
 from colors import EnumColor
+from i18n import I18n
 import hashlib, os, pyqrcode
 
 
@@ -18,17 +19,15 @@ class Image(object):
         tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
         if (os.path.isfile(tmb_full_path)):
-            # todo make I18N
-            print "Load cached image"
+            print(I18n.get('Load cached image'))
             return pillow.open(tmb_full_path).convert('RGB')
 
-        # todo make I18N
-        print 'generating converted image here : ' + tmb_full_path
+        print(I18n.get('generating converted image here : %s') % str(tmb_full_path))
+
         new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
         self.save_image(new_image, tmb_full_path)
 
-        # todo make I18N
-        print 'Saved image cache file, Loading Now...'
+        print(I18n.get('Saved image cache file, Loading Now...'))
         return pillow.open(tmb_full_path).convert('RGB')
 
     def md5(self, fname):
@@ -76,6 +75,6 @@ class Image(object):
         full_QR_path = os.getcwd() + '/img/QRcode.png'
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
-        # todo make I18N
-        print('Create QR Code succes in here: ' + full_QR_path)
+
+        print(I18n.get('Create QR Code succes in here: %s') % str(full_QR_path))
         print(url.text())

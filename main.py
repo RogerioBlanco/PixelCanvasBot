@@ -8,40 +8,40 @@ from argparse import ArgumentParser
 
 
 def parse_args():
-    # TODO added I18n argument help messages
+
     parser = ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
-                        help='The image file containing the desired drawing, respecting the pallets of RGBs: ')
+                        help=I18n.get('--image', 'true'))
     parser.add_argument('-f', '--fingerprint', required=True, dest='fingerprint',
-                        help='The fingerprint of your browser')
+                        help=I18n.get('--fingerprint', 'true'))
     parser.add_argument('-x', '--start_x', required=True, type=int, dest='start_x',
-                        help='The point x axis that will start to draw')
+                        help=I18n.get('--start_x', 'true'))
     parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
-                        help='The point y axis that will start to draw')
+                        help=I18n.get('--start_y', 'true'))
     parser.add_argument('--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
-                        help='Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15')
+                        help=I18n.get('--colors_ignored', 'true'))
     parser.add_argument('--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
-                        help='Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15')
+                        help=I18n.get('--colors_not_overwrite', 'true'))
     parser.add_argument('--draw_strategy', required=False, default='randomize', dest='draw_strategy',
-                        help='Optional draw strategy avaiable strategy list [lineer, randomize, status, sketch] default: randomize')
+                        help=I18n.get('--draw_strategy', 'true'))
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
-                        help='Put the bot on mode defensive. This will run forever')
-    parser.add_argument('--proxy_url', required=False, dest='proxy_url', help='Proxy url with port. ex: url:port')
-    parser.add_argument('--proxy_auth', required=False, dest='proxy_auth', help='Proxy authentication. ex: user:pass')
+                        help=I18n.get('--mode_defensive', 'true'))
+    parser.add_argument('--proxy_url', required=False, dest='proxy_url',
+                        help=I18n.get('--proxy_url', 'true'))
+    parser.add_argument('--proxy_auth', required=False, dest='proxy_auth',
+                        help=I18n.get('--proxy_auth', 'true'))
     parser.add_argument('--round_sensitive', required=False, type=int, default=3, dest='round_sensitive',
-                        help='Color rounding sensitive option. Need this number > 0 ex: 3')
+                        help=I18n.get('--round_sensitive', 'true'))
     parser.add_argument('--image_brightness', required=False, type=int, default=15, dest='image_brightness',
-                        help='Change image brignets, Support negative values ex: 15 or -15')
-
+                        help=I18n.get('--image_brightness', 'true'))
     parser.add_argument('--detect_area_min_range', required=False, type=int, default=-5000, dest='min_range',
-                        help='Support negative values ex: 3000 or -3000')
+                        help=I18n.get('--detect_area_min_range', 'true'))
     parser.add_argument('--detect_area_max_range', required=False, type=int, default=5000, dest='max_range',
-                        help='Support negative values ex: 3000 or -3000')
-
+                        help=I18n.get('--detect_area_max_range', 'true'))
     parser.add_argument('--QR_text', required=False, default="", dest='QR_text',
-                        help='url or some text')
+                        help=I18n.get('--QR_text', 'true'))
     parser.add_argument('--QR_scale', required=False, type=int, default=3, dest='QR_scale',
-                        help='QR code pixel length')
+                        help=I18n.get('--QR_scale', 'true'))
 
     return parser.parse_args()
 

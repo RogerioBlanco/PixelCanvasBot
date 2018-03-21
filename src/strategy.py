@@ -19,7 +19,6 @@ class Randomize(Strategy):
         self.size_limit = self.bot.image.width * self.bot.image.height
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -58,7 +57,6 @@ class Linear(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -77,12 +75,10 @@ class Sketch(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
-        # todo make I18N
-        print '# From left to right, from top to bottom,'
+        print(I18n.get('# From left to right, from top to bottom,'))
         near_color = 0
 
         for y in xrange(self.bot.image.height):
@@ -94,8 +90,8 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # todo make I18N
-        print '# From right to left, from top to bottom,'
+        print(I18n.get('# From right to left, from top to bottom,'))
+
         near_color = 0
 
         for y in xrange(self.bot.image.height):
@@ -107,8 +103,8 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # todo make I18N
-        print '# From top to bottom, from left to right,'
+        print(I18n.get('# From top to bottom, from left to right,'))
+
         near_color = 0
 
         for x in xrange(self.bot.image.width):
@@ -120,8 +116,8 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        # todo make I18N
-        print '# From bottom to top, from left to right,'
+        print(I18n.get('# From bottom to top, from left to right,'))
+
         near_color = 0
 
         for x in xrange(self.bot.image.width):
@@ -139,7 +135,6 @@ class Status(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -166,7 +161,6 @@ class TopLeftCorner(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -209,7 +203,6 @@ class TopRightCorner(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -252,7 +245,6 @@ class BottomLeftCorner(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -295,7 +287,6 @@ class BottomRightCorner(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -338,7 +329,6 @@ class CentreNorthBoundary(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -381,7 +371,6 @@ class CentreSouthBoundary(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -424,7 +413,6 @@ class CentreWestBoundary(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -467,7 +455,6 @@ class CentreEastBoundary(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -510,7 +497,6 @@ class CentrePointDomain(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -553,7 +539,6 @@ class DetectMinTime(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
 
-        # todo Need Tester
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
@@ -633,6 +618,6 @@ class FactoryStrategy(object):
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
-        #todo make I18N
-        print('not fonud strategy "' + strategy + '" auto selected randomize')
+        print(I18n.get('not fonud strategy %s auto selected randomize') % str(strategy))
+
         return Randomize(bot, colors_ignored, colors_not_overwrite)  # Default strategy
