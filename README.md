@@ -81,7 +81,13 @@ go bot directory
 * [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list : 
 
     * *linear* :    line by line paint, 
-    
+
+    * *qf* :        Quickfill line by line. Will draw a 3x3 square in this order:
+
+            | 1 | 6 | 2 |
+            | 7 | 3 | 8 |
+            | 4 | 9 | 5 |
+
     * *randomize* : pixel paint random coordinates, 
     
     * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--

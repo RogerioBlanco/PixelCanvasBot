@@ -69,6 +69,28 @@ class Linear(Strategy):
                     self.bot.start_y + y) not in self.colors_not_overwrite:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
 
+class QuickFill(Strategy):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+
+        self.colors_not_overwrite = colors_not_overwrite
+
+        self.b = True
+
+    def apply(self):
+        for y in xrange(self.bot.image.height):
+            for x in xrange(self.bot.image.width):
+                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                if self.bot.canvas.get_color(self.bot.start_x + x,
+                                             self.bot.start_y + y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(
+                    self.bot.start_x + x,
+                    self.bot.start_y + y) not in self.colors_not_overwrite:
+                    if (x % 2 == self.b):
+                        self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+            self.b = not self.b
+        self.b = False
+
 
 class Sketch(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite):
@@ -581,6 +603,9 @@ class FactoryStrategy(object):
 
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite)
+
+        if strategy == 'qf':
+            return QuickFill(bot, colors_ignored, colors_not_overwrite)
 
         if strategy == 'status':
             return Status(bot, colors_ignored, colors_not_overwrite)
