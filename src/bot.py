@@ -8,6 +8,7 @@ from matrix import Matrix
 from colors import EnumColor
 from strategy import FactoryStrategy
 from i18n import I18n
+from six.moves import range
 
 
 class Bot(object):
@@ -82,17 +83,17 @@ class Bot(object):
         axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
         canvas = Matrix(iteration, axis_x, axis_y)
 
-        for center_x in xrange(axis_x - iteration, 1 + axis_x + iteration, 15):
-            for center_y in xrange(axis_y - iteration, 1 + axis_y + iteration, 15):
+        for center_x in range(axis_x - iteration, 1 + axis_x + iteration, 15):
+            for center_y in range(axis_y - iteration, 1 + axis_y + iteration, 15):
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
-                for block_y in xrange(center_y - 7, center_y + 8):
-                    for block_x in xrange(center_x - 7, center_x + 8):
-                        for y in xrange(64):
+                for block_y in range(center_y - 7, center_y + 8):
+                    for block_x in range(center_x - 7, center_x + 8):
+                        for y in range(64):
                             actual_y = (block_y * 64) + y
-                            for x in xrange(0, 64, 2):
+                            for x in range(0, 64, 2):
                                 actual_x = (block_x * 64) + x
-                                canvas.update(actual_x, actual_y, EnumColor.index(ord(raw[index]) >> 4))
-                                canvas.update(actual_x + 1, actual_y, EnumColor.index(ord(raw[index]) & 0x0F))
+                                canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
+                                canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
                                 index += 1
         return canvas

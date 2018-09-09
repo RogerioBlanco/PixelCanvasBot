@@ -5,6 +5,7 @@ from calc_axis import CalcAxis
 from matrix import Matrix
 from colors import EnumColor
 from i18n import I18n
+from six.moves import range
 
 
 class Strategy(object):
@@ -44,8 +45,8 @@ class Randomize(Strategy):
         return random.randint(start, end)
 
     def match(self, canvas, image):
-        for x in xrange(0, image.width):
-            for y in xrange(0, image.height):
+        for x in range(0, image.width):
+            for y in range(0, image.height):
                 if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgb(
                         self.bot.image.pix[x, y], True):
                     return False
@@ -60,8 +61,8 @@ class Linear(Strategy):
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
-        for y in xrange(self.bot.image.height):
-            for x in xrange(self.bot.image.width):
+        for y in range(self.bot.image.height):
+            for x in range(self.bot.image.width):
                 color = EnumColor.rgb(self.bot.image.pix[x, y], True)
                 if self.bot.canvas.get_color(self.bot.start_x + x,
                                              self.bot.start_y + y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(
@@ -79,8 +80,8 @@ class QuickFill(Strategy):
         self.b = True
 
     def apply(self):
-        for y in xrange(self.bot.image.height):
-            for x in xrange(self.bot.image.width):
+        for y in range(self.bot.image.height):
+            for x in range(self.bot.image.width):
                 color = EnumColor.rgb(self.bot.image.pix[x, y], True)
                 if self.bot.canvas.get_color(self.bot.start_x + x,
                                              self.bot.start_y + y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(
@@ -103,8 +104,8 @@ class Sketch(Strategy):
         print(I18n.get('# From left to right, from top to bottom,'))
         near_color = 0
 
-        for y in xrange(self.bot.image.height):
-            for x in xrange(self.bot.image.width):
+        for y in range(self.bot.image.height):
+            for x in range(self.bot.image.width):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -116,8 +117,8 @@ class Sketch(Strategy):
 
         near_color = 0
 
-        for y in xrange(self.bot.image.height):
-            for x in reversed(xrange(self.bot.image.width)):
+        for y in range(self.bot.image.height):
+            for x in reversed(range(self.bot.image.width)):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -129,8 +130,8 @@ class Sketch(Strategy):
 
         near_color = 0
 
-        for x in xrange(self.bot.image.width):
-            for y in xrange(self.bot.image.height):
+        for x in range(self.bot.image.width):
+            for y in range(self.bot.image.height):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -142,8 +143,8 @@ class Sketch(Strategy):
 
         near_color = 0
 
-        for x in xrange(self.bot.image.width):
-            for y in reversed(xrange(self.bot.image.height)):
+        for x in range(self.bot.image.width):
+            for y in reversed(range(self.bot.image.height)):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -163,8 +164,8 @@ class Status(Strategy):
         px_total = self.bot.image.height * self.bot.image.width
         px_ok = 0
         px_not_yet = 0
-        for y in xrange(self.bot.image.height):
-            for x in xrange(self.bot.image.width):
+        for y in range(self.bot.image.height):
+            for x in range(self.bot.image.width):
                 color = EnumColor.rgb(self.bot.image.pix[x, y])
                 px_ok = px_ok + 1
                 if self.bot.canvas.get_color(self.bot.start_x + x,

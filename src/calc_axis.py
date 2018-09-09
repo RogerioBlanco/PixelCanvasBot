@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import division
 import math
 
 
@@ -7,7 +8,7 @@ class CalcAxis:
 
     @staticmethod
     def calc_centers_axis(middle_x, middle_y):
-        return (middle_x - (middle_x % 64)) / 64, (middle_y - (middle_y % 64)) / 64
+        return (middle_x - (middle_x % 64)) // 64, (middle_y - (middle_y % 64)) // 64
 
     @staticmethod
     def calc_radius(start_x, width, start_y, height):
@@ -18,7 +19,7 @@ class CalcAxis:
 
     @staticmethod
     def calc_middle_axis(start_x, width, start_y, height):
-        return ((start_x + width) + start_x) / 2, ((start_y + height) + start_y) / 2
+        return ((start_x + width) + start_x) // 2, ((start_y + height) + start_y) // 2
 
     @staticmethod
     def calc_iteration(radius):
