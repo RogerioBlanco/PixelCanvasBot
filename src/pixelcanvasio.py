@@ -3,10 +3,10 @@
 import requests, threading, websocket, math
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
-from colors import EnumColor
-from matrix import Matrix
-from i18n import I18n
-from custom_exception import NeedUserInteraction
+from .colors import EnumColor
+from .matrix import Matrix
+from .i18n import I18n
+from .custom_exception import NeedUserInteraction
 from six.moves import range
 
 

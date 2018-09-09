@@ -2,12 +2,12 @@
 
 import time, random
 from sys import stdout as out
-from pixelcanvasio import PixelCanvasIO
-from calc_axis import CalcAxis
-from matrix import Matrix
-from colors import EnumColor
-from strategy import FactoryStrategy
-from i18n import I18n
+from .pixelcanvasio import PixelCanvasIO
+from .calc_axis import CalcAxis
+from .matrix import Matrix
+from .colors import EnumColor
+from .strategy import FactoryStrategy
+from .i18n import I18n
 from six.moves import range
 
 
