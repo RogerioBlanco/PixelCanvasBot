@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from PIL import Image as pillow
-from colors import EnumColor
-from i18n import I18n
+from .colors import EnumColor
+from .i18n import I18n
 import hashlib, os, pyqrcode
 
 

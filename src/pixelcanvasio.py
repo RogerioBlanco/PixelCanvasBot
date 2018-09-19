@@ -3,10 +3,11 @@
 import requests, threading, websocket, math
 from six.moves.urllib.parse import urlparse
 from struct import unpack_from
-from colors import EnumColor
-from matrix import Matrix
-from i18n import I18n
-from custom_exception import NeedUserInteraction
+from .colors import EnumColor
+from .matrix import Matrix
+from .i18n import I18n
+from .custom_exception import NeedUserInteraction
+from six.moves import range
 
 
 class PixelCanvasIO(object):
@@ -64,7 +65,8 @@ class PixelCanvasIO(object):
             raise Exception(I18n.get('only_time') + str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
-        return self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content
+        x = bytearray(self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
+        return x
 
     def get_ws(self):
         return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
@@ -82,7 +84,7 @@ class PixelCanvasIO(object):
                 color = EnumColor.index(15 & a)
                 try:
                     canvas.matrix[x][y] = color
-                    if (x in xrange(axis['start_x'], axis['end_x'] + 1) and y in xrange(axis['start_y'],
+                    if (x in range(axis['start_x'], axis['end_x'] + 1) and y in range(axis['start_y'],
                                                                                         axis['end_y'])) or log_all_info:
                         print(I18n.get('Somebody updated %s,%s with %s color') % (
                             str(x), str(y), I18n.get(color.name, 'true')))
