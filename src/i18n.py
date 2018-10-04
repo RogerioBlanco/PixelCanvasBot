@@ -58,6 +58,8 @@ class I18n(object):
             '--detect_area_max_range': 'Support negative values ex: 3000 or -3000',
             '--QR_text': 'url or some text',
             '--QR_scale': 'QR code pixel width',
+            '--xreversed': 'Draw x axis from right to left. Set to True or False (default False)',
+            '--yreversed': 'Draw y axis from bottom to top. Set to True or False (default False)',
 
             ##  Colors
 
@@ -123,6 +125,8 @@ class I18n(object):
             '--detect_area_max_range': 'Support negative values ex: 3000 or -3000',
             '--QR_text': 'url or some text',
             '--QR_scale': 'QR code pixel length',
+            '--xreversed': 'Draw x axis from right to left. Set to True or False (default False)',
+            '--yreversed': 'Draw y axis from bottom to top. Set to True or False (default False)',
 
             ##   colors
 

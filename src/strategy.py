@@ -54,15 +54,16 @@ class Randomize(Strategy):
 
 
 class Linear(Strategy):
-    def __init__(self, bot, colors_ignored, colors_not_overwrite):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
         self.bot = bot
         self.colors_ignored = colors_ignored
-
         self.colors_not_overwrite = colors_not_overwrite
+        self.xrange = reversed(range(self.bot.image.width)) if xreversed else range(self.bot.image.width)
+        self.yrange = reversed(range(self.bot.image.height)) if yreversed else range(self.bot.image.height)
 
     def apply(self):
-        for y in range(self.bot.image.height):
-            for x in range(self.bot.image.width):
+        for y in self.yrange:
+            for x in self.xrange:
                 color = EnumColor.rgb(self.bot.image.pix[x, y], True)
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -70,17 +71,17 @@ class Linear(Strategy):
 
 
 class QuickFill(Strategy):
-    def __init__(self, bot, colors_ignored, colors_not_overwrite):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
         self.bot = bot
         self.colors_ignored = colors_ignored
-
         self.colors_not_overwrite = colors_not_overwrite
-
+        self.xrange = reversed(range(self.bot.image.width)) if xreversed else range(self.bot.image.width)
+        self.yrange = reversed(range(self.bot.image.height)) if yreversed else range(self.bot.image.height)
         self.b = True
 
     def apply(self):
-        for y in range(self.bot.image.height):
-            for x in range(self.bot.image.width):
+        for y in self.yrange:
+            for x in self.xrange:
                 color = EnumColor.rgb(self.bot.image.pix[x, y], True)
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
@@ -574,16 +575,16 @@ class DetectMinTime(Strategy):
 class FactoryStrategy(object):
 
     @staticmethod
-    def build(strategy, bot, colors_ignored, colors_not_overwrite):
+    def build(strategy, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
 
         if strategy == 'randomize':
             return Randomize(bot, colors_ignored, colors_not_overwrite)
 
         if strategy == 'linear':
-            return Linear(bot, colors_ignored, colors_not_overwrite)
+            return Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
 
         if strategy == 'qf':
-            return QuickFill(bot, colors_ignored, colors_not_overwrite)
+            return QuickFill(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
 
         if strategy == 'status':
             return Status(bot, colors_ignored, colors_not_overwrite)
