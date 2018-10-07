@@ -148,6 +148,13 @@ Important this value changing image file and ignoring *-i* parameters value For 
 
 * [optional] **--QR_scale**    QRcode image size Default 3 this value pxel based. '1' to min image size 
 
+* [optional] **--xreversed**    Draw x axis from right to left. Set to True or False (default False)
+
+* [optional] **--yreversed**    Draw y axis from bottom to top. Set to True or False (default False)
+
+#### Note:
+The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
+
 # Update bot with last changes
 ### Clear local changes (if you changes source code) 
 * git reset --hard

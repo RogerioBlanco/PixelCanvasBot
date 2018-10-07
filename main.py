@@ -42,6 +42,10 @@ def parse_args():
                         help=I18n.get('--QR_text', 'true'))
     parser.add_argument('--QR_scale', required=False, type=int, default=3, dest='QR_scale',
                         help=I18n.get('--QR_scale', 'true'))
+    parser.add_argument('--xreversed', required=False, default=False, dest='xreversed',
+                        help=I18n.get('--xreversed', 'true'))
+    parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
+                        help=I18n.get('--yreversed', 'true'))
 
     return parser.parse_args()
 
@@ -75,7 +79,7 @@ def main():
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
     bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
-              args.draw_strategy)
+              args.draw_strategy, args.xreversed, args.yreversed)
 
     bot.init()
 
