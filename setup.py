@@ -4,7 +4,7 @@ import os
 
 try:
     import pip
-except ImportError, e:
+except ImportError as e:
     print "installing pip"
     os.system("get-pip.py")
     import pip
@@ -14,7 +14,7 @@ pkgs = ['websocket-client', 'Pillow', 'requests', 'pyqrcode', 'pypng', 'six']
 for package in pkgs:
     try:
         import package
-    except ImportError, e:
+    except ImportError as e:
         pip.main(['install', package])
 
 print "OK"
