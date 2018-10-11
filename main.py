@@ -88,7 +88,7 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(exception.message)
-            if raw_input(I18n.get('token_resolved')) == 'y':
+            if raw_input(I18n.get('token_resolved')).strip() == 'y':
                 run()
 
     run()
