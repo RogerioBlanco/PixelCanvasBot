@@ -4,12 +4,12 @@ This is a functional bot for pixelcanvas.io.
 We will not provide you with a faster drawing.
 It does not allow you to easily draw your image. You need to spend some effort.
 This bot can draw images that you can't normally draw on your place.
- 
+
 ### What you can do with this?
 Well, you can draw some image and try replicate in pixelcanvas.io. You can combine with your friends or clan, whatever for combine forces to draw more quickly or defend your 'territory'.
 
 ### I can use any image and this bot will draw for me?
-You can use any image. 
+You can use any image.
 Converted your image colors to nearest PixelCanvas.io color for every pixel.
 Conversion result images if not exist in ./img/.cache folder created.
 You can interfere with this file or you can preview it to be drawn.
@@ -17,9 +17,8 @@ You can interfere with this file or you can preview it to be drawn.
 # Installation
 
 ## get python
-install python for yours operation systems in here https://www.python.org/downloads/release/python-2713/
-Recomments 'Python 2.7' 32bit versions,
-Important Python 3 not supported (Help wanted a few critical error) 
+Install python for yours operation systems in here https://www.python.org/downloads/
+All Python version from 2.7 supported
 
 ## Download bot
 
@@ -39,8 +38,8 @@ enter this command
 ### Optional downlad from release
 https://github.com/RogerioBlanco/PixelCanvasBot/archive/v1.0.zip
 
-## Setup bot 
-go bot directory
+## Setup bot
+Navigate to the Directory with the Bot
 
 * cd PixelCanvasBot
 * python ./setup.py
@@ -63,7 +62,7 @@ go bot directory
 
 * python ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
 
-## What is each parameter? 
+## What is each parameter?
     Need to help?
     Try it 'python ./main.py --help' maybe more usefull.
 * [required] **-i** or **--image**          it is the image you want to draw.
@@ -78,9 +77,9 @@ go bot directory
 
 * [optional] **--colors_not_overwrite**     Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15
 
-* [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list : 
+* [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list :
 
-    * *linear* :    line by line paint, 
+    * *linear* :    line by line paint,
 
     * *qf* :        Quickfill line by line. Will draw a 3x3 square in this order:
 
@@ -88,20 +87,20 @@ go bot directory
             | 7 | 3 | 8 |
             | 4 | 9 | 5 |
 
-    * *randomize* : pixel paint random coordinates, 
-    
+    * *randomize* : pixel paint random coordinates,
+
     * *status* :    not painted only list paint status --support colors ignored parameters, don't suppurt sketch mode--
-    
+
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
-    
+
     * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates evry time. Ignore start point and ignore image. this strategy return wait time in any coordinates with pixelcanvas.io
-    
+
     * *tlc* :       Print start fill Top Left Corner -randomize tracking select all pixel-
-        
+
     * *trc* :       Print start fill Top Right Corner -randomize tracking select all pixel-
-        
+
     * *blc* :       Print start fill Bottom Left Corner -randomize tracking select all pixel-
-        
+
     * *brc* :       Print start fill Bottom Right Corner -randomize tracking select all pixel-
 
     * *cnb* :       Print start fill Centre North Boundary -randomize tracking select all pixel-
@@ -116,12 +115,12 @@ go bot directory
 #### Note:
 The rcm-domain based strategyes are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
-Good and half randomize drawing but maybe a big image bad performance problems.  
+Good and half randomize drawing but maybe a big image bad performance problems.
 
 #### Detect mode maybe alternative using. RANDOM COLOR BOMP, need 2 parameters
 For example this result for *--draw_strategy detect --detect_area_min_range 4800 --detect_area_max_range 4825* parameters.
-visit at http://pixelcanvas.io/@4800,4800    
-    
+visit at http://pixelcanvas.io/@4800,4800
+
 * [optional] **--mode_defensive**           is the mode who put the program mode deamon. Default: True
 
 * [optional] **--proxy_url**                it is you proxy. Ex: proxy.yourcompany.com:8080
@@ -146,7 +145,7 @@ see work result: https://github.com/RogerioBlanco/PixelCanvasBot/issues/45
 * [optional] **--QR_text**     Your url or some text value Generate PNG image this bots ./img/QRcode.png images And drawing new generatied image to other parameters.
 Important this value changing image file and ignoring *-i* parameters value For example '-i j:\\asfdas --QR_text http://github.com' Working with QRcode image. 
 
-* [optional] **--QR_scale**    QRcode image size Default 3 this value pxel based. '1' to min image size 
+* [optional] **--QR_scale**    QRcode image size Default 3 this value pxel based. '1' to min image size
 
 * [optional] **--xreversed**    Draw x axis from right to left. Set to True or False (default False)
 
@@ -156,9 +155,9 @@ Important this value changing image file and ignoring *-i* parameters value For 
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
 
 # Update bot with last changes
-### Clear local changes (if you changes source code) 
+### Clear local changes (if you changes source code)
 * git reset --hard
 ### Update from server server
 * git pull -ff
 # External: thanks for reference
-https://github.com/possatti/pixelbot/blob/master/README.md 
+https://github.com/possatti/pixelbot/blob/master/README.md
