@@ -5,11 +5,11 @@ import os
 try:
     import pip
 except ImportError as e:
-    print "installing pip"
+    print("installing pip")
     os.system("get-pip.py")
     import pip
 
-print "Checking required packages"
+print("Checking required packages")
 pkgs = ['websocket-client', 'Pillow', 'requests', 'pyqrcode', 'pypng', 'six']
 
 try:
@@ -19,7 +19,7 @@ try:
         except ImportError as e:
                 pip.main(['install', package])
 
-    print "OK"
+    print("OK")
 except AttributeError as e:
     print("It seems you pip version is over 10.0, please install the required packages manually, "
           "by executing following command:\n"
