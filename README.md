@@ -47,7 +47,7 @@ Navigate to the Directory with the Bot
 # Using
 
 ## Geting yours fingerprint Chrome or chromium
-* go http://pixelcanvas.io/@0,0
+* go http://pixelcanvas.io
 * press **F12**
 * open **network** tab
 * in **filter** input paste '**pixel**'
@@ -61,6 +61,8 @@ Navigate to the Directory with the Bot
 ## Easy to use, only required parameters:
 
 * python ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
+
+replace '$FINGERPRINT$' values to your fingerprint (has include $ charecters)
 
 ## What is each parameter?
     Need to help?
@@ -81,11 +83,13 @@ Navigate to the Directory with the Bot
 
     * *linear* :    line by line paint,
 
-    * *qf* :        Quickfill line by line. Will draw a 3x3 square in this order:
+    * *qf* :        Quickfill line by line. Will draw a 5x5 square in this order:
 
-            | 1 | 6 | 2 |
-            | 7 | 3 | 8 |
-            | 4 | 9 | 5 |
+            | 01 | 14 | 02 | 15 | 03 |
+            | 16 | 04 | 17 | 05 | 18 |
+            | 06 | 19 | 07 | 20 | 08 |
+            | 21 | 09 | 22 | 10 | 23 |
+            | 11 | 24 | 12 | 25 | 13 |
 
     * *randomize* : pixel paint random coordinates,
 
@@ -93,7 +97,7 @@ Navigate to the Directory with the Bot
 
     * *sketch* :    Don't fill image drawing image only bordes. see more information https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
 
-    * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates evry time. Ignore start point and ignore image. this strategy return wait time in any coordinates with pixelcanvas.io
+    * *detect* :    Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]
 
     * *tlc* :       Print start fill Top Left Corner -randomize tracking select all pixel-
 
@@ -157,7 +161,7 @@ The reverse parameters only work on the linear draw strategies (linear and quick
 # Update bot with last changes
 ### Clear local changes (if you changes source code)
 * git reset --hard
-### Update from server server
+### Update lastest changes from server
 * git pull -ff
 # External: thanks for reference
 https://github.com/possatti/pixelbot/blob/master/README.md
