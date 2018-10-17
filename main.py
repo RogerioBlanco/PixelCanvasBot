@@ -87,9 +87,13 @@ def main():
         try:
             bot.run()
         except NeedUserInteraction as exception:
-            alert(exception.message)
-            if raw_input(I18n.get('token_resolved')) == 'y':
-                run()
+            alert(str(exception))
+            try:
+                if raw_input(I18n.get('token_resolved')).strip() == 'y':
+                    run()
+            except NameError as e:
+                if input(I18n.get('token_resolved')).strip() == 'y':
+                    run()
 
     run()
 
