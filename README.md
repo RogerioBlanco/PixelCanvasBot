@@ -35,8 +35,8 @@ enter this command
 
 * git clone https://github.com/RogerioBlanco/PixelCanvasBot.git
 
-### Optional downlad from release
-https://github.com/RogerioBlanco/PixelCanvasBot/archive/v1.0.zip
+### Optional downlad lastest zip archive
+https://github.com/RogerioBlanco/PixelCanvasBot/archive/master.zip
 
 ## Setup bot
 Navigate to the Directory with the Bot
