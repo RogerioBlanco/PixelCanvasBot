@@ -58,12 +58,12 @@ Navigate to the Directory with the Bot
 * open **headers** tab
 * your fingerprint is under **Request Playload**
 
+![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
+
 ## Adding your IP
 
 * Get your [public IP](http://whatismyip.com)
 * In `src/pixelcanvasio.py`, replace `YOUR_IP` with your IP
-
-![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
 
 ## Easy to use, only required parameters:
 
