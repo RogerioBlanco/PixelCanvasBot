@@ -11,10 +11,10 @@ class CalcAxis:
         return (middle_x - (middle_x % 64)) // 64, (middle_y - (middle_y % 64)) // 64
 
     @staticmethod
-    def calc_max_chunks(start_x, width, start_y, height):
+    def calc_max_chunks(width, height):
         chunks_x = width / 960.
         chunks_y = height / 960.
-        max_chunks = int(math.ceil(radius_x if radius_x >= radius_y else radius_y))
+        max_chunks = int(math.ceil(chunks_x if chunks_x >= chunks_y else chunks_y))
         return (max_chunks if max_chunks % 2 else max_chunks + 1)
 
     @staticmethod

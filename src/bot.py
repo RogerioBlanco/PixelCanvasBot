@@ -82,7 +82,7 @@ class Bot(object):
         # Coordinates of the middle pixel of the template
         middle_x, middle_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
         # Number of chunks we need to load in any direction
-        max_chunks = CalcAxis.calc_max_chunks(self.start_x, self.image.width, self.start_y, self.image.height)
+        max_chunks = CalcAxis.calc_max_chunks(self.image.width, self.image.height)
         # Number of blocks spanned by the chunks we need
         num_blocks = CalcAxis.calc_num_blocks(max_chunks)
         # Block coordinates of the center of the template
