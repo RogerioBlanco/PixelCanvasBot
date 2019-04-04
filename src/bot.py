@@ -85,12 +85,13 @@ class Bot(object):
         max_chunks = CalcAxis.calc_max_chunks(self.image.width, self.image.height)
         # Number of blocks spanned by the chunks we need
         num_blocks = CalcAxis.calc_num_blocks(max_chunks)
-        # Block coordinates of the center of the template
+        # Block coordinates of the center of the template, offset to the block grid
         center_block_x, center_block_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
         canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
         for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
             for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
+                print("cx, cy = %s, %s" % (center_x, center_y))
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
                 for block_y in range(center_y - 7, center_y + 8):
@@ -99,6 +100,7 @@ class Bot(object):
                             actual_y = (block_y * 64) + y
                             for x in range(0, 64, 2):
                                 actual_x = (block_x * 64) + x
+
                                 canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
                                 canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
                                 index += 1
