@@ -32,7 +32,7 @@ The bot will be updated when we notice. It may be a bit late, and updates are no
 Open Terminal (git bash, cmd vs.)
 enter this command
 
-* git clone https://github.com/RogerioBlanco/PixelCanvasBot.git
+* git clone https://github.com/traa-pixelcanvas/PixelCanvasBot.git
 
 ### Or, downlad lastest zip archive [not recommended]
 https://github.com/RogerioBlanco/PixelCanvasBot/archive/master.zip
