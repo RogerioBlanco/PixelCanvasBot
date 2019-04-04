@@ -1,7 +1,7 @@
 # PixelCanvasBot
 
-This is a functional bot for pixelcanvas.io.
-It does not draw faster than placing pixels manually, but it can autmate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
+This is a fork of Rogerio's bot for pixelcanvas.io, it has blackjack *and* hookers!
+It does not draw faster than placing pixels manually, but it can automate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
 
 ### What you can do with this?
 Well, you can draw some image and try replicate it in pixelcanvas.io. You can unite with your friends or clan to coordinate your pixel placement better, or defend your 'territory'.
@@ -16,6 +16,8 @@ Converted images will be placed the ./img/.cache folder if they don't already ex
 ## get python
 Download and install python for your operating system from here https://www.python.org/downloads/
 All Python versions from 2.7+ are supported.
+
+If you are on windows, ensure you add python to PATH when installing. Python sometimes calls this setting "Add python to environment variables". If it is already installed and not in PATH, follow the instructions on this website to add it: https://geek-university.com/python/add-python-to-the-windows-path/
 
 ## Download bot
 
@@ -41,14 +43,16 @@ Navigate to the Directory with the Bot
 * cd path-to-directory/PixelCanvasBot
 * python ./setup.py
 
+If you are on windows, you may need to use backslashes (\) instead of forward slashes (/) in your path.
+
 # Usage
 
 ## Getting your fingerprint with Chrome
-* go http://pixelcanvas.io
+* go to http://pixelcanvas.io
 * press **F12** to open DevTools
 * open **network** tab
-* in **filter** input paste '**pixel**'
-* place a pixel at any coordinates
+* in **filter** type '**pixel**'
+* place a pixel at any coordinates on the canvas
 * in the DevTools window click the request named *pixel*
 * open **headers** tab
 * scoll down to find your fingerprint under **Request Playload**
@@ -58,6 +62,12 @@ Navigate to the Directory with the Bot
 ## Basic example with only required parameters:
 
 * `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
+
+If the image is not in the same folder as the code, you will need to put it's path before it, ie: /user/path_to_image/image.png
+
+You should also delete the quotations around your fingerprint, so it looks like this: e4bca63b3e65a4c7f7aba06818783c47
+
+The x and y coordinates are where you want the very top left pixel of your template to sit on the canvas.
 
 ## Parameter descriptions
 Use `python ./main.py --help` for documentation in your terminal.
@@ -69,7 +79,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 * [required] **-y** or **--start_y**        is the topmost Y coordinate your template will be placed at. Ex: -4000
 
-* [optional] **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent.Use color index 16 if all pallette colors are used.
+* [optional] **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent. By default color index 16 is ignored.
 
 * [optional] **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
 
