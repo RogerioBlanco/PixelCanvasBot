@@ -41,15 +41,6 @@ Navigate to the Directory with the Bot
 * cd path-to-directory/PixelCanvasBot
 * python ./setup.py
 
-## Prepare your template
-Due to changes to pixelcanvas.io, templates must be padded to make this bot compatible. This is (probably) a temporary solution.
-
-* Prepare your template normally
-* Decide on the placement coordinates of its top left pixel
-* In the bot directory, run `python coordinator.py <x> <y> <width> <height>`
-* Using the output, edit your template so that its padded accordingly
-* Make sure that the padded area is masked in an appropriate color with use of the `--colors_ignored` flag
-
 # Usage
 
 ## Getting your fingerprint with Chrome
