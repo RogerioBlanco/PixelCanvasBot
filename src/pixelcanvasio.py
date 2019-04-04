@@ -21,7 +21,6 @@ class PixelCanvasIO(object):
         'accept': 'application/json',
         'content-type': 'application/json',
         'Host': 'pixelcanvas.io',
-        'x-forwarded-for': '10.0.0.1,103.21.244.0,YOUR_IP',
         'Origin': URL,
         'Referer': URL
     }
