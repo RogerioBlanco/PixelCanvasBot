@@ -4,7 +4,7 @@ This is a functional bot for pixelcanvas.io.
 It does not draw faster than placing pixels manually, but it can autmate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
 
 ### What you can do with this?
-Well, you can draw some image and try replicate it in pixelcanvas.io. You can combine with your friends or clan, whatever for combine forces to draw more quickly or defend your 'territory'.
+Well, you can draw some image and try replicate it in pixelcanvas.io. You can unite with your friends or clan to coordinate your pixel placement better, or defend your 'territory'.
 
 ### I can use any image and this bot will draw for me?
 You can use any image.
