@@ -27,7 +27,8 @@ class EnumColor:
         Color(12, 'pacific blue', (0, 131, 199)),
         Color(13, 'blue', (0, 0, 234)),
         Color(14, 'violet', (207, 110, 228)),
-        Color(15, 'purple', (130, 0, 128))
+        Color(15, 'purple', (130, 0, 128)),
+        Color(16, 'noncolor', (91, 9, 9))
     ]
 
     @staticmethod

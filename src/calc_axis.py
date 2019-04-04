@@ -8,9 +8,7 @@ class CalcAxis:
 
     @staticmethod
     def calc_centers_axis(middle_x, middle_y):
-        center_x = (middle_x - (middle_x % 64)) // 64
-        center_y = (middle_y - (middle_y % 64)) // 64
-        return center_x - (center_x % 15), center_y - (center_y % 15)
+        return (middle_x - (middle_x % 64)) // 64, (middle_y - (middle_y % 64)) // 64
 
     @staticmethod
     def calc_radius(start_x, width, start_y, height):

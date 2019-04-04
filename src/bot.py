@@ -51,7 +51,7 @@ class Bot(object):
         while not response['success']:
             print(I18n.get('try_again'))
             self.wait_time(response)
-            response = self.pixelio.send_pixel(x, y, color)
+            self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
         print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
@@ -85,8 +85,8 @@ class Bot(object):
         axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
         canvas = Matrix(iteration, axis_x, axis_y)
 
-        for center_x in range(axis_x, axis_x + iteration, 15):
-            for center_y in range(axis_y, axis_y + iteration, 15):
+        for center_x in range(axis_x - iteration, 1 + axis_x + iteration, 15):
+            for center_y in range(axis_y - iteration, 1 + axis_y + iteration, 15):
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
                 for block_y in range(center_y - 7, center_y + 8):
@@ -98,5 +98,4 @@ class Bot(object):
                                 canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
                                 canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
                                 index += 1
-
         return canvas
