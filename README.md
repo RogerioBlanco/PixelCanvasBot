@@ -35,7 +35,7 @@ enter this command
 * git clone https://github.com/traa-pixelcanvas/PixelCanvasBot.git
 
 ### Or, downlad lastest zip archive [not recommended]
-https://github.com/RogerioBlanco/PixelCanvasBot/archive/master.zip
+https://github.com/traa-pixelcanvas/PixelCanvasBot/archive/master.zip
 
 ## Setup bot
 Navigate to the Directory with the Bot
