@@ -11,16 +11,16 @@ class CalcAxis:
         return (middle_x - (middle_x % 64)) // 64, (middle_y - (middle_y % 64)) // 64
 
     @staticmethod
-    def calc_radius(start_x, width, start_y, height):
-        radius_x = ((start_x + width) - start_x) / 960.
-        radius_y = ((start_y + height) - start_y) / 960.
-        radius = int(math.ceil(radius_x if radius_x >= radius_y else radius_y))
-        return (radius if radius % 2 else radius + 1)
+    def calc_max_chunks(start_x, width, start_y, height):
+        chunks_x = width / 960.
+        chunks_y = height / 960.
+        max_chunks = int(math.ceil(radius_x if radius_x >= radius_y else radius_y))
+        return (max_chunks if max_chunks % 2 else max_chunks + 1)
 
     @staticmethod
     def calc_middle_axis(start_x, width, start_y, height):
-        return ((start_x + width) + start_x) // 2, ((start_y + height) + start_y) // 2
+        return (2 * start_x + width) // 2, (2 * start_y + height) // 2
 
     @staticmethod
-    def calc_iteration(radius):
-        return int(math.ceil(radius / 2) * 15)
+    def calc_iteration(max_chunks):
+        return int(math.ceil(max_chunks / 2) * 15)

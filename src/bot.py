@@ -80,8 +80,8 @@ class Bot(object):
 
     def setup_canvas(self):
         point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
-        radius = CalcAxis.calc_radius(self.start_x, self.image.width, self.start_y, self.image.height)
-        iteration = CalcAxis.calc_iteration(radius)
+        max_chunks = CalcAxis.calc_max_chunks(self.start_x, self.image.width, self.start_y, self.image.height)
+        iteration = CalcAxis.calc_iteration(max_chunks)
         axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
         canvas = Matrix(iteration, axis_x, axis_y)
 
