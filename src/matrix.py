@@ -4,14 +4,14 @@ from six.moves import range
 
 class Matrix:
 
-    def __init__(self, iterator, start_x, start_y):
-        self.matrix = self.setup_matrix(iterator, start_x, start_y)
+    def __init__(self, num_blocks, start_x, start_y):
+        self.matrix = self.setup_matrix(num_blocks, start_x, start_y)
 
-    def setup_matrix(self, iterator, start_x, start_y):
+    def setup_matrix(self, num_blocks, start_x, start_y):
         matrix = {}
-        for x in range((start_x - (7 + iterator)) * 64, (iterator + start_x + 8) * 64):
+        for x in range((start_x - (7 + num_blocks)) * 64, (num_blocks + start_x + 8) * 64):
             matrix[x] = {}
-            for y in range((start_y - (7 + iterator)) * 64, (iterator + start_y + 8) * 64):
+            for y in range((start_y - (7 + num_blocks)) * 64, (num_blocks + start_y + 8) * 64):
                 matrix[x][y] = None
         return matrix
 

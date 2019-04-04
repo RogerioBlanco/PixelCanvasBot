@@ -79,14 +79,25 @@ class Bot(object):
         return 99999999
 
     def setup_canvas(self):
-        point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
-        radius = CalcAxis.calc_radius(self.start_x, self.image.width, self.start_y, self.image.height)
-        iteration = CalcAxis.calc_iteration(radius)
-        axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
-        canvas = Matrix(iteration, axis_x, axis_y)
+        # Coordinates of the middle pixel of the template
+        middle_x, middle_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
+        # Number of chunks we need to load in any direction
+        max_chunks = CalcAxis.calc_max_chunks(self.image.width, self.image.height)
+        # Number of blocks spanned by the chunks we need
+        num_blocks = CalcAxis.calc_num_blocks(max_chunks)
+        # Block coordinates of the center of the template, offset to the block grid
+        center_block_x, center_block_y, offset_x, offset_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
+        if offset_x is not 0:
+            end = (center_block_x + offset_x + num_blocks) * 64
+            print("This bot may be blind for all pixels east of %s" % end)
+        if offset_y is not 0:
+            end = (center_block_y + offset_y + num_blocks) * 64
+            print("This bot may be blind for all pixels south of %s" % end)
+        canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
-        for center_x in range(axis_x - iteration, 1 + axis_x + iteration, 15):
-            for center_y in range(axis_y - iteration, 1 + axis_y + iteration, 15):
+        for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
+            for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
+                print("Loading chunk (%s, %s)..." % (center_x, center_y))
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
                 for block_y in range(center_y - 7, center_y + 8):
@@ -95,6 +106,7 @@ class Bot(object):
                             actual_y = (block_y * 64) + y
                             for x in range(0, 64, 2):
                                 actual_x = (block_x * 64) + x
+
                                 canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
                                 canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
                                 index += 1
