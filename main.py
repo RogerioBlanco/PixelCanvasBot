@@ -68,6 +68,8 @@ def alert(message=''):
 
 def main():
     args = parse_args()
+    if colors_ignored.count(16) == 0:
+        colors_ignored.append(16)
 
     proxy = setup_proxy(args.proxy_url, args.proxy_auth)
 
