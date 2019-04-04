@@ -79,14 +79,18 @@ class Bot(object):
         return 99999999
 
     def setup_canvas(self):
-        point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
+        # Coordinates of the middle pixel of the template
+        middle_x, middle_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
+        # Number of chunks we need to load in any direction
         max_chunks = CalcAxis.calc_max_chunks(self.start_x, self.image.width, self.start_y, self.image.height)
+        # Number of blocks spanned by the chunks we need
         num_blocks = CalcAxis.calc_num_blocks(max_chunks)
-        axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
-        canvas = Matrix(num_blocks, axis_x, axis_y)
+        # Block coordinates of the center of the template
+        center_block_x, center_block_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
+        canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
-        for center_x in range(axis_x - num_blocks, 1 + axis_x + num_blocks, 15):
-            for center_y in range(axis_y - num_blocks, 1 + axis_y + num_blocks, 15):
+        for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
+            for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
                 for block_y in range(center_y - 7, center_y + 8):
