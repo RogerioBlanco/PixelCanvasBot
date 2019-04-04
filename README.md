@@ -82,6 +82,8 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 * [optional] **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
 
+![image](https://i.imgur.com/8F6CRRD.png)
+
 * [optional] **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *random* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
