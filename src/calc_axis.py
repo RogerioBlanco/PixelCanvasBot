@@ -12,7 +12,7 @@ class CalcAxis:
         center_y = (middle_y - (middle_y % 64)) // 64
         offset_x = center_x % 15
         offset_y = center_y % 15
-        return center_x - offset_x, center_y - offset_y
+        return center_x - offset_x, center_y - offset_y, offset_x, offset_y
 
     @staticmethod
     def calc_max_chunks(width, height):

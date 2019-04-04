@@ -86,12 +86,18 @@ class Bot(object):
         # Number of blocks spanned by the chunks we need
         num_blocks = CalcAxis.calc_num_blocks(max_chunks)
         # Block coordinates of the center of the template, offset to the block grid
-        center_block_x, center_block_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
+        center_block_x, center_block_y, offset_x, offset_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
+        if offset_x is not 0:
+            end = (center_block_x + offset_x + num_blocks) * 64
+            print("This bot may be blind for all pixels east of %s" % end)
+        if offset_y is not 0:
+            end = (center_block_y + offset_y + num_blocks) * 64
+            print("This bot may be blind for all pixels south of %s" % end)
         canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
         for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
             for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
-                print("cx, cy = %s, %s" % (center_x, center_y))
+                print("Loading chunk (%s, %s)..." % (center_x, center_y))
                 raw = self.pixelio.download_canvas(center_x, center_y)
                 index = 0
                 for block_y in range(center_y - 7, center_y + 8):
