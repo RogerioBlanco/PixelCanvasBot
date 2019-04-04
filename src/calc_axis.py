@@ -22,5 +22,5 @@ class CalcAxis:
         return (2 * start_x + width) // 2, (2 * start_y + height) // 2
 
     @staticmethod
-    def calc_iteration(max_chunks):
+    def calc_num_blocks(max_chunks):
         return int(math.ceil(max_chunks / 2) * 15)
