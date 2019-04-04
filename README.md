@@ -52,7 +52,7 @@ Due to changes to pixelcanvas.io, templates must be padded to make this bot comp
 
 # Usage
 
-## Geting your fingerprint with Chrome
+## Getting your fingerprint with Chrome
 * go http://pixelcanvas.io
 * press **F12** to open DevTools
 * open **network** tab
@@ -66,13 +66,13 @@ Due to changes to pixelcanvas.io, templates must be padded to make this bot comp
 
 ## Basic example with only required parameters:
 
-* python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>
+* `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
 
 ## Parameter descriptions
 Use `python ./main.py --help` for documentation in your terminal.
 * [required] **-i** or **--image**          is the image you want to draw.
 
-* [required] **-f** or **--fingerprint**    is your unique code. See 'Geting your fingerprint with Chrome' above
+* [required] **-f** or **--fingerprint**    is your unique code. See 'Getting your fingerprint with Chrome' above
 
 * [required] **-x** or **--start_x**        is the leftmost X coordinate your template will be placed at. Ex: 156
 
@@ -122,6 +122,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 #### Note:
 The rcm-domain based strategies are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
+
 This strategy will walk the next pixel to be painted randomly from the chosen origin. There may be performance issues with large images.
 
 * [optional] **--mode_defensive**           is a flag to control what the bot will do after finishing a stragtegy. For example with `--draw_strategy linear --mode_defensive False` the bot will not begin again at the start when it finishes iterating through the template onece. Usage: `--mode_defensive {True|False}` Default: True
