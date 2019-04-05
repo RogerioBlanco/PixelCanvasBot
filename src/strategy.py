@@ -163,16 +163,23 @@ class Status(Strategy):
         # TODO account for ignored colors
         px_ok = 0
         px_not_yet = 0
+        ignored = 0
         for y in range(self.bot.image.height):
             for x in range(self.bot.image.width):
                 template_color = EnumColor.rgb(self.bot.image.pix[x, y])
                 canvas_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                px_ok = px_ok + 1
+                px_ok += 1
                 # Check if pixel is correct and not ignored
                 if canvas_color != template_color and not template_color in self.colors_ignored and canvas_color not in self.colors_not_overwrite:
-                    px_not_yet = px_not_yet + 1
-                    px_ok = px_ok - 1
-        print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
+                    px_not_yet += 1
+                    px_ok -= 1
+
+                # Account for ignored pixels
+                if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite:
+                    ignored += 1
+
+        px_active_total = px_total - ignored
+        print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_active_total), str(px_ok), str(px_not_yet)))
         self.bot.wait_time({'waitSeconds': 60})
 
 
