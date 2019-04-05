@@ -48,7 +48,7 @@ class EnumColor:
         # if that color is not in standard colors list
         diff_min = [(255, 255, 255), 1038366]  # sqrt(255*255 + 255*255 + 255*255) = 441.67295593 --> Default white
 
-        for x in range(0,15):
+        for x in range(0,16):
             color = EnumColor.ENUM[x]
             # formula that sqrt( (x1 - x2)2 + (y1 - y2)2 + (z1 - z2)2 )
 
