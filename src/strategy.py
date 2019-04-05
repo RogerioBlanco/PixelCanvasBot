@@ -160,14 +160,16 @@ class Status(Strategy):
 
     def apply(self):
         px_total = self.bot.image.height * self.bot.image.width
+        # TODO account for ignored colors
         px_ok = 0
         px_not_yet = 0
         for y in range(self.bot.image.height):
             for x in range(self.bot.image.width):
-                color = EnumColor.rgb(self.bot.image.pix[x, y])
-                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                template_color = EnumColor.rgb(self.bot.image.pix[x, y])
+                canvas_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 px_ok = px_ok + 1
-                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                # Check if pixel is correct and not ignored
+                if canvas_color != template_color and not template_color in self.colors_ignored and canvas_color not in self.colors_not_overwrite:
                     px_not_yet = px_not_yet + 1
                     px_ok = px_ok - 1
         print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_total), str(px_ok), str(px_not_yet)))
