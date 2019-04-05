@@ -1,4 +1,4 @@
-# PixelCanvasBot
+# TraanvasBot
 
 This is a fork of Rogerio's bot for pixelcanvas.io, it has blackjack *and* hookers!
 It does not draw faster than placing pixels manually, but it can automate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
@@ -32,15 +32,15 @@ The bot will be updated when we notice. It may be a bit late, and updates are no
 Open Terminal (git bash, cmd vs.)
 enter this command
 
-* git clone https://github.com/traa-pixelcanvas/PixelCanvasBot.git
+* git clone https://github.com/traa-pixelcanvas/TraanvasBot.git
 
 ### Or, downlad lastest zip archive [not recommended]
-https://github.com/traa-pixelcanvas/PixelCanvasBot/archive/master.zip
+https://github.com/traa-pixelcanvas/TraanvasBot/archive/master.zip
 
 ## Setup bot
 Navigate to the Directory with the Bot
 
-* cd path-to-directory/PixelCanvasBot
+* cd path-to-directory/TraanvasBot
 * python ./setup.py
 
 If you are on windows, you may need to use backslashes (\) instead of forward slashes (/) in your path.
