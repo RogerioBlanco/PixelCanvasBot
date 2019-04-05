@@ -58,8 +58,8 @@ class Linear(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
         self.colors_not_overwrite = colors_not_overwrite
-        self.xrange = reversed(range(self.bot.image.width)) if xreversed else range(self.bot.image.width)
-        self.yrange = reversed(range(self.bot.image.height)) if yreversed else range(self.bot.image.height)
+        self.xrange = list(reversed(range(self.bot.image.width))) if xreversed else range(self.bot.image.width)
+        self.yrange = list(reversed(range(self.bot.image.height))) if yreversed else range(self.bot.image.height)
 
     def apply(self):
         for y in self.yrange:
@@ -75,8 +75,8 @@ class QuickFill(Strategy):
         self.bot = bot
         self.colors_ignored = colors_ignored
         self.colors_not_overwrite = colors_not_overwrite
-        self.xrange = reversed(range(self.bot.image.width)) if xreversed else range(self.bot.image.width)
-        self.yrange = reversed(range(self.bot.image.height)) if yreversed else range(self.bot.image.height)
+        self.xrange = list(reversed(range(self.bot.image.width))) if xreversed else range(self.bot.image.width)
+        self.yrange = list(reversed(range(self.bot.image.height))) if yreversed else range(self.bot.image.height)
         self.b = True
 
     def apply(self):
