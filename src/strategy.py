@@ -160,7 +160,6 @@ class Status(Strategy):
 
     def apply(self):
         px_total = self.bot.image.height * self.bot.image.width
-        # TODO account for ignored colors
         correct_px = 0
         ignored = 0
         for y in range(self.bot.image.height):
@@ -172,7 +171,7 @@ class Status(Strategy):
                 if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite:
                     ignored += 1
 
-                # Count as good if not ignored, and if design matches canvas
+                # Count as correct if not ignored, and if design matches canvas
                 if (template_color not in self.colors_ignored and
                         canvas_color not in self.colors_not_overwrite and
                         canvas_color == template_color):
@@ -180,7 +179,9 @@ class Status(Strategy):
 
         px_active_total = px_total - ignored
         incorrect_px = px_active_total - correct_px
-        print(I18n.get('Total: %s painted: %s Not painted %s') % (str(px_active_total), str(correct_px), str(incorrect_px)))
+        progress = round(float(correct_px) / px_active_total * 100., 2)
+        
+        print(I18n.get('Total: %s painted: %s Not painted: %s Progress: %s%%') % (str(px_active_total), str(correct_px), str(incorrect_px), str(progress)))
         self.bot.wait_time({'waitSeconds': 60})
 
 

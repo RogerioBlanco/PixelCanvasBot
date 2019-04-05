@@ -19,7 +19,7 @@ class I18n(object):
             'try_again': 'Oh no, an error occurred. Trying again.',
             'You painted %s in the %s,%s': 'You painted %s at %s,%s',
             'Waiting %s seconds': 'Waiting %s seconds',
-            'Total: %s painted: %s Not painted %s': 'Total image pixel count: %s. Correct pixels: %s Incorrect pixels: %s',
+            'Total: %s painted: %s Not painted: %s Progress: %s%%': 'Total active pixel count: %s. Correct pixels: %s Incorrect pixels: %s Progress: %s%%',
             ' %s colours rounded %s (%s) ': '%s colors rounded %s (%s)',
             'Oh no, you are using a proxy': 'Oh no, you are using a proxy',
             'refresh_token': 'Oh no, a new token is required. Please open pixelcanvas.io and paint a pixel.',
