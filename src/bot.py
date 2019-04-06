@@ -67,7 +67,7 @@ class Bot(object):
 
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds'] + (random.randint(2, 4) / 3.33)
-            print(I18n.get('Waiting %s seconds') % str(wait))
+            print(I18n.get('Waiting %s seconds') % str(round(wait, 2)))
 
             c = i = 0
             while c < 50:
