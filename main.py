@@ -18,11 +18,11 @@ def parse_args():
                         help=I18n.get('--start_x', 'true'))
     parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
                         help=I18n.get('--start_y', 'true'))
-    parser.add_argument('--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
+    parser.add_argument('-ci', '--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
                         help=I18n.get('--colors_ignored', 'true'))
-    parser.add_argument('--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
+    parser.add_argument('-cno', '--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
                         help=I18n.get('--colors_not_overwrite', 'true'))
-    parser.add_argument('--draw_strategy', required=False, default='randomize', dest='draw_strategy',
+    parser.add_argument('-ds', '--draw_strategy', required=False, default='randomize', dest='draw_strategy',
                         help=I18n.get('--draw_strategy', 'true'))
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
                         help=I18n.get('--mode_defensive', 'true'))
