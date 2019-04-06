@@ -94,11 +94,15 @@ class PixelCanvasIO(object):
                 try:
                     canvas.matrix[x][y] = color
                     # Check that message is relevant, and not being modified by self.
-                    if ((x in range(axis['start_x'], axis['end_x'] + 1) and 
-                            y in range(axis['start_y'], axis['end_y'])) and 
+                    if ((x in range(axis['start_x'], axis['end_x'] + 1) and
+                            y in range(axis['start_y'], axis['end_y'])) and
                             (x, y, color.index) != self.bot.pixel_intent):
-                        if color == EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y]):
+                        template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
+                        if color == template_color:
                             print(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
+                                str(x), str(y), I18n.get(color.name, 'true')))
+                        elif template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
+                            print(I18n.get('Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
                         else:
                             print(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
@@ -106,7 +110,7 @@ class PixelCanvasIO(object):
                     elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
                         self.bot.pixel_intent = ()
-                        
+
                 except Exception as e:
                     pass
 

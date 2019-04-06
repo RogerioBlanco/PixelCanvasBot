@@ -26,6 +26,7 @@ class I18n(object):
             'token_resolved': 'Have you painted a pixel in pixelcanvas.io? y/n:',
             'Rate_limit_exceeded': 'Oh no, you tried hard. Rate limit exceeded',
             'Somebody updated %s,%s with %s color [ALLY]': 'Somebody updated %s,%s with %s [ALLY]',
+            'Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]': 'Somebody updated %s,%s with %s [OUTSIDE TEMPLATE]',
             'Somebody updated %s,%s with %s color [ENEMY]': 'Somebody updated %s,%s with %s [ENEMY]',
             '### closed ###': '### closed ###',
             'Websocket open': 'Websocket open',
@@ -94,7 +95,9 @@ class I18n(object):
             'refresh_token': 'Token degeri gecersiz oldu. Sorunu duzeltmek icin pixelcanvas.io sitesine girin ve 1 tane pixel birakarak dogrulayin.',
             'token_resolved': '"pixelcanvasa girip pixel koyup dogruladin mi y/n:',
             'Rate_limit_exceeded': 'Hata istek limiti asildi',
-            'Somebody updated %s,%s with %s color': 'Birisi %s,%s burayi %s renge boyadi',
+            'Somebody updated %s,%s with %s color [ALLY]': 'Birisi %s,%s burayi %s renge boyadi',
+            'Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]': 'Birisi %s,%s burayi %s renge boyadi',
+            'Somebody updated %s,%s with %s color [ENEMY]': 'Birisi %s,%s burayi %s renge boyadi',
             '### closed ###': '### Baglanti Kesildi ###',
             'Websocket open': 'Websockete baglanildi',
 

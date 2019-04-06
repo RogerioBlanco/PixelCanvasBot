@@ -21,7 +21,8 @@ class Bot(object):
         self.start_y = start_y
         self.notify = notify
         self.mode_defensive = mode_defensive
-        self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored],[EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
+        self.colors_ignored = [EnumColor.index(i) for i in colors_ignored]
+        self.strategy = FactoryStrategy.build(draw_strategy, self, self.colors_ignored, [EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
         self.pixelio = PixelCanvasIO(fingerprint, proxy, self, notify)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
