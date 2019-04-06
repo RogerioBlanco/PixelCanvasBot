@@ -93,8 +93,13 @@ class PixelCanvasIO(object):
                     if ((x in range(axis['start_x'], axis['end_x'] + 1) and 
                             y in range(axis['start_y'], axis['end_y'])) and 
                             (x, y, color) != self.bot.pixel_intent):
-                        print(I18n.get('Somebody updated %s,%s with %s color') % (
-                            str(x), str(y), I18n.get(color.name, 'true')))
+                        if color == EnumColor.rgb(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y]):
+                            print(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
+                                str(x), str(y), I18n.get(color.name, 'true')))
+                        else:
+                            print(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
+                                str(x), str(y), I18n.get(color.name, 'true')))
+                        
                 except Exception as e:
                     pass
 

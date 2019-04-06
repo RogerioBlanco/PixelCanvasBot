@@ -25,7 +25,8 @@ class I18n(object):
             'refresh_token': 'Oh no, a new token is required. Please open pixelcanvas.io and paint a pixel.',
             'token_resolved': 'Have you painted a pixel in pixelcanvas.io? y/n:',
             'Rate_limit_exceeded': 'Oh no, you tried hard. Rate limit exceeded',
-            'Somebody updated %s,%s with %s color': 'Somebody updated %s,%s with %s',
+            'Somebody updated %s,%s with %s color [ALLY]': 'Somebody updated %s,%s with %s [ALLY]',
+            'Somebody updated %s,%s with %s color [ENEMY]': 'Somebody updated %s,%s with %s [ENEMY]',
             '### closed ###': '### closed ###',
             'Websocket open': 'Websocket open',
 
