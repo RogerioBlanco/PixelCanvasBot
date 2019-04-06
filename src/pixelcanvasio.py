@@ -92,8 +92,7 @@ class PixelCanvasIO(object):
                     # Check that message is relevant, and not being modified by self.
                     if ((x in range(axis['start_x'], axis['end_x'] + 1) and 
                             y in range(axis['start_y'], axis['end_y'])) and 
-                            (x, y) != self.bot.pixel_intent):
-                        # print('pixel_intent = %s' % str(self.bot.pixel_intent))
+                            (x, y, color) != self.bot.pixel_intent):
                         print(I18n.get('Somebody updated %s,%s with %s color') % (
                             str(x), str(y), I18n.get(color.name, 'true')))
                 except Exception as e:

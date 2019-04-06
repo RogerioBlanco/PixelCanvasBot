@@ -48,7 +48,7 @@ class Bot(object):
             time.sleep(2)
 
     def paint(self, x, y, color):
-        self.pixel_intent = (x, y)
+        self.pixel_intent = (x, y, color)
         response = self.pixelio.send_pixel(x, y, color)
         while not response['success']:
             print(I18n.get('try_again'))
