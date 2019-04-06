@@ -1,3 +1,4 @@
+*.png
 /img/*
 !/img/.gitkeep
 !/img/.cache/
