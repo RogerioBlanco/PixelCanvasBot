@@ -26,9 +26,7 @@ class Randomize(Strategy):
         count = 0
         while not self.match(self.bot.canvas, self.bot.image):
             x, y, color = self.roll_dice(self.bot.canvas)
-            if self.bot.canvas.get_color(x,
-                                         y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(
-                x, y) not in self.colors_not_overwrite:
+            if self.bot.canvas.get_color(x, y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(x, y) not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(x, y, color)
             count += 1
 
@@ -37,8 +35,8 @@ class Randomize(Strategy):
         while all(v is None for v in [rnd_x, rnd_y, color]) or canvas.get_color(rnd_x, rnd_y) == color:
             rnd_x = self.random(self.bot.start_x, self.bot.start_x + self.bot.image.width - 1)
             rnd_y = self.random(self.bot.start_y, self.bot.start_y + self.bot.image.height - 1)
-            color = EnumColor.rgb(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y], True)
-        color = EnumColor.rgb(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y])
+            color = EnumColor.rgba(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y], True)
+        color = EnumColor.rgba(self.bot.image.pix[rnd_x - self.bot.start_x, rnd_y - self.bot.start_y])
         return rnd_x, rnd_y, color
 
     def random(self, start, end):
@@ -47,7 +45,7 @@ class Randomize(Strategy):
     def match(self, canvas, image):
         for x in range(0, image.width):
             for y in range(0, image.height):
-                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgb(
+                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != EnumColor.rgba(
                         self.bot.image.pix[x, y], True):
                     return False
         return True
@@ -64,9 +62,9 @@ class Linear(Strategy):
     def apply(self):
         for y in self.yrange:
             for x in self.xrange:
-                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                color = EnumColor.rgba(self.bot.image.pix[x, y], True)
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
 
 
@@ -82,9 +80,9 @@ class QuickFill(Strategy):
     def apply(self):
         for y in self.yrange:
             for x in self.xrange:
-                color = EnumColor.rgb(self.bot.image.pix[x, y], True)
+                color = EnumColor.rgba(self.bot.image.pix[x, y], True)
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     if (x % 2 == self.b):
                         self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
             self.b = not self.b
@@ -104,9 +102,9 @@ class Sketch(Strategy):
 
         for y in range(self.bot.image.height):
             for x in range(self.bot.image.width):
-                color = EnumColor.rgb(self.bot.image.pix[x, y])
+                color = EnumColor.rgba(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
             near_color = 0
@@ -117,9 +115,9 @@ class Sketch(Strategy):
 
         for y in range(self.bot.image.height):
             for x in reversed(range(self.bot.image.width)):
-                color = EnumColor.rgb(self.bot.image.pix[x, y])
+                color = EnumColor.rgba(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
             near_color = 0
@@ -130,9 +128,9 @@ class Sketch(Strategy):
 
         for x in range(self.bot.image.width):
             for y in range(self.bot.image.height):
-                color = EnumColor.rgb(self.bot.image.pix[x, y])
+                color = EnumColor.rgba(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
             near_color = 0
@@ -143,9 +141,9 @@ class Sketch(Strategy):
 
         for x in range(self.bot.image.width):
             for y in reversed(range(self.bot.image.height)):
-                color = EnumColor.rgb(self.bot.image.pix[x, y])
+                color = EnumColor.rgba(self.bot.image.pix[x, y])
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+                if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
             near_color = 0
@@ -164,23 +162,24 @@ class Status(Strategy):
         ignored = 0
         for y in range(self.bot.image.height):
             for x in range(self.bot.image.width):
-                template_color = EnumColor.rgb(self.bot.image.pix[x, y])
+                template_color = EnumColor.rgba(self.bot.image.pix[x, y])
                 canvas_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
 
                 # Account for ignored pixels
-                if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite:
+                if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite or template_color.rgba[3] < 128:
                     ignored += 1
 
                 # Count as correct if not ignored, and if design matches canvas
                 if (template_color not in self.colors_ignored and
                         canvas_color not in self.colors_not_overwrite and
+                        template_color.rgba[3] > 127 and
                         canvas_color == template_color):
                     correct_px += 1
 
         px_active_total = px_total - ignored
         incorrect_px = px_active_total - correct_px
         progress = round(float(correct_px) / px_active_total * 100., 2)
-        
+
         print(I18n.get('Total: %s painted: %s Not painted: %s Progress: %s%%') % (str(px_active_total), str(correct_px), str(incorrect_px), str(progress)))
         self.bot.wait_time({'waitSeconds': 60})
 
@@ -202,9 +201,9 @@ class TopLeftCorner(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -242,9 +241,9 @@ class TopRightCorner(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -282,9 +281,9 @@ class BottomLeftCorner(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -322,9 +321,9 @@ class BottomRightCorner(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -362,9 +361,9 @@ class CentreNorthBoundary(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -402,9 +401,9 @@ class CentreSouthBoundary(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -442,9 +441,9 @@ class CentreWestBoundary(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -482,9 +481,9 @@ class CentreEastBoundary(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
@@ -522,9 +521,9 @@ class CentrePointDomain(Strategy):
 
         while True:
 
-            color = EnumColor.rgb(self.bot.image.pix[_currentX, _currentY], True)
+            color = EnumColor.rgba(self.bot.image.pix[_currentX, _currentY], True)
             old_color = self.bot.canvas.get_color(self.bot.start_x + _currentX, self.bot.start_y + _currentY)
-            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite:
+            if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 127:
                 self.bot.paint(self.bot.start_x + _currentX, self.bot.start_y + _currentY, color)
                 _currentX = _startX
                 _currentY = _startY
