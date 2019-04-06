@@ -43,6 +43,9 @@ Navigate to the directory with the Bot
 * python ./setup.py
 
 If you are on windows, you may need to use backslashes (\\) instead of forward slashes (/) in your path.
+If you run into errors on a UNIX machine (Linux/OS-X) it might help to run the setup file as a superuser:
+
+* sudo python ./setup.py
 
 # Usage
 
@@ -149,6 +152,8 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 * [optional] **--xreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
 
 * [optional] **--yreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
+
+* [optional] **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
 
 #### Note:
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
