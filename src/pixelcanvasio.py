@@ -99,7 +99,7 @@ class PixelCanvasIO(object):
                         else:
                             print(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
-                    elif (x, y, color) == self.bot.pixel_intent:
+                    elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
                         self.bot.pixel_intent = ()
                         
