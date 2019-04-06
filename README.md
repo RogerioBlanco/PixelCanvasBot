@@ -79,15 +79,15 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 * [required] **-y** or **--start_y**        is the topmost Y coordinate your template will be placed at. Ex: -4000
 
-* [optional] **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent. By default color index 16 is ignored.
+* [optional] **-ci** or **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent. By default color index 16 is ignored.
 
-* [optional] **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
+* [optional] **-cno** or **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
 
 ![image](https://i.imgur.com/8F6CRRD.png)
 
 Additional color: index 16, hexcode #5B0909
 
-* [optional] **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *random* is used by default.
+* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *random* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
 
