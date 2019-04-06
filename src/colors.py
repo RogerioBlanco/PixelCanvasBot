@@ -68,7 +68,7 @@ class EnumColor:
 
             if diffys < diff_min[1]:
                 diff_min[1] = diffys
-                diff_min[0] = color.rgba[0:3] + [rgba[3]]
+                diff_min[0] = color.rgba[0:3] + (rgba[3],)
 
         # return rounding colour
 
