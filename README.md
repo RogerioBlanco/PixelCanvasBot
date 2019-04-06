@@ -63,7 +63,7 @@ If you are on windows, you may need to use backslashes instead of forward slashe
 
 * `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
 
-If the image is not in the same folder as the code, you will need to put it's path before it, ie: /user/path_to_image/image.png
+If the image is not in the same folder as the code, you will need to put its path before it, ie: /user/path_to_image/image.png
 
 You should also delete the quotations around your fingerprint, so it looks like this: e4bca63b3e65a4c7f7aba06818783c47
 
@@ -130,7 +130,7 @@ The rcm-domain based strategies are defined using a number of reference points s
 
 This strategy will walk the next pixel to be painted randomly from the chosen origin. There may be performance issues with large images.
 
-* [optional] **--mode_defensive**           is a flag to control what the bot will do after finishing a stragtegy. For example with `--draw_strategy linear --mode_defensive False` the bot will not begin again at the start when it finishes iterating through the template onece. Usage: `--mode_defensive {True|False}` Default: True
+* [optional] **--mode_defensive**           is a flag to control what the bot will do after finishing a stragtegy. For example with `--draw_strategy linear --mode_defensive False` the bot will not begin again at the start when it finishes iterating through the template once. Usage: `--mode_defensive {True|False}` Default: True
 
 * [optional] **--proxy_url**                is a proxy you want the bot to use. Usage: `--proxy_url <address>:<port>` Note: many proxys are detected and blocked by pixelcanvas.io
 j
