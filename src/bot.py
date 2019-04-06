@@ -57,8 +57,6 @@ class Bot(object):
 
             self.canvas.update(x, y, color)
         print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
-        # Clear intent so 3rd party updates are logged.
-        self.pixel_intent = ()
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):
@@ -78,7 +76,11 @@ class Bot(object):
                 i += 1
             out.write("\n")
             out.flush()
+            # Clear intent so 3rd party updates are logged.
+            self.pixel_intent = ()
             return data['waitSeconds']
+            
+        self.pixel_intent = ()
         return 99999999
 
     def setup_canvas(self):
