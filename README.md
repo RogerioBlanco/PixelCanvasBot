@@ -23,14 +23,13 @@ If you are on windows, ensure you add python to PATH when installing. Python som
 
 ### With git
 PixelCanvas.io frequently changes the API validation system.
-The bot will be updated when we notice. It may be a bit late, and updates are not guaranteed it in any way. We recommend using git for the most up to date version.
+The bot will be updated when we notice. It may be a bit late, and updates are not guaranteed in any way. We recommend using git for the most up to date version.
 
 #### If you have not installed git?
 * get git and install from https://git-scm.com/downloads
 
 #### Clone bot
-Open Terminal (git bash, cmd vs.)
-enter this command
+Open Terminal (git bash, cmd, etc.) and enter this command
 
 * git clone https://github.com/traa-pixelcanvas/TraanvasBot.git
 
@@ -38,12 +37,12 @@ enter this command
 https://github.com/traa-pixelcanvas/TraanvasBot/archive/master.zip
 
 ## Setup bot
-Navigate to the Directory with the Bot
+Navigate to the directory with the Bot
 
 * cd path-to-directory/TraanvasBot
 * python ./setup.py
 
-If you are on windows, you may need to use backslashes instead of forward slashes in your path.
+If you are on windows, you may need to use backslashes (\\) instead of forward slashes (/) in your path.
 
 # Usage
 
@@ -63,11 +62,11 @@ If you are on windows, you may need to use backslashes instead of forward slashe
 
 * `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
 
-If the image is not in the same folder as the code, you will need to put its path before it, ie: /user/path_to_image/image.png
+If the image is not in the same folder as the code, you will need to put its path before it, e.g.: /user/path_to_image/image.png
 
-You should also delete the quotations around your fingerprint, so it looks like this: e4bca63b3e65a4c7f7aba06818783c47
+You should also delete the quotations around your fingerprint, so it looks like this: `e4bca63b3e65a4c7f7aba06818783c47`
 
-The x and y coordinates are where you want the very top left pixel of your template to sit on the canvas.
+The `x` and `y` coordinates are where you want the very top left pixel of your template to sit on the canvas.
 
 ## Parameter descriptions
 Use `python ./main.py --help` for documentation in your terminal.
@@ -79,7 +78,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 * [required] **-y** or **--start_y**        is the topmost Y coordinate your template will be placed at. Ex: -4000
 
-* [optional] **-ci** or **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent. By default color index 16 is ignored.
+* [optional] **-ci** or **--colors_ignored**           is the index of a color in pixelcanvas.io's palette (see reference image below). Pixels of this color in your template will be treated as transparent. By default, transparent pixels and color index 16 (#5B0909) are considered ignored.
 
 * [optional] **-cno** or **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
 
@@ -87,7 +86,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 Additional color: index 16, hexcode #5B0909
 
-* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *random* is used by default.
+* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *randomize* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
 
