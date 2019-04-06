@@ -15,12 +15,13 @@ class Bot(object):
 
     def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
                  draw_strategy='randomize', xreversed=False, yreversed=False):
+        self.pixel_intent = () # Where the bot is currently trying to paint
         self.image = image
         self.start_x = start_x
         self.start_y = start_y
         self.mode_defensive = mode_defensive
         self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored],[EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
-        self.pixelio = PixelCanvasIO(fingerprint, proxy)
+        self.pixelio = PixelCanvasIO(fingerprint, proxy, self)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
         self.max_range = max_range
@@ -47,6 +48,7 @@ class Bot(object):
             time.sleep(2)
 
     def paint(self, x, y, color):
+        self.pixel_intent = (x, y)
         response = self.pixelio.send_pixel(x, y, color)
         while not response['success']:
             print(I18n.get('try_again'))
@@ -55,7 +57,8 @@ class Bot(object):
 
             self.canvas.update(x, y, color)
         print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
-
+        # Clear intent so 3rd party updates are logged.
+        self.pixel_intent = ()
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):

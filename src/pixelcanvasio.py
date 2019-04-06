@@ -25,11 +25,12 @@ class PixelCanvasIO(object):
         'Referer': URL
     }
 
-    def __init__(self, fingerprint, proxy=None):
+    def __init__(self, fingerprint, proxy=None, bot=None):
         self.fingerprint = fingerprint
         self.proxy = proxy
         self.cookies = None
         self.duck = 'z'
+        self.bot = bot
 
     def post(self, url, payload):
         return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy,
@@ -88,8 +89,11 @@ class PixelCanvasIO(object):
                 color = EnumColor.index(15 & a)
                 try:
                     canvas.matrix[x][y] = color
-                    if (x in range(axis['start_x'], axis['end_x'] + 1) and y in range(axis['start_y'],
-                                                                                        axis['end_y'])) or log_all_info:
+                    # Check that message is relevant, and not being modified by self.
+                    if ((x in range(axis['start_x'], axis['end_x'] + 1) and 
+                            y in range(axis['start_y'], axis['end_y'])) and 
+                            (x, y) != self.bot.pixel_intent):
+                        # print('pixel_intent = %s' % str(self.bot.pixel_intent))
                         print(I18n.get('Somebody updated %s,%s with %s color') % (
                             str(x), str(y), I18n.get(color.name, 'true')))
                 except Exception as e:
