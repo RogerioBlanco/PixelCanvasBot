@@ -43,7 +43,7 @@ Navigate to the Directory with the Bot
 * cd path-to-directory/TraanvasBot
 * python ./setup.py
 
-If you are on windows, you may need to use backslashes (\) instead of forward slashes (/) in your path.
+If you are on windows, you may need to use backslashes instead of forward slashes in your path.
 
 # Usage
 
