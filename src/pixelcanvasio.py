@@ -60,7 +60,7 @@ class PixelCanvasIO(object):
 
         if response.status_code == 422:
             if self.notify:
-                notification.notify(title='Canvas Bot Alert',message='A captcha has been encountered by the bot, and it requires your human abilities to solve the captcha before it can continue painting. Please do this as soon as possible.',app_name='PixelTraanvas Bot',app_icon='res/robotto.ico',timeout=900)
+                notification.notify(title='Canvas Bot Alert',message='A captcha has been encountered by the bot, and it requires your human abilities to solve the captcha before it can continue painting. Please do this as soon as possible.',app_name='PixelTraanvas Bot',app_icon='res/robotto.ico',timeout=60)
             raise NeedUserInteraction(I18n.get('refresh_token'))
 
         if response.status_code == 429:
