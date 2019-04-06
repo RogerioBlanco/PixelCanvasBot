@@ -8,6 +8,7 @@ from .matrix import Matrix
 from .i18n import I18n
 from .custom_exception import NeedUserInteraction
 from six.moves import range
+from plyer import notification
 
 
 class PixelCanvasIO(object):
@@ -25,12 +26,13 @@ class PixelCanvasIO(object):
         'Referer': URL
     }
 
-    def __init__(self, fingerprint, proxy=None, bot=None):
+    def __init__(self, fingerprint, proxy=None, bot=None, notify=False):
         self.fingerprint = fingerprint
         self.proxy = proxy
         self.cookies = None
         self.duck = 'z'
         self.bot = bot
+        self.notify = notify
 
     def post(self, url, payload):
         return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy,
@@ -57,6 +59,8 @@ class PixelCanvasIO(object):
             raise Exception(I18n.get('Oh no, you are using a proxy'))
 
         if response.status_code == 422:
+            if self.notify:
+                notification.notify(title='Canvas Bot Alert',message='A captcha has been encountered by the bot, and it requires your human abilities to solve the captcha before it can continue painting. Please do this as soon as possible.',app_name='PixelTraanvas Bot',app_icon='res/robotto.ico',timeout=900)
             raise NeedUserInteraction(I18n.get('refresh_token'))
 
         if response.status_code == 429:

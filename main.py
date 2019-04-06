@@ -46,6 +46,7 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
+    parser.add_argument('-n', '--notify', required=False, default=False, dest='notify', action='store_true', help=I18n.get('--notify','true'))
 
     return parser.parse_args()
 
@@ -81,7 +82,7 @@ def main():
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
     bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
-              args.draw_strategy, args.xreversed, args.yreversed)
+              args.draw_strategy, args.xreversed, args.yreversed, args.notify)
 
     bot.init()
 

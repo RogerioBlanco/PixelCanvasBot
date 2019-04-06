@@ -14,14 +14,15 @@ from six.moves import range
 class Bot(object):
 
     def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
-                 draw_strategy='randomize', xreversed=False, yreversed=False):
+                 draw_strategy='randomize', xreversed=False, yreversed=False, notify=False):
         self.pixel_intent = () # Where the bot is currently trying to paint
         self.image = image
         self.start_x = start_x
         self.start_y = start_y
+        self.notify = notify
         self.mode_defensive = mode_defensive
         self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored],[EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
-        self.pixelio = PixelCanvasIO(fingerprint, proxy, self)
+        self.pixelio = PixelCanvasIO(fingerprint, proxy, self, notify)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
         self.max_range = max_range

@@ -61,6 +61,7 @@ class I18n(object):
             '--QR_scale': 'QR code pixel width',
             '--xreversed': 'Draw from right to left. Set to True or False (default False)',
             '--yreversed': 'Draw from bottom to top. Set to True or False (default False)',
+			'--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
 
             ##  Colors
 
