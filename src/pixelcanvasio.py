@@ -98,11 +98,11 @@ class PixelCanvasIO(object):
                             y in range(axis['start_y'], axis['end_y'])) and
                             (x, y, color.index) != self.bot.pixel_intent):
                         template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
-                        if color == template_color:
-                            print(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
-                                str(x), str(y), I18n.get(color.name, 'true')))
-                        elif template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
+                        if template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
                             print(I18n.get('Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]') % (
+                                str(x), str(y), I18n.get(color.name, 'true')))
+                        elif color == template_color:
+                            print(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
                         else:
                             print(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
