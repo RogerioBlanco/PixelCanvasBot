@@ -4,66 +4,79 @@ This is a fork of Rogerio's bot for pixelcanvas.io, it has blackjack *and* hooke
 It does not draw faster than placing pixels manually, but it can automate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
 
 ### What you can do with this?
+
 Well, you can draw some image and try replicate it in pixelcanvas.io. You can unite with your friends or clan to coordinate your pixel placement better, or defend your 'territory'.
 
 ### I can use any image and this bot will draw for me?
-You can use any image.
-The bot will convert your image colors to nearest PixelCanvas.io color for every pixel.
-Converted images will be placed the ./img/.cache folder if they don't already exist.
+
+You can use any image. The bot will convert your image colors to nearest PixelCanvas.io color for every pixel. Converted images will be placed the ./img/.cache folder if they don't already exist.
 
 # Installation
 
-## get python
-Download and install python for your operating system from here https://www.python.org/downloads/
-All Python versions from 2.7+ are supported.
+## Get Python
 
-If you are on windows, ensure you add python to PATH when installing. Python sometimes calls this setting "Add python to environment variables". If it is already installed and not in PATH, follow the instructions on this website to add it: https://geek-university.com/python/add-python-to-the-windows-path/
+Download and install python for your operating system from here https://www.python.org/downloads/
+
+Only Python 3.7 and higher is officially supported.
+
+If you are on Windows, ensure you add Python to PATH when installing. Python sometimes calls this setting "Add Python to environment variables". If it is already installed and not in PATH, follow the instructions on this website to add it: https://geek-university.com/python/add-python-to-the-windows-path/
+
+## Install Pipenv
+
+* `pip install pipenv` (`pip3 install pipenv` on some systems)
 
 ## Download bot
 
 ### With git
-PixelCanvas.io frequently changes the API validation system.
-The bot will be updated when we notice. It may be a bit late, and updates are not guaranteed in any way. We recommend using git for the most up to date version.
+
+PixelCanvas.io frequently changes the API validation system. The bot will be updated when we notice. It may be a bit late, and updates are not guaranteed in any way. We recommend using git for the most up to date version.
 
 #### If you have not installed git?
-* get git and install from https://git-scm.com/downloads
+
+* Get git and install from https://git-scm.com/downloads
 
 #### Clone bot
+
 Open Terminal (git bash, cmd, etc.) and enter this command
 
-* git clone https://github.com/traa-pixelcanvas/TraanvasBot.git
+* `git clone https://github.com/traa-pixelcanvas/TraanvasBot.git`
 
-### Or, downlad lastest zip archive [not recommended]
+### Or, download lastest zip archive [not recommended]
+
 https://github.com/traa-pixelcanvas/TraanvasBot/archive/master.zip
 
 ## Setup bot
+
 Navigate to the directory with the Bot
 
-* cd path-to-directory/TraanvasBot
-* python ./setup.py
+* `cd path-to-directory/TraanvasBot`
+* `pipenv install` (add `--dev` if you're a developer)
 
 If you are on windows, you may need to use backslashes (\\) instead of forward slashes (/) in your path.
-If you run into errors on a UNIX machine (Linux/OS-X) it might help to run the setup file as a superuser:
 
-* sudo python ./setup.py
+If you run into errors on a UNIX machine (Linux/OS-X) it might help to run the setup file as a superuser (though this is _highly_ discouraged):
+
+* `sudo pipenv install`
 
 # Usage
 
 ## Getting your fingerprint with Chrome
-* go to http://pixelcanvas.io
-* press **F12** to open DevTools
-* open **network** tab
-* in **filter** type '**pixel**'
-* place a pixel at any coordinates on the canvas
-* in the DevTools window click the request named *pixel*
-* open **headers** tab
-* scoll down to find your fingerprint under **Request Playload**
+
+* Go to http://pixelcanvas.io
+* Press **F12** to open DevTools
+* Open **network** tab
+* In **filter** type '**pixel**'
+* Place a pixel at any coordinates on the canvas
+* In the DevTools window click the request named *pixel*
+* Open **headers** tab
+* Scoll down to find your fingerprint under **Request Playload**
 
 ![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
 
 ## Basic example with only required parameters:
 
-* `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
+* `pipenv run python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
+* If `pipenv run` is annoying, run `pipenv shell` once and you can omit it
 
 If the image is not in the same folder as the code, you will need to put its path before it, e.g.: /user/path_to_image/image.png
 
@@ -72,7 +85,9 @@ You should also delete the quotations around your fingerprint, so it looks like 
 The `x` and `y` coordinates are where you want the very top left pixel of your template to sit on the canvas.
 
 ## Parameter descriptions
-Use `python ./main.py --help` for documentation in your terminal.
+
+Use `pipenv run python ./main.py --help` for documentation in your terminal.
+
 * [required] **-i** or **--image**          is the image you want to draw.
 
 * [required] **-f** or **--fingerprint**    is your unique code. See 'Getting your fingerprint with Chrome' above
@@ -128,7 +143,9 @@ Additional color: index 16, hexcode #5B0909
     * *ceb* :       fill outwards from the Centre East Boundary
 
     * *cpd* :       fill outwards from the Centre Point Domain
+
 #### Note:
+
 The rcm-domain based strategies are defined using a number of reference points shown in the figure below:
 ![image](http://cordex-australasia.wdfiles.com/local--files/rcm-domains/CORDEXDomainDef.jpg)
 
@@ -158,12 +175,19 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 * [optional] **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
 
 #### Note:
+
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
 
 # Update bot with last changes
+
 ### Clear local changes (if you changed the source code)
-* git reset --hard
+
+* `git reset --hard`
+
 ### Update lastest changes from server
-* git pull -ff
+
+* `git pull -ff`
+
 # External: thanks for reference
+
 https://github.com/possatti/pixelbot/blob/master/README.md
