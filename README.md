@@ -92,6 +92,8 @@ Additional color: index 16, hexcode #5B0909
 * [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *randomize* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
+	
+	* *p_linear* :  deprioritize pixels with more transparency in the original image, then paint the priority groups line by line, left to right, top to bottom
 
     * *qf* :        quickfill; paint every second pixel line by line, left to right, top to bottom. Will draw a 5x5 square in this order:
 

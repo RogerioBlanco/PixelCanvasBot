@@ -51,6 +51,30 @@ class Randomize(Strategy):
         return True
 
 
+class Prioritized_Linear(Strategy):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+        self.colors_not_overwrite = colors_not_overwrite
+        self.xrange = list(reversed(range(self.bot.image.width))) if xreversed else range(self.bot.image.width)
+        self.yrange = list(reversed(range(self.bot.image.height))) if yreversed else range(self.bot.image.height)
+        self.priorities = []
+
+    def apply(self):
+        if self.priorities == []:
+            for y in self.yrange:
+                for x in self.xrange:
+                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                    if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+            self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
+        for pixel in self.priorities:
+            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
+            if old_color != pixel[2]:
+                self.bot.paint(*pixel)
+
+
 class Linear(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
         self.bot = bot
@@ -592,6 +616,9 @@ class FactoryStrategy(object):
 
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
+        
+        if strategy == 'p_linear':
+            return Prioritized_Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
 
         if strategy == 'qf':
             return QuickFill(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
