@@ -55,6 +55,8 @@ class Bot(object):
         while not response['success']:
             print(I18n.get('try_again'))
             self.wait_time(response)
+            # Redeclare intent after a timer
+            self.pixel_intent = (x, y, color.index)
             response = self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
