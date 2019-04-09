@@ -76,5 +76,5 @@ class Image(object):
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
 
-        print(I18n.get('Create QR Code succes in here: %s') % str(full_QR_path))
+        print(I18n.get('Create QR Code success in here: %s') % str(full_QR_path))
         print(url.text())

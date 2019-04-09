@@ -659,6 +659,6 @@ class FactoryStrategy(object):
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
-        print(I18n.get('not fonud strategy %s auto selected randomize') % str(strategy))
+        print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
 
         return Randomize(bot, colors_ignored, colors_not_overwrite)  # Default strategy

@@ -19,6 +19,9 @@ class I18n(object):
             'try_again': 'Oh no, an error occurred. Trying again.',
             'You painted %s in the %s,%s': 'You painted %s at %s,%s',
             'Waiting %s seconds': 'Waiting %s seconds',
+            'This bot may be blind for all pixels east of %s': 'This bot may be blind for all pixels east of %s',
+            'This bot may be blind for all pixels south of %s': 'This bot may be blind for all pixels south of %s',
+            'Loading chunk (%s, %s)...': 'Loading chunk (%s, %s)...',
             'Total: %s painted: %s Not painted: %s Progress: %s%%': 'Total active pixel count: %s. Correct pixels: %s Incorrect pixels: %s Progress: %s%%',
             ' %s colours rounded %s (%s) ': '%s colors rounded %s (%s)',
             'Oh no, you are using a proxy': 'Oh no, you are using a proxy',
@@ -35,12 +38,12 @@ class I18n(object):
             'Load cached image': 'Load cached image',
             'generating converted image here : %s': 'Generating converted image here : %s',
             'Saved image cache file, Loading Now...': 'Saved image cache file, Loading Now...',
-            'Create QR Code succes in here: %s': 'QR Code successfully saved here: %s',
+            'Create QR Code success in here: %s': 'QR Code successfully saved here: %s',
             '# From left to right, from top to bottom,': '# From left to right, from top to bottom,',
             '# From right to left, from top to bottom,': '# From right to left, from top to bottom,',
             '# From top to bottom, from left to right,': '# From top to bottom, from left to right,',
             '# From bottom to top, from left to right,': '# From bottom to top, from left to right,',
-            'not fonud strategy %s auto selected randomize': 'Invalid strategy "%s". Defaulting to strategy "randomize"',
+            'not found strategy %s auto selected randomize': 'Invalid strategy "%s". Defaulting to strategy "randomize"',
 
             ##  Arguments
 
@@ -105,12 +108,12 @@ class I18n(object):
             'Load cached image': 'Load cached image',
             'generating converted image here : %s': 'generating converted image here : %s',
             'Saved image cache file, Loading Now...': 'Saved image cache file, Loading Now...',
-            'Create QR Code succes in here: %s': 'Create QR Code succes in here: %s',
+            'Create QR Code success in here: %s': 'Create QR Code success in here: %s',
             '# From left to right, from top to bottom,': '# From left to right, from top to bottom,',
             '# From right to left, from top to bottom,': '# From right to left, from top to bottom,',
             '# From top to bottom, from left to right,': '# From top to bottom, from left to right,',
             '# From bottom to top, from left to right,': '# From bottom to top, from left to right,',
-            'not fonud strategy %s auto selected randomize': 'not fonud strategy %s auto selected randomize',
+            'not found strategy %s auto selected randomize': 'not fonud strategy %s auto selected randomize',
 
             ##  Arguments
 
