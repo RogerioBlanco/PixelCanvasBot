@@ -17,13 +17,9 @@ You can use any image. The bot will convert your image colors to nearest PixelCa
 
 Download and install python for your operating system from here https://www.python.org/downloads/
 
-Only Python 3.7 and higher is officially supported.
+Only Python 3.7 and higher is officially supported, but 2.7+ should work as long as you're just running the bot.
 
 If you are on Windows, ensure you add Python to PATH when installing. Python sometimes calls this setting "Add Python to environment variables". If it is already installed and not in PATH, follow the instructions on this website to add it: https://geek-university.com/python/add-python-to-the-windows-path/
-
-## Install Pipenv
-
-* `pip install pipenv` (`pip3 install pipenv` on some systems)
 
 ## Download bot
 
@@ -50,13 +46,14 @@ https://github.com/traa-pixelcanvas/TraanvasBot/archive/master.zip
 Navigate to the directory with the Bot
 
 * `cd path-to-directory/TraanvasBot`
-* `pipenv install` (add `--dev` if you're a developer)
+* `python setup.py`
+    * If you get an error about your pip version being too high, just run the command it tells you to.
 
 If you are on windows, you may need to use backslashes (\\) instead of forward slashes (/) in your path.
 
-If you run into errors on a UNIX machine (Linux/OS-X) it might help to run the setup file as a superuser (though this is _highly_ discouraged):
+If you run into errors on a UNIX machine (Linux/macOS) it might help to run the setup file as a superuser (only as a last resort):
 
-* `sudo pipenv install`
+* `sudo python setup.py`
 
 # Usage
 
@@ -75,8 +72,7 @@ If you run into errors on a UNIX machine (Linux/OS-X) it might help to run the s
 
 ## Basic example with only required parameters:
 
-* `pipenv run python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
-* If `pipenv run` is annoying, run `pipenv shell` once and you can omit it
+* `python ./main.py -i <image.png> -f <fingerprint> -x <x> -y <y>`
 
 If the image is not in the same folder as the code, you will need to put its path before it, e.g.: /user/path_to_image/image.png
 
@@ -86,7 +82,7 @@ The `x` and `y` coordinates are where you want the very top left pixel of your t
 
 ## Parameter descriptions
 
-Use `pipenv run python ./main.py --help` for documentation in your terminal.
+Use `python ./main.py --help` for documentation in your terminal.
 
 * [required] **-i** or **--image**          is the image you want to draw.
 
@@ -107,8 +103,8 @@ Additional color: index 16, hexcode #5B0909
 * [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *randomize* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
-	
-	* *p_linear* :  deprioritize pixels with more transparency in the original image, then paint the priority groups line by line, left to right, top to bottom
+
+	  * *p_linear* :  deprioritize pixels with more transparency in the original image, then paint the priority groups line by line, left to right, top to bottom
 
     * *qf* :        quickfill; paint every second pixel line by line, left to right, top to bottom. Will draw a 5x5 square in this order:
 
