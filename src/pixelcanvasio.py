@@ -53,7 +53,12 @@ class PixelCanvasIO(object):
     def send_pixel(self, x, y, color):
         payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (
             x, y, self.duck, x + y + 8, color.index, self.fingerprint)
-        response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
+        response = None
+        try:
+            response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
+        except requests.exceptions.ConnectionError as e:
+            print(I18n.get('connection_broke'))
+            return {'success': 0, 'waitSeconds': 5}
 
         if response.status_code == 403:
             raise Exception(I18n.get('Oh no, you are using a proxy'))
@@ -68,6 +73,11 @@ class PixelCanvasIO(object):
 
         if response.status_code == 504:
             return {'success': 0, 'waitSeconds': 120}
+
+        if response.status_code >= 500:
+            print(I18n.get('try_again'))
+            return {'success': 0, 'waitSeconds': 5}
+
         try:
             return response.json()
         except Exception as e:
