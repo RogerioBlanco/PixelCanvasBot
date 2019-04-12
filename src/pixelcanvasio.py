@@ -75,7 +75,6 @@ class PixelCanvasIO(object):
             return {'success': 0, 'waitSeconds': 120}
 
         if response.status_code >= 500:
-            print(I18n.get('try_again'))
             return {'success': 0, 'waitSeconds': 5}
 
         try:
