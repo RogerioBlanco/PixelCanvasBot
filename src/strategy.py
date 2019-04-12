@@ -243,8 +243,8 @@ class Spiral(Strategy):
             self.leftxrange = []
             self.rightxrange = range(self.bot.image.width)
         elif px < self.bot.start_x + self.bot.image.width:
-            self.leftxrange = range(px)
-            self.rightxrange = range(px, self.bot.image.width)
+            self.leftxrange = range(px - self.bot.start_x)
+            self.rightxrange = range(px - self.bot.start_x, self.bot.image.width)
         else:
             self.leftxrange = range(self.bot.image.width)
             self.rightxrange = []
