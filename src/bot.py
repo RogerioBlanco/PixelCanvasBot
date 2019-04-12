@@ -28,12 +28,12 @@ class Bot(object):
         self.notify = notify
         self.mode_defensive = mode_defensive
         self.colors_ignored = [EnumColor.index(i) for i in colors_ignored]
-        if point_x == 100000000:
+        if point_x == None:
             self.point_x = (2 * start_x + image.width) // 2
         else:
             self.point_x = point_x
-        if point_y == 100000000:
-            self.point_y = (2 * start_x + image.width) // 2
+        if point_y == None:
+            self.point_y = (2 * start_y + image.height) // 2
         else:
             self.point_y = point_y
         self.strategy = FactoryStrategy.build(draw_strategy, self, self.colors_ignored, [EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed, self.point_x, self.point_y, prioritized)

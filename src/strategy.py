@@ -255,7 +255,7 @@ class Radiant(Strategy):
                     if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                         self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
             random.shuffle(self.priorities)
-            self.priorities.sort(reverse=True, key=lambda priorities: (priorities[0]-self.px)^2+(priorities[1]-self.py)^2)
+            self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
         for pixel in self.priorities:
@@ -280,25 +280,46 @@ class Spiral(Strategy):
         else:
             self.leftxrange = range(self.bot.image.width)
             self.rightxrange = []
+        if py <= self.bot.start_y:
+            self.topyrange = []
+            self.bottomyrange = range(self.bot.image.height)
+        elif py < self.bot.start_y + self.bot.image.height:
+            self.topyrange = range(py - self.bot.start_y)
+            self.bottomyrange = range(py - self.bot.start_y, self.bot.image.height)
+        else:
+            self.topyrange = range(self.bot.image.height)
+            self.bottomyrange = []
         self.yrange = range(self.bot.image.height)
         self.prioritized = prioritized
         self.priorities = []
 
     def apply(self):
         if self.priorities == []:
+            for y in self.topyrange:
+                for x in self.rightxrange:
+                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                    if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+            for x in reversed(self.rightxrange):
+                for y in self.bottomyrange:
+                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                    if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+            for y in reversed(self.bottomyrange):
+                for x in reversed(self.leftxrange):
+                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                    if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
             for x in self.leftxrange:
-                for y in self.yrange:
+                for y in reversed(self.topyrange):
                     color = EnumColor.rgba(self.bot.image.pix[x, y], True)
                     old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                     if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                         self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
-            for x in self.rightxrange:
-                for y in reversed(self.yrange):
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
-            self.priorities.sort(reverse=True, key=lambda priorities: (priorities[0]-self.px)^2+(priorities[1]-self.py)^2)
+            self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
         for pixel in self.priorities:

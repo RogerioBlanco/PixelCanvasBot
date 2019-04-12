@@ -60,7 +60,7 @@ def parse_args():
                         dest='log_file', help=I18n.get('--output_file', 'true'))
     parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
                         help=I18n.get('--point_x', 'true'))
-    parser.add_argument('-py', '--point_y', required=False, type=int, default=100000000, dest='point_y',
+    parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
                         help=I18n.get('--point_y', 'true'))
     parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
                         help=I18n.get('--yreversed', 'true'))
