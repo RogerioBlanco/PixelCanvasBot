@@ -190,7 +190,7 @@ class Status(Strategy):
                 canvas_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
 
                 # Account for ignored pixels
-                if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite or template_color.rgba[3] < 0:
+                if template_color in self.colors_ignored or canvas_color in self.colors_not_overwrite or template_color.rgba[3] == 0:
                     ignored += 1
 
                 # Count as correct if not ignored, and if design matches canvas
