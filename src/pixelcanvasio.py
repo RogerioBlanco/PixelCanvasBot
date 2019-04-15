@@ -12,7 +12,7 @@ from plyer import notification
 
 
 class PixelCanvasIO(object):
-    URL = 'http://pixelcanvas.io/'
+    URL = 'https://pixelcanvas.io/'
     HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
     HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
                          'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
