@@ -18,6 +18,12 @@ logger = logging.getLogger('bot')
 class Strategy(object):
     def apply(self):
         raise NotImplementedError()
+		
+    def addToPriorities(bot,colors_ignored,colors_not_overwrite,x,y):
+        color = EnumColor.rgba(bot.image.pix[x, y], True)
+        old_color = bot.canvas.get_color(bot.start_x + x, bot.start_y + y)
+        if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+            self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
 
 
 class Randomize(Strategy):
@@ -399,48 +405,48 @@ class FactoryStrategy(object):
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
         if strategy == 'tlc':
-            px = self.bot.start_x
-            py = self.bot.start_y
+            px = bot.start_x
+            py = bot.start_y
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'trc':
-            px = self.bot.start_x + self.bot.image.width
-            py = self.bot.start_y
+            px = bot.start_x + bot.image.width - 1
+            py = bot.start_y
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'blc':
-            px = self.bot.start_x
-            py = self.bot.start_y + self.bot.image.height
+            px = bot.start_x
+            py = bot.start_y + bot.image.height - 1
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'brc':
-            px = self.bot.start_x + self.bot.image.width
-            py = self.bot.start_y + self.bot.image.height
+            px = bot.start_x + bot.image.width - 1
+            py = bot.start_y + bot.image.height - 1
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cnb':
-            px = (self.bot.start_x + self.bot.image.width) // 2
-            py = self.bot.start_y
+            px = (2 * bot.start_x + bot.image.width) // 2
+            py = bot.start_y
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'csb':
-            px = (self.bot.start_x + self.bot.image.width) // 2
-            py = self.bot.start_y + self.bot.image.height
+            px = (2 * bot.start_x + bot.image.width) // 2
+            py = bot.start_y + bot.image.height - 1
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cwb':
-            px = self.bot.start_x
-            py = (self.bot.start_y + self.bot.image.height) // 2
+            px = bot.start_x
+            py = (2 * bot.start_y + bot.image.height) // 2
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'ceb':
-            px = self.bot.start_x + self.bot.image.width
-            py = (self.bot.start_y + self.bot.image.height) // 2
+            px = bot.start_x + bot.image.width - 1
+            py = (2 * bot.start_y + bot.image.height) // 2
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cpd':
-            px = (self.bot.start_x + self.bot.image.width) // 2
-            py = (self.bot.start_y + self.bot.image.height) // 2
+            px = (2 * bot.start_x + bot.image.width) // 2
+            py = (2 * bot.start_y + bot.image.height) // 2
             return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
