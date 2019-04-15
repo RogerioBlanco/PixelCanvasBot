@@ -54,7 +54,7 @@ class I18n(object):
             '--start_y': 'The y coordinate at which to start drawing',
             '--colors_ignored': 'Any colors listed here, if contained within the quantized image, will be treated as transparent for the purposes of drawing.',
             '--colors_not_overwrite': 'The colors listed here will not be overwritten if they appear on the canvas where the image is being drawn.',
-            '--draw_strategy': 'Optional draw strategy. Choose from the strategy list [linear, p_linear, qf, randomize, status, sketch] default: randomize',
+            '--draw_strategy': 'Optional draw strategy. Choose from the strategy list [linear, linear_vertical, p_linear, qf, randomize, status, sketch] default: randomize',
             '--mode_defensive': 'Put the bot in daemon mode (run in background). This will run forever.',
             '--proxy_url': 'Proxy url with port. ex: url:port . DEPRECATED',
             '--proxy_auth': 'Proxy authentication. ex: user:pass . DEPRECATED',

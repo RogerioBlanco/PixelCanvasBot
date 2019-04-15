@@ -91,6 +91,22 @@ class Linear(Strategy):
                 if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
 
+class LinearVertical(Strategy):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+        self.colors_not_overwrite = colors_not_overwrite
+        self.xrange = list(reversed(range(self.bot.image.width))) if xreversed else range(self.bot.image.width)
+        self.yrange = list(reversed(range(self.bot.image.height))) if yreversed else range(self.bot.image.height)
+
+    def apply(self):
+        for x in self.yrange:
+            for y in self.xrange:
+                color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                    self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+
 
 class QuickFill(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
@@ -616,6 +632,9 @@ class FactoryStrategy(object):
 
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
+
+        if strategy == 'linear_vertical':
+            return LinearVertical(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
         
         if strategy == 'p_linear':
             return Prioritized_Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed)
