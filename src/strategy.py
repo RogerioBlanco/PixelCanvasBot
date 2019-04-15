@@ -398,6 +398,51 @@ class FactoryStrategy(object):
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
-        logger.debug(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
+        if strategy == 'tlc':
+            px = self.bot.start_x
+            py = self.bot.start_y
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'trc':
+            px = self.bot.start_x + self.bot.image.width
+            py = self.bot.start_y
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'blc':
+            px = self.bot.start_x
+            py = self.bot.start_y + self.bot.image.height
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'brc':
+            px = self.bot.start_x + self.bot.image.width
+            py = self.bot.start_y + self.bot.image.height
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'cnb':
+            px = (self.bot.start_x + self.bot.image.width) // 2
+            py = self.bot.start_y
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'csb':
+            px = (self.bot.start_x + self.bot.image.width) // 2
+            py = self.bot.start_y + self.bot.image.height
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'cwb':
+            px = self.bot.start_x
+            py = (self.bot.start_y + self.bot.image.height) // 2
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'ceb':
+            px = self.bot.start_x + self.bot.image.width
+            py = (self.bot.start_y + self.bot.image.height) // 2
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        if strategy == 'cpd':
+            px = (self.bot.start_x + self.bot.image.width) // 2
+            py = (self.bot.start_y + self.bot.image.height) // 2
+            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+
+        print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
 
         return Randomize(bot, colors_ignored, colors_not_overwrite, prioritized)  # Default strategy
