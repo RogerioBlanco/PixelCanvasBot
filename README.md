@@ -1,5 +1,7 @@
 # TraanvasBot
 
+[![Codeship Status for traa-pixelcanvas/TraanvasBot](https://app.codeship.com/projects/ee0d5ad0-4220-0137-2087-768e45172ce6/status?branch=master)](https://app.codeship.com/projects/336153)
+
 This is a fork of Rogerio's bot for pixelcanvas.io, it has blackjack *and* hookers!
 It does not draw faster than placing pixels manually, but it can automate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
 
