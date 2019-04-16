@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import math
+from copy import deepcopy
 from .i18n import I18n
 
 
@@ -10,6 +11,13 @@ class EnumColor:
             self.name = name
             self.rgba = rgba
             self.index = index
+
+        def __eq__(self, other):
+            return self.name == other.name and self.rgba[0:3] == other.rgba[0:3]
+
+        @property
+        def alpha(self):
+            return self.rgba[3]
 
     ENUM = [
         Color(0, 'white', (255, 255, 255, 255)),
@@ -43,8 +51,9 @@ class EnumColor:
     def rgba(rgba, silent=False, sensitive=1, brightness=0):
         for color in EnumColor.ENUM:
             if rgba[0:3] == color.rgba[0:3]:
-                color.rgba = rgba
-                return color
+                new_color = deepcopy(color)
+                new_color.rgba = rgba
+                return new_color
 
         # if that color is not in standard colors list
         diff_min = [(255, 255, 255), 1038366]  # sqrt(255*255 + 255*255 + 255*255) = 441.67295593 --> Default white
