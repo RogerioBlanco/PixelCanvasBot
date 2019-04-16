@@ -15,6 +15,9 @@ class EnumColor:
         def __eq__(self, other):
             return self.name == other.name and self.rgba[0:3] == other.rgba[0:3]
 
+        def __ne__(self, other):
+            return not self.__eq__(other)
+
         @property
         def alpha(self):
             return self.rgba[3]
