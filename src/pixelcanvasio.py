@@ -64,7 +64,7 @@ class PixelCanvasIO(object):
         try:
             response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
         except requests.exceptions.ConnectionError as e:
-            print(I18n.get('connection_broke'))
+            logger.debug(I18n.get('connection_broke'))
             return {'success': 0, 'waitSeconds': 5}
 
         if response.status_code == 403:
@@ -115,13 +115,13 @@ class PixelCanvasIO(object):
                             (x, y, color.index) != self.bot.pixel_intent):
                         template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
                         if template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
-                            print(I18n.get('Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]') % (
+                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
                         elif color == template_color:
-                            print(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
+                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
                         else:
-                            print(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
+                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
                                 str(x), str(y), I18n.get(color.name, 'true')))
                     elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
@@ -134,11 +134,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            print(I18n.get("### closed ###"))
+            logger.debug(I18n.get("### closed ###"))
             open_connection()
 
         def on_open(ws):
-            print(I18n.get("Websocket open"))
+            logger.debug(I18n.get("Websocket open"))
 
         def open_connection():
             url = self.get_ws()

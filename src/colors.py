@@ -6,6 +6,8 @@ from copy import deepcopy
 
 from .i18n import I18n
 
+logger = logging.getLogger('bot')
+
 
 class EnumColor:
     class Color(object):
@@ -87,6 +89,6 @@ class EnumColor:
         # return rounding colour
 
         if not silent:
-            print(I18n.get(' %s colours rounded %s (%s) ') % (
+            logger.debug(I18n.get(' %s colours rounded %s (%s) ') % (
             str(rgba), str(diff_min[0]), I18n.get(str(EnumColor.rgba(diff_min[0]).name), 'true')))
         return EnumColor.rgba(diff_min[0])

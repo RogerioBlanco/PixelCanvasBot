@@ -15,9 +15,10 @@ from .matrix import Matrix
 from .pixelcanvasio import PixelCanvasIO
 from .strategy import FactoryStrategy
 
+logger = logging.getLogger('bot')
+
 
 class Bot(object):
-
     def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
                  draw_strategy='randomize', xreversed=False, yreversed=False, notify=False):
         self.pixel_intent = () # Where the bot is currently trying to paint
@@ -58,14 +59,14 @@ class Bot(object):
         self.pixel_intent = (x, y, color.index)
         response = self.pixelio.send_pixel(x, y, color)
         while not response['success']:
-            print(I18n.get('try_again'))
+            logger.debug(I18n.get('try_again'))
             self.wait_time(response)
             # Redeclare intent after a timer
             self.pixel_intent = (x, y, color.index)
             response = self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
-        print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
+        logger.debug(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):
@@ -74,7 +75,7 @@ class Bot(object):
 
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds'] + (random.randint(2, 4) / 3.33)
-            print(I18n.get('Waiting %s seconds') % str(round(wait, 2)))
+            logger.debug(I18n.get('Waiting %s seconds') % str(round(wait, 2)))
 
             c = i = 0
             while c < 50:
@@ -117,16 +118,16 @@ class Bot(object):
         center_block_x, center_block_y, offset_x, offset_y = CalcAxis.calc_centers_axis(middle_x, middle_y)
         if offset_x is not 0:
             end = (center_block_x + offset_x + num_blocks) * 64
-            print(I18n.get("This bot may be blind for all pixels east of %s") % end)
+            logger.debug(I18n.get("This bot may be blind for all pixels east of %s") % end)
         if offset_y is not 0:
             end = (center_block_y + offset_y + num_blocks) * 64
-            print(I18n.get("This bot may be blind for all pixels south of %s") % end)
+            logger.debug(I18n.get("This bot may be blind for all pixels south of %s") % end)
         canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
         threads = []
         for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
             for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
-                print(I18n.get("Loading chunk (%s, %s)...") % (center_x, center_y))
+                logger.debug(I18n.get("Loading chunk (%s, %s)...") % (center_x, center_y))
                 threads.append(threading.Thread(target=update_canvas, args=(self.pixelio, canvas, center_x, center_y)))
                 threads[-1].setDaemon(True)
                 threads[-1].start()
