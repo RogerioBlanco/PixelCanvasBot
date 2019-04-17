@@ -8,6 +8,8 @@ from src.custom_exception import *
 from src.i18n import I18n
 from src.image import Image
 
+logger = logging.getLogger('bot')
+
 def parse_args():
 
     parser = ArgumentParser()
@@ -83,7 +85,6 @@ def main():
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
     # Setup file log.
-    logger = logging.getLogger('bot')
     formatter = logging.Formatter('%(message)s')
     if args.log_file:
         filehandler = logging.FileHandler(args.log_file)
