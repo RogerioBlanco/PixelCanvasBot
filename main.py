@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import logging
+import logging.handlers
 from argparse import ArgumentParser
 
 from src.bot import Bot
@@ -55,7 +56,7 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-o', '--output_file', required=False, default='',
+    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
                         dest='log_file', help=I18n.get('--output_file', 'true'))
     parser.add_argument('-n', '--notify', required=False, default=False,
                         dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
@@ -92,11 +93,9 @@ def main():
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
-    if args.log_file != '':
-        filehandler = logging.FileHandler(args.log_file)
-        filehandler.setFormatter(formatter)
-        logger.addHandler(filehandler)
-
+    filehandler = logging.handlers.RotatingFileHandler(args.log_file)
+    filehandler.setFormatter(formatter)
+    logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
     streamhandler.setFormatter(formatter)
     logger.addHandler(streamhandler)
