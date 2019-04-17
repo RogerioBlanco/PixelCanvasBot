@@ -17,6 +17,8 @@ from .custom_exception import NeedUserInteraction
 from .i18n import I18n
 from .matrix import Matrix
 
+logger = logging.getLogger('bot')
+
 
 class PixelCanvasIO(object):
     URL = 'https://pixelcanvas.io/'
