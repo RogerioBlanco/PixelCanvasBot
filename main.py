@@ -83,16 +83,17 @@ def main():
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
     # Setup file log.
+    logger = logging.getLogger('bot')
     formatter = logging.Formatter('%(message)s')
     if args.log_file:
         filehandler = logging.FileHandler(args.log_file)
         filehandler.setFormatter(formatter)
+        logger.addHandler(filehandler)
 
     streamhandler = logging.StreamHandler()
     streamhandler.setFormatter(formatter)
-    logger = logging.getLogger('bot')
+    logger.addHandler(streamhandler)
     logger.setLevel(logging.DEBUG)
-    logger.addHandler(filehandler)
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
