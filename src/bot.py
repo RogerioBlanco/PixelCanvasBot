@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import time, random
+import time, random, threading
 from sys import stdout as out
 from .pixelcanvasio import PixelCanvasIO
 from .calc_axis import CalcAxis
@@ -88,6 +88,20 @@ class Bot(object):
         return 99999999
 
     def setup_canvas(self):
+        def update_canvas(pixelio, canvas, center_x, center_y):
+            raw = pixelio.download_canvas(center_x, center_y)
+            index = 0
+            for block_y in range(center_y - 7, center_y + 8):
+                for block_x in range(center_x - 7, center_x + 8):
+                    for y in range(64):
+                        actual_y = (block_y * 64) + y
+                        for x in range(0, 64, 2):
+                            actual_x = (block_x * 64) + x
+
+                            canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
+                            canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
+                            index += 1
+
         # Coordinates of the middle pixel of the template
         middle_x, middle_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
         # Number of chunks we need to load in any direction
@@ -104,19 +118,14 @@ class Bot(object):
             print(I18n.get("This bot may be blind for all pixels south of %s") % end)
         canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
+        threads = []
         for center_x in range(center_block_x - num_blocks, 1 + center_block_x + num_blocks, 15):
             for center_y in range(center_block_y - num_blocks, 1 + center_block_y + num_blocks, 15):
                 print(I18n.get("Loading chunk (%s, %s)...") % (center_x, center_y))
-                raw = self.pixelio.download_canvas(center_x, center_y)
-                index = 0
-                for block_y in range(center_y - 7, center_y + 8):
-                    for block_x in range(center_x - 7, center_x + 8):
-                        for y in range(64):
-                            actual_y = (block_y * 64) + y
-                            for x in range(0, 64, 2):
-                                actual_x = (block_x * 64) + x
+                threads.append(threading.Thread(target=update_canvas, args=(self.pixelio, canvas, center_x, center_y)))
+                threads[-1].setDaemon(True)
+                threads[-1].start()
+        for thread in threads:
+            thread.join()
 
-                                canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
-                                canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
-                                index += 1
         return canvas
