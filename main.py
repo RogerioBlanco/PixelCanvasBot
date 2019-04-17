@@ -49,10 +49,10 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
+    parser.add_argument('-o', '--output_file', required=False, default='',
+                        dest='log_file', help=I18n.get('--output_file', 'true'))
     parser.add_argument('-n', '--notify', required=False, default=False,
                         dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
-    parser.add_argument('-o', '--output_file', required=False, default=None,
-                        dest='log_file', action='store_true', help=I18n.get('--output_file', 'true'))
 
     return parser.parse_args()
 
@@ -86,7 +86,7 @@ def main():
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
-    if args.log_file:
+    if args.log_file != '':
         filehandler = logging.FileHandler(args.log_file)
         filehandler.setFormatter(formatter)
         logger.addHandler(filehandler)
