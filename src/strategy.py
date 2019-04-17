@@ -65,6 +65,28 @@ class Linear(Strategy):
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
 
+class LinearVertical(Strategy):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
+        self.bot = bot
+        self.colors_ignored = colors_ignored
+        self.colors_not_overwrite = colors_not_overwrite
+        self.xrange = list(reversed(range(self.bot.image.width))) if xreversed else range(self.bot.image.width)
+        self.yrange = list(reversed(range(self.bot.image.height))) if yreversed else range(self.bot.image.height)
+
+    def apply(self):
+        for x in self.xrange:
+            for y in self.yrange:
+                color = EnumColor.rgba(self.bot.image.pix[x, y], True)
+                old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
+                if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
+                    self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+            if self.prioritized:
+                self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
+        for pixel in self.priorities:
+            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
+            if old_color != pixel[2]:
+                self.bot.paint(*pixel)
+
 
 class QuickFill(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized):
@@ -344,7 +366,10 @@ class FactoryStrategy(object):
 
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized)
-        
+
+        if strategy == 'linear_vertical':
+            return LinearVertical(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized)
+
         if strategy == 'qf':
             return QuickFill(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized)
 
