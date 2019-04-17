@@ -10,3 +10,6 @@
 /.idea/
 /*/*.pyc
 *.pyc
+
+*.log
+*.log.*

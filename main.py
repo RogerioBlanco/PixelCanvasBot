@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import logging
+import logging.handlers
 from argparse import ArgumentParser
 
 from src.bot import Bot
@@ -10,8 +11,14 @@ from src.image import Image
 
 logger = logging.getLogger('bot')
 
-def parse_args():
+try:
+    # Python 2
+    input = raw_input
+except:
+    # Python 3
+    pass
 
+def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
                         help=I18n.get('--image', 'true'))
@@ -49,7 +56,7 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-o', '--output_file', required=False, default='',
+    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
                         dest='log_file', help=I18n.get('--output_file', 'true'))
     parser.add_argument('-n', '--notify', required=False, default=False,
                         dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
@@ -86,11 +93,9 @@ def main():
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
-    if args.log_file != '':
-        filehandler = logging.FileHandler(args.log_file)
-        filehandler.setFormatter(formatter)
-        logger.addHandler(filehandler)
-
+    filehandler = logging.handlers.RotatingFileHandler(args.log_file, maxBytes=8*1024*1024, backupCount=5)
+    filehandler.setFormatter(formatter)
+    logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
     streamhandler.setFormatter(formatter)
     logger.addHandler(streamhandler)
@@ -108,12 +113,8 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            try:
-                if raw_input(I18n.get('token_resolved')).strip() == 'y':
-                    run()
-            except NameError:
-                if input(I18n.get('token_resolved')).strip() == 'y':
-                    run()
+            if input(I18n.get('token_resolved')).strip() == 'y':
+                run()
 
     run()
 
