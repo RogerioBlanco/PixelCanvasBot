@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 
+import hashlib
+import logging
+import os
+
 from PIL import Image as pillow
+
+import pyqrcode
+
 from .colors import EnumColor
 from .i18n import I18n
-import hashlib, os, pyqrcode
+
+logger = logging.getLogger('bot')
 
 
 class Image(object):
@@ -19,15 +27,15 @@ class Image(object):
         tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
         if (os.path.isfile(tmb_full_path)):
-            print(I18n.get('Load cached image'))
+            logger.debug(I18n.get('Load cached image'))
             return pillow.open(tmb_full_path).convert('RGBA')
 
-        print(I18n.get('generating converted image here : %s') % str(tmb_full_path))
+        logger.debug(I18n.get('generating converted image here : %s') % str(tmb_full_path))
 
         new_image = self.convert_pixels(pillow.open(file).convert('RGBA'))
         self.save_image(new_image, tmb_full_path)
 
-        print(I18n.get('Saved image cache file, Loading Now...'))
+        logger.debug(I18n.get('Saved image cache file, Loading Now...'))
         return pillow.open(tmb_full_path).convert('RGBA')
 
     def md5(self, fname):
@@ -76,5 +84,5 @@ class Image(object):
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
 
-        print(I18n.get('Create QR Code success in here: %s') % str(full_QR_path))
-        print(url.text())
+        logger.debug(I18n.get('Create QR Code success in here: %s') % str(full_QR_path))
+        logger.debug(url.text())

@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 
-import time, random, math
+import logging
+import math
+import random
+import time
+
+from six.moves import range
+
 from .calc_axis import CalcAxis
-from .matrix import Matrix
 from .colors import EnumColor
 from .i18n import I18n
-from six.moves import range
+from .matrix import Matrix
+
+logger = logging.getLogger('bot')
 
 
 class Strategy(object):
@@ -137,7 +144,7 @@ class Sketch(Strategy):
         self.colors_not_overwrite = colors_not_overwrite
 
     def apply(self):
-        print(I18n.get('# From left to right, from top to bottom,'))
+        logger.debug(I18n.get('# From left to right, from top to bottom,'))
         near_color = 0
 
         for y in range(self.bot.image.height):
@@ -149,7 +156,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        print(I18n.get('# From right to left, from top to bottom,'))
+        logger.debug(I18n.get('# From right to left, from top to bottom,'))
 
         near_color = 0
 
@@ -162,7 +169,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        print(I18n.get('# From top to bottom, from left to right,'))
+        logger.debug(I18n.get('# From top to bottom, from left to right,'))
 
         near_color = 0
 
@@ -175,7 +182,7 @@ class Sketch(Strategy):
                 near_color = color
             near_color = 0
 
-        print(I18n.get('# From bottom to top, from left to right,'))
+        logger.debug(I18n.get('# From bottom to top, from left to right,'))
 
         near_color = 0
 
@@ -220,7 +227,7 @@ class Status(Strategy):
         incorrect_px = px_active_total - correct_px
         progress = round(float(correct_px) / px_active_total * 100., 2)
 
-        print(I18n.get('Total: %s painted: %s Not painted: %s Progress: %s%%') % (str(px_active_total), str(correct_px), str(incorrect_px), str(progress)))
+        logger.debug(I18n.get('Total: %s painted: %s Not painted: %s Progress: %s%%') % (str(px_active_total), str(correct_px), str(incorrect_px), str(progress)))
         self.bot.wait_time({'waitSeconds': 60})
 
 
@@ -678,6 +685,6 @@ class FactoryStrategy(object):
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
 
-        print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
+        logger.debug(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
 
         return Randomize(bot, colors_ignored, colors_not_overwrite)  # Default strategy

@@ -67,6 +67,7 @@ class I18n(object):
             '--xreversed': 'Draw from right to left. Set to True or False (default False)',
             '--yreversed': 'Draw from bottom to top. Set to True or False (default False)',
 			'--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
+            '--output_file': 'Output the logs to a file. This is completely optional.',
 
             ##  Colors
 
@@ -137,6 +138,7 @@ class I18n(object):
             '--QR_scale': 'QR code pixel length',
             '--xreversed': 'Draw x axis from right to left. Set to True or False (default False)',
             '--yreversed': 'Draw y axis from bottom to top. Set to True or False (default False)',
+            '--output_file': 'Output the logs to a file. This is completely optional. [NEEDS TRANSLATION]',
 
             ##   colors
 

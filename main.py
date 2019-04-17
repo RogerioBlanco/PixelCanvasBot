@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
-from src.custom_exception import *
-from src.bot import Bot
-from src.image import Image
-from src.i18n import I18n
+import logging
 from argparse import ArgumentParser
 
+from src.bot import Bot
+from src.custom_exception import *
+from src.i18n import I18n
+from src.image import Image
+
+logger = logging.getLogger('bot')
 
 def parse_args():
 
@@ -46,7 +49,10 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-n', '--notify', required=False, default=False, dest='notify', action='store_true', help=I18n.get('--notify','true'))
+    parser.add_argument('-o', '--output_file', required=False, default='',
+                        dest='log_file', help=I18n.get('--output_file', 'true'))
+    parser.add_argument('-n', '--notify', required=False, default=False,
+                        dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
 
     return parser.parse_args()
 
@@ -74,10 +80,21 @@ def main():
 
     proxy = setup_proxy(args.proxy_url, args.proxy_auth)
 
-
     if not args.QR_text == "":
         args.file = "./img/QRcode.png"
         Image.create_QR_image(args.QR_text, args.QR_scale)
+
+    # Setup file log.
+    formatter = logging.Formatter('%(message)s')
+    if args.log_file != '':
+        filehandler = logging.FileHandler(args.log_file)
+        filehandler.setFormatter(formatter)
+        logger.addHandler(filehandler)
+
+    streamhandler = logging.StreamHandler()
+    streamhandler.setFormatter(formatter)
+    logger.addHandler(streamhandler)
+    logger.setLevel(logging.DEBUG)
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
@@ -94,7 +111,7 @@ def main():
             try:
                 if raw_input(I18n.get('token_resolved')).strip() == 'y':
                     run()
-            except NameError as e:
+            except NameError:
                 if input(I18n.get('token_resolved')).strip() == 'y':
                     run()
 
@@ -105,4 +122,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print(I18n.get('Bye'))
+        logger.debug(I18n.get('Bye'))
