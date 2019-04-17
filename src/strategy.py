@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
-import time, random, math
+import logging
+import math
+import random
+import time
+
+from six.moves import range
+
 from .calc_axis import CalcAxis
-from .matrix import Matrix
 from .colors import EnumColor
 from .i18n import I18n
-from six.moves import range
+from .matrix import Matrix
 
 
 class Strategy(object):

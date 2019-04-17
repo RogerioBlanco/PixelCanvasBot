@@ -1,14 +1,21 @@
 #!/usr/bin/env python
 
-import requests, threading, websocket, math
-from six.moves.urllib.parse import urlparse
+import logging
+import math
+import threading
 from struct import unpack_from
-from .colors import EnumColor
-from .matrix import Matrix
-from .i18n import I18n
-from .custom_exception import NeedUserInteraction
+
+import requests
+import websocket
 from six.moves import range
+from six.moves.urllib.parse import urlparse
+
 from plyer import notification
+
+from .colors import EnumColor
+from .custom_exception import NeedUserInteraction
+from .i18n import I18n
+from .matrix import Matrix
 
 
 class PixelCanvasIO(object):

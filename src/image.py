@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 
+import hashlib
+import logging
+import os
+
 from PIL import Image as pillow
+
+import pyqrcode
+
 from .colors import EnumColor
 from .i18n import I18n
-import hashlib, os, pyqrcode
 
 
 class Image(object):

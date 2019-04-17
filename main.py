@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
-from src.custom_exception import *
-from src.bot import Bot
-from src.image import Image
-from src.i18n import I18n
+import logging
 from argparse import ArgumentParser
 
+from src.bot import Bot
+from src.custom_exception import *
+from src.i18n import I18n
+from src.image import Image
 
 def parse_args():
 

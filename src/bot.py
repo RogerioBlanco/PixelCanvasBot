@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 
-import time, random, threading
+import logging
+import random
+import threading
+import time
 from sys import stdout as out
-from .pixelcanvasio import PixelCanvasIO
-from .calc_axis import CalcAxis
-from .matrix import Matrix
-from .colors import EnumColor
-from .strategy import FactoryStrategy
-from .i18n import I18n
+
 from six.moves import range
+
+from .calc_axis import CalcAxis
+from .colors import EnumColor
+from .i18n import I18n
+from .matrix import Matrix
+from .pixelcanvasio import PixelCanvasIO
+from .strategy import FactoryStrategy
 
 
 class Bot(object):
