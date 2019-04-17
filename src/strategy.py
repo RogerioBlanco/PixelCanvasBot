@@ -11,12 +11,6 @@ from six.moves import range
 class Strategy(object):
     def apply(self):
         raise NotImplementedError()
-		
-    def addToPriorities(bot,colors_ignored,colors_not_overwrite,x,y):
-        color = EnumColor.rgba(bot.image.pix[x, y], True)
-        old_color = bot.canvas.get_color(bot.start_x + x, bot.start_y + y)
-        if not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-            self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
 
 
 class Randomize(Strategy):
