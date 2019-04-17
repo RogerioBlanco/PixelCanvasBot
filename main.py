@@ -10,8 +10,14 @@ from src.image import Image
 
 logger = logging.getLogger('bot')
 
-def parse_args():
+try:
+    # Python 2
+    input = raw_input
+except:
+    # Python 3
+    pass
 
+def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
                         help=I18n.get('--image', 'true'))
@@ -108,12 +114,8 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            try:
-                if raw_input(I18n.get('token_resolved')).strip() == 'y':
-                    run()
-            except NameError:
-                if input(I18n.get('token_resolved')).strip() == 'y':
-                    run()
+            if input(I18n.get('token_resolved')).strip() == 'y':
+                run()
 
     run()
 
