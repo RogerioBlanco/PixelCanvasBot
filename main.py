@@ -93,7 +93,7 @@ def main():
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
-    filehandler = logging.handlers.RotatingFileHandler(args.log_file)
+    filehandler = logging.handlers.RotatingFileHandler(args.log_file, maxBytes=8*1024*1024, backupCount=5)
     filehandler.setFormatter(formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
