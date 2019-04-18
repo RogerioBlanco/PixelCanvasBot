@@ -38,6 +38,7 @@ class Randomize(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Linear(Strategy):
@@ -64,6 +65,7 @@ class Linear(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 class LinearVertical(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
@@ -86,6 +88,7 @@ class LinearVertical(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class QuickFill(Strategy):
@@ -116,6 +119,7 @@ class QuickFill(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Sketch(Strategy):
@@ -187,6 +191,7 @@ class Sketch(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Status(Strategy):
@@ -252,6 +257,7 @@ class Radiant(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Spiral(Strategy):
@@ -316,6 +322,7 @@ class Spiral(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class DetectMinTime(Strategy):
