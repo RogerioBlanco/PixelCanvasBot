@@ -36,6 +36,7 @@ class Randomize(Strategy):
             if self.bot.canvas.get_color(x, y) != color and not color in self.colors_ignored and self.bot.canvas.get_color(x, y) not in self.colors_not_overwrite and color.rgba[3] > 0:
                 self.bot.paint(x, y, color)
             count += 1
+        self.bot.wait_time({'waitSeconds': 20})
 
     def roll_dice(self, canvas):
         rnd_x = rnd_y = color = None
@@ -80,6 +81,7 @@ class Prioritized_Linear(Strategy):
             old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
             if old_color != pixel[2]:
                 self.bot.paint(*pixel)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Linear(Strategy):
@@ -97,6 +99,7 @@ class Linear(Strategy):
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+        self.bot.wait_time({'waitSeconds': 20})
 
 class LinearVertical(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
@@ -113,6 +116,7 @@ class LinearVertical(Strategy):
                 old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
                 if old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class QuickFill(Strategy):
@@ -134,6 +138,7 @@ class QuickFill(Strategy):
                         self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
             self.b = not self.b
         self.b = False
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Sketch(Strategy):
@@ -194,6 +199,8 @@ class Sketch(Strategy):
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
             near_color = None
+            
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class Status(Strategy):
@@ -269,6 +276,8 @@ class TopLeftCorner(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class TopRightCorner(Strategy):
@@ -309,6 +318,8 @@ class TopRightCorner(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class BottomLeftCorner(Strategy):
@@ -349,6 +360,8 @@ class BottomLeftCorner(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class BottomRightCorner(Strategy):
@@ -389,6 +402,8 @@ class BottomRightCorner(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class CentreNorthBoundary(Strategy):
@@ -429,6 +444,8 @@ class CentreNorthBoundary(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class CentreSouthBoundary(Strategy):
@@ -469,6 +486,8 @@ class CentreSouthBoundary(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class CentreWestBoundary(Strategy):
@@ -509,6 +528,8 @@ class CentreWestBoundary(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class CentreEastBoundary(Strategy):
@@ -549,6 +570,8 @@ class CentreEastBoundary(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class CentrePointDomain(Strategy):
@@ -589,6 +612,8 @@ class CentrePointDomain(Strategy):
             if _currentX >= self.bot.image.width or _currentY >= self.bot.image.height or _currentX < 0 or _currentY < 0:
                 _currentX = _startX
                 _currentY = _startY
+                
+        self.bot.wait_time({'waitSeconds': 20})
 
 
 class DetectMinTime(Strategy):
