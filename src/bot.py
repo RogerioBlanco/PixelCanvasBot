@@ -19,8 +19,8 @@ logger = logging.getLogger('bot')
 
 
 class Bot(object):
-    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
-                 draw_strategy='randomize', xreversed=False, yreversed=False, notify=False):
+    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, point_x, point_y, proxy=None,
+                 draw_strategy='randomize', xreversed=False, yreversed=False, prioritized=False, notify=False):
         self.pixel_intent = () # Where the bot is currently trying to paint
         self.image = image
         self.start_x = start_x
@@ -28,7 +28,15 @@ class Bot(object):
         self.notify = notify
         self.mode_defensive = mode_defensive
         self.colors_ignored = [EnumColor.index(i) for i in colors_ignored]
-        self.strategy = FactoryStrategy.build(draw_strategy, self, self.colors_ignored, [EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
+        if point_x == None:
+            self.point_x = random.randrange(start_x, start_x + image.width, 1)
+        else:
+            self.point_x = point_x
+        if point_y == None:
+            self.point_y = random.randrange(start_y, start_y + image.height, 1)
+        else:
+            self.point_y = point_y
+        self.strategy = FactoryStrategy.build(draw_strategy, self, self.colors_ignored, [EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed, self.point_x, self.point_y, prioritized)
         self.pixelio = PixelCanvasIO(fingerprint, proxy, self, notify)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
@@ -36,6 +44,8 @@ class Bot(object):
         self.colors_not_overwrite = colors_not_overwrite
         self.xreversed = xreversed
         self.yreversed = yreversed
+        self.prioritized = prioritized
+        self.prioritized = prioritized
 
     def init(self):
         self.canvas = self.setup_canvas()

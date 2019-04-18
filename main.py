@@ -58,8 +58,13 @@ def parse_args():
                         help=I18n.get('--yreversed', 'true'))
     parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
                         dest='log_file', help=I18n.get('--output_file', 'true'))
-    parser.add_argument('-n', '--notify', required=False, default=False,
-                        dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
+    parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
+                        help=I18n.get('--point_x', 'true'))
+    parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
+                        help=I18n.get('--point_y', 'true'))
+    parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
+                        help=I18n.get('--yreversed', 'true'))
+    parser.add_argument('-n', '--notify', required=False, default=False, dest='notify', action='store_true', help=I18n.get('--notify','true'))
 
     return parser.parse_args()
 
@@ -103,8 +108,8 @@ def main():
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
-    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
-              args.draw_strategy, args.xreversed, args.yreversed, args.notify)
+    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, args.point_x, args.point_y, proxy,
+              args.draw_strategy, args.xreversed, args.yreversed, args.prioritized, args.notify)
 
     bot.init()
 
