@@ -20,7 +20,10 @@ def retry(exceptions, max_tries=4, delay=5, backoff=1.5, log_on_failure=None, fa
                         "Retried {0.__name__} for time {1}/{2}. "
                         "{3.__class__.__name__}: {3}".format(func, tries, max_tries, e))
                     current_delay *= backoff
-                    time.sleep(current_delay)
+                    if time < max_tries:
+                        # Only delay when we're going to try again, otherwise
+                        # we're just holding it up.
+                        time.sleep(current_delay)
 
             if log_on_failure:
                 logger.error(log_on_failure)
