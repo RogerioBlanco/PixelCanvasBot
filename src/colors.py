@@ -17,7 +17,10 @@ class EnumColor:
             self.index = index
 
         def __eq__(self, other):
-            return self.name == other.name and self.rgba[0:3] == other.rgba[0:3]
+            if isinstance(other, EnumColor.Color):
+                return self.name == other.name and self.rgba[0:3] == other.rgba[0:3]
+            else:
+                return False
 
         def __ne__(self, other):
             return not self.__eq__(other)

@@ -145,7 +145,7 @@ class Sketch(Strategy):
 
     def apply(self):
         logger.debug(I18n.get('# From left to right, from top to bottom,'))
-        near_color = 0
+        near_color = None
 
         for y in range(self.bot.image.height):
             for x in range(self.bot.image.width):
@@ -154,11 +154,11 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
-            near_color = 0
+            near_color = None
 
         logger.debug(I18n.get('# From right to left, from top to bottom,'))
 
-        near_color = 0
+        near_color = None
 
         for y in range(self.bot.image.height):
             for x in reversed(range(self.bot.image.width)):
@@ -167,11 +167,11 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
-            near_color = 0
+            near_color = None
 
         logger.debug(I18n.get('# From top to bottom, from left to right,'))
 
-        near_color = 0
+        near_color = None
 
         for x in range(self.bot.image.width):
             for y in range(self.bot.image.height):
@@ -180,11 +180,11 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
-            near_color = 0
+            near_color = None
 
         logger.debug(I18n.get('# From bottom to top, from left to right,'))
 
-        near_color = 0
+        near_color = None
 
         for x in range(self.bot.image.width):
             for y in reversed(range(self.bot.image.height)):
@@ -193,7 +193,7 @@ class Sketch(Strategy):
                 if color != near_color and old_color != color and not color in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
                     self.bot.paint(self.bot.start_x + x, self.bot.start_y + y, color)
                 near_color = color
-            near_color = 0
+            near_color = None
 
 
 class Status(Strategy):
