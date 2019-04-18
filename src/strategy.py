@@ -239,7 +239,7 @@ class Status(Strategy):
         self.bot.wait_time({'waitSeconds': 60})
 
 
-class Radiant(Strategy):
+class Radiate(Strategy):
     def __init__(self, bot, colors_ignored, colors_not_overwrite, px, py, prioritized):
         self.bot = bot
         self.colors_ignored = colors_ignored
@@ -396,8 +396,8 @@ class FactoryStrategy(object):
         if strategy == 'sketch':
             return Sketch(bot, colors_ignored, colors_not_overwrite, prioritized)
 
-        if strategy == 'radiant':
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+        if strategy == 'radiate':
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'spiral':
             return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
@@ -408,47 +408,47 @@ class FactoryStrategy(object):
         if strategy == 'tlc':
             px = bot.start_x
             py = bot.start_y
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'trc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'blc':
             px = bot.start_x
             py = bot.start_y + bot.image.height - 1
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'brc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y + bot.image.height - 1
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cnb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'csb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y + bot.image.height - 1
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cwb':
             px = bot.start_x
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'ceb':
             px = bot.start_x + bot.image.width - 1
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         if strategy == 'cpd':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiant(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
         print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
 
