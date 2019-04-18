@@ -28,3 +28,20 @@ def test_rgba_ignores_alpha_when_comparing_colors():
 def test_rgba_returns_closest_color_object_if_rgba_doesnt_match():
     expected_color = EnumColor.ENUM[9] # (148, 224, 68, 255)
     assert expected_color == EnumColor.rgba((130, 250, 65, 3))
+
+# equality
+def test_colors_are_equal_if_rbg_and_name_are_the_same():
+    color_1 = EnumColor.rgba((255, 255, 255, 0))
+    color_2 = EnumColor.rgba((255, 255, 255, 255))
+    color_3 = EnumColor.rgba((0, 255, 255, 0))
+    color_4 = EnumColor.Color(0, 'noncolor', (255, 255, 255, 0))
+    assert color_1 == color_2
+    assert not color_1 != color_2 # test __ne__()
+    assert color_1 != color_3
+    assert color_1 != color_4
+
+def test_color_equality_works_with_bad_values():
+    color = EnumColor.index(0)
+    assert color != None
+    assert color != 5
+    assert color != "i am not a color"
