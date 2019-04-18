@@ -383,7 +383,7 @@ class FactoryStrategy(object):
 
         if strategy == 'linear':
             return Linear(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized)
-        
+
         if strategy == 'linear_vertical':
             return LinearVertical(bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized)
 
