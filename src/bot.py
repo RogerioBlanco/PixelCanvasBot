@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import datetime
 import logging
@@ -84,11 +85,19 @@ class Bot(object):
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):
-        def complete(i, wait):
-            return ((100 * (float(i) / float(wait))) * 50) / 100
+
+        bar_width = 50 # keep this less than 80
+
+        # Print iterations progress
+        def print_progress_bar (iteration, total, prefix = '', suffix = '', length = 100, fill = '█'):
+            filledLength = int(length * iteration / total)
+            bar = fill * filledLength + '-' * (length - filledLength)
+            print('%s |%s| %.2f %s' % (prefix, bar, round(iteration, 2), suffix), end = '\r')
+
 
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds']
+            wait = data['waitSeconds'] - 2
+
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
             if wait > 60:
@@ -96,16 +105,19 @@ class Bot(object):
             else:
                 logger.debug(I18n.get('paint.waitsec').format(time=formattedWait))
 
-            c = i = 0
-            while c < 50:
-                c = complete(i, wait)
-                time.sleep(wait - i if i == int(wait) else 1)
-                out.write("[{}]\0\r".format(
-                    '+' * int(c) + '-' * (50 - int(c))))
-                out.flush()
-                i += 1
-            out.write("\n")
-            out.flush()
+            # initial bar
+            print_progress_bar(0, wait, prefix = '', suffix = 'Seconds', length = bar_width)
+            # update at 0.1 second intervals
+            full = range(int(float(wait) / 0.1))
+            for i in full:
+                time.sleep(0.1)
+                # Update Progress Bar
+                print_progress_bar(float(i) * 0.1, wait, prefix = '', suffix = 'Seconds', length = bar_width)
+            # wait for whatever remains
+            remaining_time = wait - len(full) * 0.1 
+            time.sleep(remaining_time)
+            print_progress_bar(wait, wait, prefix = '', suffix = 'Seconds', length = bar_width)
+
             # Clear intent so 3rd party updates are logged.
             self.pixel_intent = ()
             return data['waitSeconds']

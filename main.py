@@ -100,14 +100,17 @@ def main():
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
     # Setup file log.
-    formatter = logging.Formatter('%(message)s')
+    file_formatter = logging.Formatter('%(message)s')
+    # Clear line first to prevent issues with the timer
+    stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
-    filehandler = logging.handlers.RotatingFileHandler(
-        logfile, maxBytes=8*1024*1024, backupCount=5)
-    filehandler.setFormatter(formatter)
+    filehandler = logging.handlers.RotatingFileHandler(logfile,
+                                                       maxBytes=8*1024*1024,
+                                                       backupCount=5)
+    filehandler.setFormatter(file_formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
-    streamhandler.setFormatter(formatter)
+    streamhandler.setFormatter(stream_formatter)
     logger.addHandler(streamhandler)
     logger.setLevel(logging.DEBUG)
 
