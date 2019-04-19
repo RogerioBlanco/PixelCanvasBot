@@ -18,7 +18,7 @@ class Image(object):
     def __init__(self, file, sens, brig):
         self.sensitive = sens
         self.brightness = brig
-        self.checksum = self.md5(file);
+        self.checksum = self.md5(file)
         self.image = self.load_image(file)
         self.width, self.height = self.image.size
         self.pix = self.image.load()
@@ -27,15 +27,16 @@ class Image(object):
         tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
         if (os.path.isfile(tmb_full_path)):
-            logger.debug(I18n.get('Load cached image'))
+            logger.debug(I18n.get('external.load_cache'))
             return pillow.open(tmb_full_path).convert('RGBA')
 
-        logger.debug(I18n.get('generating converted image here : %s') % str(tmb_full_path))
+        logger.debug(I18n.get('external.generating').format(
+            path=tmb_full_path))
 
         new_image = self.convert_pixels(pillow.open(file).convert('RGBA'))
         self.save_image(new_image, tmb_full_path)
 
-        logger.debug(I18n.get('Saved image cache file, Loading Now...'))
+        logger.debug(I18n.get('external.saved_cache'))
         return pillow.open(tmb_full_path).convert('RGBA')
 
     def md5(self, fname):
@@ -73,8 +74,10 @@ class Image(object):
         for i in range(width):
             for j in range(height):
                 pixel = self.get_pixel(image, i, j)
-                new_color = EnumColor.rgba(pixel, True, self.sensitive, self.brightness)
-                pixels[i, j] = (int(new_color.rgba[0]), int(new_color.rgba[1]), int(new_color.rgba[2]), int(new_color.rgba[3]))
+                new_color = EnumColor.rgba(
+                    pixel, True, self.sensitive, self.brightness)
+                pixels[i, j] = (int(new_color.rgba[0]), int(new_color.rgba[1]), int(
+                    new_color.rgba[2]), int(new_color.rgba[3]))
 
         return new
 
@@ -84,5 +87,5 @@ class Image(object):
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
 
-        logger.debug(I18n.get('Create QR Code success in here: %s') % str(full_QR_path))
+        logger.debug(I18n.get('qr_created').format(path=full_QR_path))
         logger.debug(url.text())

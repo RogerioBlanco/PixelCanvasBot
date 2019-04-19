@@ -143,7 +143,7 @@ class Sketch(Strategy):
 
     def apply(self):
         if self.priorities == []:
-            print(I18n.get('# From left to right, from top to bottom,'))
+            print(I18n.get('strategy.left_right_top_bottom'))
             near_color = 0
 
             for y in range(self.bot.image.height):
@@ -155,7 +155,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('# From right to left, from top to bottom,'))
+            print(I18n.get('strategy.right_left_top_bottom'))
 
             near_color = 0
 
@@ -168,7 +168,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('# From top to bottom, from left to right,'))
+            print(I18n.get('strategy.top_bottom_left_right'))
 
             near_color = 0
 
@@ -181,7 +181,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('# From bottom to top, from left to right,'))
+            print(I18n.get('strategy.bottom_top_left_right'))
 
             near_color = 0
 
@@ -235,7 +235,7 @@ class Status(Strategy):
         incorrect_px = px_active_total - correct_px
         progress = round(float(correct_px) / px_active_total * 100., 2)
 
-        logger.debug(I18n.get('Total: %s painted: %s Not painted: %s Progress: %s%%') % (str(px_active_total), str(correct_px), str(incorrect_px), str(progress)))
+        logger.debug(I18n.get('progress').format(total=px_active_total, correct=correct_px, incorrect=incorrect_px, progress=progress))
         self.bot.wait_time({'waitSeconds': 60})
 
 
@@ -450,6 +450,6 @@ class FactoryStrategy(object):
             py = (2 * bot.start_y + bot.image.height) // 2
             return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
-        print(I18n.get('not found strategy %s auto selected spiral') % str(strategy))
+        print(I18n.get('strategy.auto_select').format(strategy=strategy))
 
         return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)  # Default strategy

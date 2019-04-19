@@ -66,15 +66,19 @@ class EnumColor:
                 return new_color
 
         # if that color is not in standard colors list
-        diff_min = [(255, 255, 255), 1038366]  # sqrt(255*255 + 255*255 + 255*255) = 441.67295593 --> Default white
+        # sqrt(255*255 + 255*255 + 255*255) = 441.67295593 --> Default white
+        diff_min = [(255, 255, 255), 1038366]
 
-        for x in range(0,16):
+        for x in range(0, 16):
             color = EnumColor.ENUM[x]
             # formula that sqrt( (x1 - x2)2 + (y1 - y2)2 + (z1 - z2)2 )
 
-            diff_r = ((rgba[0] + brightness) - color.rgba[0]) * ((rgba[0] + brightness) - color.rgba[0])
-            diff_g = ((rgba[1] + brightness) - color.rgba[1]) * ((rgba[1] + brightness) - color.rgba[1])
-            diff_b = ((rgba[2] + brightness) - color.rgba[2]) * ((rgba[2] + brightness) - color.rgba[2])
+            diff_r = ((rgba[0] + brightness) - color.rgba[0]) * \
+                ((rgba[0] + brightness) - color.rgba[0])
+            diff_g = ((rgba[1] + brightness) - color.rgba[1]) * \
+                ((rgba[1] + brightness) - color.rgba[1])
+            diff_b = ((rgba[2] + brightness) - color.rgba[2]) * \
+                ((rgba[2] + brightness) - color.rgba[2])
 
             x = min(diff_r, diff_g, diff_b)
             z = max(diff_r, diff_g, diff_r)
@@ -91,7 +95,8 @@ class EnumColor:
 
         # return rounding colour
 
+        name = I18n.get(str(EnumColor.rgba(diff_min[0]).name), 'true')
         if not silent:
-            logger.debug(I18n.get(' %s colours rounded %s (%s) ') % (
-            str(rgba), str(diff_min[0]), I18n.get(str(EnumColor.rgba(diff_min[0]).name), 'true')))
+            logger.debug(I18n.get('colors.round').format(
+                rgba=rgba, diff_min=diff_min[0], name=name))
         return EnumColor.rgba(diff_min[0])

@@ -66,19 +66,19 @@ class PixelCanvasIO(object):
         try:
             response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
         except requests.exceptions.ConnectionError as e:
-            logger.debug(I18n.get('connection_broke'))
+            logger.debug(I18n.get('error.connection'))
             return {'success': 0, 'waitSeconds': 5}
 
         if response.status_code == 403:
-            raise Exception(I18n.get('Oh no, you are using a proxy'))
+            raise Exception(I18n.get('error.proxy'))
 
         if response.status_code == 422:
             if self.notify:
                 notification.notify(title='Canvas Bot Alert',message='A captcha has been encountered by the bot, and it requires your human abilities to solve the captcha before it can continue painting. Please do this as soon as possible.',app_name='PixelTraanvas Bot',app_icon='res/robotto.ico',timeout=60)
-            raise NeedUserInteraction(I18n.get('refresh_token'))
+            raise NeedUserInteraction(I18n.get('error.token'))
 
         if response.status_code == 429:
-            raise Exception(I18n.get('Rate_limit_exceeded'))
+            raise Exception(I18n.get('error.rate_limit'))
 
         if response.status_code == 504:
             return {'success': 0, 'waitSeconds': 120}
@@ -89,7 +89,7 @@ class PixelCanvasIO(object):
         try:
             return response.json()
         except Exception as e:
-            raise Exception(I18n.get('only_time') + str(response.text) + '-' + str(response.status_code))
+            raise Exception(str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
         x = bytearray(self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
@@ -116,15 +116,16 @@ class PixelCanvasIO(object):
                             y in range(axis['start_y'], axis['end_y'])) and
                             (x, y, color.index) != self.bot.pixel_intent):
                         template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
+                        color_name = I18n.get(color.name, 'true')
                         if template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
-                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [OUTSIDE TEMPLATE]') % (
-                                str(x), str(y), I18n.get(color.name, 'true')))
+                            logger.debug(I18n.get('paint.outside').format(
+                                x=x, y=y, color=color_name))
                         elif color == template_color:
-                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [ALLY]') % (
-                                str(x), str(y), I18n.get(color.name, 'true')))
+                            logger.debug(I18n.get('paint.ally').format(
+                                x=x, y=y, color=color_name))
                         else:
-                            logger.debug(I18n.get('Somebody updated %s,%s with %s color [ENEMY]') % (
-                                str(x), str(y), I18n.get(color.name, 'true')))
+                            logger.debug(I18n.get('paint.enemy').format(
+                                x=x, y=y, color=color_name))
                     elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
                         self.bot.pixel_intent = ()
@@ -136,11 +137,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            logger.debug(I18n.get("### closed ###"))
+            logger.debug(I18n.get('websocket.closed'))
             open_connection()
 
         def on_open(ws):
-            logger.debug(I18n.get("Websocket open"))
+            logger.debug(I18n.get("websocket.opened"))
 
         def open_connection():
             url = self.get_ws()

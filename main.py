@@ -120,7 +120,7 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            if input(I18n.get('token_resolved')).strip() == 'y':
+            if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
                 run()
 
     run()
@@ -130,4 +130,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.debug(I18n.get('Bye'))
+        logger.debug(I18n.get('exit'))
