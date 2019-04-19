@@ -2,6 +2,7 @@
 
 import logging
 import logging.handlers
+import os
 from argparse import ArgumentParser
 
 from src.bot import Bot
@@ -98,7 +99,8 @@ def main():
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
-    filehandler = logging.handlers.RotatingFileHandler(args.log_file, maxBytes=8*1024*1024, backupCount=5)
+    logfile = os.path.join(os.getcwd(), "log", args.log_file)
+    filehandler = logging.handlers.RotatingFileHandler(logfile, maxBytes=8*1024*1024, backupCount=5)
     filehandler.setFormatter(formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
