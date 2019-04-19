@@ -49,6 +49,7 @@ class Bot(object):
         self.xreversed = xreversed
         self.yreversed = yreversed
         self.prioritized = prioritized
+        self.save_time = 5
 
     def init(self):
         self.canvas = self.setup_canvas()
@@ -74,6 +75,7 @@ class Bot(object):
         response = self.pixelio.send_pixel(x, y, color)
         while not response['success']:
             logger.debug(I18n.get('error.try_again'))
+            self.save_time -= 1
             self.wait_time(response)
             # Redeclare intent after a timer
             self.pixel_intent = (x, y, color.index)
@@ -96,7 +98,8 @@ class Bot(object):
 
 
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] - 2
+            wait = data['waitSeconds'] - self.save_time if data['waitSeconds'] - self.save_time > 0 else data['waitSeconds']
+            # print("save is: %s" % self.save_time)
 
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
