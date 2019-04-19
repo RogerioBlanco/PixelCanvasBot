@@ -19,53 +19,55 @@ except:
     # Python 3
     pass
 
+
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
-                        help=I18n.get('--image', 'true'))
+                        help=I18n.get('--image', True))
     parser.add_argument('-f', '--fingerprint', required=True, dest='fingerprint',
-                        help=I18n.get('--fingerprint', 'true'))
+                        help=I18n.get('--fingerprint', True))
     parser.add_argument('-x', '--start_x', required=True, type=int, dest='start_x',
-                        help=I18n.get('--start_x', 'true'))
+                        help=I18n.get('--start_x', True))
     parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
-                        help=I18n.get('--start_y', 'true'))
+                        help=I18n.get('--start_y', True))
     parser.add_argument('-ci', '--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
-                        help=I18n.get('--colors_ignored', 'true'))
+                        help=I18n.get('--colors_ignored', True))
     parser.add_argument('-cno', '--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
-                        help=I18n.get('--colors_not_overwrite', 'true'))
+                        help=I18n.get('--colors_not_overwrite', True))
     parser.add_argument('-ds', '--draw_strategy', required=False, default='spiral', dest='draw_strategy',
-                        help=I18n.get('--draw_strategy', 'true'))
+                        help=I18n.get('--draw_strategy', True))
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
-                        help=I18n.get('--mode_defensive', 'true'))
+                        help=I18n.get('--mode_defensive', True))
     parser.add_argument('--proxy_url', required=False, dest='proxy_url',
-                        help=I18n.get('--proxy_url', 'true'))
+                        help=I18n.get('--proxy_url', True))
     parser.add_argument('--proxy_auth', required=False, dest='proxy_auth',
-                        help=I18n.get('--proxy_auth', 'true'))
+                        help=I18n.get('--proxy_auth', True))
     parser.add_argument('--round_sensitive', required=False, type=int, default=3, dest='round_sensitive',
-                        help=I18n.get('--round_sensitive', 'true'))
+                        help=I18n.get('--round_sensitive', True))
     parser.add_argument('--image_brightness', required=False, type=int, default=15, dest='image_brightness',
-                        help=I18n.get('--image_brightness', 'true'))
+                        help=I18n.get('--image_brightness', True))
     parser.add_argument('--detect_area_min_range', required=False, type=int, default=-5000, dest='min_range',
-                        help=I18n.get('--detect_area_min_range', 'true'))
+                        help=I18n.get('--detect_area_min_range', True))
     parser.add_argument('--detect_area_max_range', required=False, type=int, default=5000, dest='max_range',
-                        help=I18n.get('--detect_area_max_range', 'true'))
+                        help=I18n.get('--detect_area_max_range', True))
     parser.add_argument('--QR_text', required=False, default="", dest='QR_text',
-                        help=I18n.get('--QR_text', 'true'))
+                        help=I18n.get('--QR_text', True))
     parser.add_argument('--QR_scale', required=False, type=int, default=3, dest='QR_scale',
-                        help=I18n.get('--QR_scale', 'true'))
+                        help=I18n.get('--QR_scale', True))
     parser.add_argument('--xreversed', required=False, default=False, dest='xreversed',
-                        help=I18n.get('--xreversed', 'true'))
+                        help=I18n.get('--xreversed', True))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
-                        help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
-                        dest='log_file', help=I18n.get('--output_file', 'true'))
+                        help=I18n.get('--yreversed', True))
     parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
-                        help=I18n.get('--point_x', 'true'))
+                        help=I18n.get('--point_x', True))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
-                        help=I18n.get('--point_y', 'true'))
+                        help=I18n.get('--point_y', True))
     parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
-                        help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-n', '--notify', required=False, default=False, dest='notify', action='store_true', help=I18n.get('--notify','true'))
+                        help=I18n.get('--yreversed', True))
+    parser.add_argument('-n', '--notify', required=False, default=False,
+                        dest='notify', action='store_true', help=I18n.get('--notify', True))
+    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
+                        dest='log_file', help=I18n.get('--output_file', True))
 
     return parser.parse_args()
 
@@ -100,7 +102,8 @@ def main():
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
-    filehandler = logging.handlers.RotatingFileHandler(logfile, maxBytes=8*1024*1024, backupCount=5)
+    filehandler = logging.handlers.RotatingFileHandler(
+        logfile, maxBytes=8*1024*1024, backupCount=5)
     filehandler.setFormatter(formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
@@ -120,7 +123,7 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            if input(I18n.get('token_resolved')).strip() == 'y':
+            if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
                 run()
 
     run()
@@ -130,4 +133,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.debug(I18n.get('Bye'))
+        logger.debug(I18n.get('exit'))
