@@ -11,7 +11,7 @@ class I18n(object):
         if (inline == 'true'):
             return I18n._all[I18n._locale][key]
         else:
-            return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n._locale][key]
+            return '[' + time.strftime("%H:%M:%S") + '] ' + I18n._all[I18n._locale][key]
 
     _all = {
         'en_GB': {
