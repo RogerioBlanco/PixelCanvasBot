@@ -79,7 +79,7 @@ class Bot(object):
 
             self.canvas.update(x, y, color)
         logger.debug(I18n.get('paint.user').format(
-            color=I18n.get(str(color.name), 'true'), x=x, y=y))
+            color=I18n.get(str(color.name), True), x=x, y=y))
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):

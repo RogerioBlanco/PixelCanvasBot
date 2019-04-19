@@ -7,8 +7,8 @@ import time
 class I18n(object):
 
     @staticmethod
-    def get(key, inline='false'):
-        if (inline == 'true'):
+    def get(key, inline=False):
+        if inline:
             return I18n._all[I18n._locale][key]
         else:
             return '[' + time.strftime("%H:%M:%S") + '] ' + I18n._all[I18n._locale][key]
@@ -74,7 +74,7 @@ class I18n(object):
             '--prioritized': 'Sorts the order in which pixels are placed so that pixels that are more opaque in the source image are given priority over the more transparent pixels; allows for establishing strategic hotspots in a template.',
             '--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
             '--output_file': 'Output the logs to this file. (default: logfile.log).',
-            '--locale': 'The language to use. Choose from [en_GB, fr_FR].',
+            '--locale': 'The language to use. Choose from [{languages}].',
 
             # Colors
             'white': 'white',
@@ -154,7 +154,7 @@ class I18n(object):
             '--prioritized': 'Peindre des pixels plus paques le premier.',
             '--notify': 'Envoyer-toi un notification quand le bot a besoin d\'une nouvelle zone de texte.',
             '--output_file': 'Écrire le journal d\'événements dans ce fichier.',
-            '--locale': 'La langue à utiliser. Choisir parmi [en_GB, fr_FR].',
+            '--locale': 'La langue à utiliser. Choisir parmi [{languages}].',
 
             # Colors
             'white': 'blanc',
@@ -235,7 +235,7 @@ class I18n(object):
             '--prioritized': 'Prioriza pixels baseado no nível de transparencia do template, pixels com maior transpareencia são pintados primeiro pelo bot; permite definir pontos estrategicos no template',
             '--notify': 'Enviar uma notificação de sistema quando o bot detecta um Captcha. A notificação dura 30 segundos, ou até ser removida.',
             '--output_file': 'Arquivo de logs. (Por padrão: logfile.log)',
-            '--locale': 'Língua a usar. Escolha entre [en_GB, fr_FR, pt_BR].',
+            '--locale': 'Língua a usar. Escolha entre [{languages}].',
 
             # Colors
             'white': 'branco',

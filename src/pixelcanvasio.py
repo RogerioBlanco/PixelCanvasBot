@@ -116,7 +116,7 @@ class PixelCanvasIO(object):
                             y in range(axis['start_y'], axis['end_y'])) and
                             (x, y, color.index) != self.bot.pixel_intent):
                         template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
-                        color_name = I18n.get(color.name, 'true')
+                        color_name = I18n.get(color.name, True)
                         if template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
                             logger.debug(I18n.get('paint.outside').format(
                                 x=x, y=y, color=color_name))
