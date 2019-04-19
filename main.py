@@ -10,6 +10,7 @@ from src.custom_exception import *
 from src.i18n import I18n
 from src.image import Image
 
+
 logger = logging.getLogger('bot')
 
 try:
@@ -18,6 +19,7 @@ try:
 except:
     # Python 3
     pass
+
 
 def parse_args():
     parser = ArgumentParser()
@@ -57,15 +59,18 @@ def parse_args():
                         help=I18n.get('--xreversed', 'true'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
-                        dest='log_file', help=I18n.get('--output_file', 'true'))
     parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
                         help=I18n.get('--point_x', 'true'))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
                         help=I18n.get('--point_y', 'true'))
     parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
                         help=I18n.get('--yreversed', 'true'))
-    parser.add_argument('-n', '--notify', required=False, default=False, dest='notify', action='store_true', help=I18n.get('--notify','true'))
+    parser.add_argument('-n', '--notify', required=False, default=False,
+                        dest='notify', action='store_true', help=I18n.get('--notify', 'true'))
+    parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
+                        dest='log_file', help=I18n.get('--output_file', 'true'))
+    parser.add_argument('-l', '--locale', required=False, default='',
+                        dest='locale', help=I18n.get('--locale', 'true'))
 
     return parser.parse_args()
 
@@ -97,10 +102,16 @@ def main():
         args.file = "./img/QRcode.png"
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
+    # Setup user defined locale.
+    if args.locale != '':
+        if args.locale in I18n._all.keys():
+            I18n._locale = args.locale
+
     # Setup file log.
     formatter = logging.Formatter('%(message)s')
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
-    filehandler = logging.handlers.RotatingFileHandler(logfile, maxBytes=8*1024*1024, backupCount=5)
+    filehandler = logging.handlers.RotatingFileHandler(
+        logfile, maxBytes=8*1024*1024, backupCount=5)
     filehandler.setFormatter(formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()

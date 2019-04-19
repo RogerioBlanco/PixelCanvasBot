@@ -9,9 +9,9 @@ class I18n(object):
     @staticmethod
     def get(key, inline='false'):
         if (inline == 'true'):
-            return I18n._all[I18n.lang_code][key]
+            return I18n._all[I18n._locale][key]
         else:
-            return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n.lang_code][key]
+            return '>> ' + time.strftime("%H:%M:%S") + ' ->' + I18n._all[I18n._locale][key]
 
     _all = {
         'en_GB': {
@@ -74,6 +74,7 @@ class I18n(object):
             '--prioritized': 'Sorts the order in which pixels are placed so that pixels that are more opaque in the source image are given priority over the more transparent pixels; allows for establishing strategic hotspots in a template',
             '--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
             '--output_file': 'Output the logs to this file. (default: logfile.log)',
+            '--locale': 'The language to use. Choose from [en_GB, fr_FR].',
 
             # Colors
             'white': 'white',
@@ -153,6 +154,7 @@ class I18n(object):
             '--prioritized': 'Peindre des pixels plus paques le premier',
             '--notify': 'Envoyer-toi un notification quand le bot a besoin d\'une nouvelle zone de texte.',
             '--output_file': 'Écrire le journal d\'événements dans ce fichier.',
+            '--locale': 'La langue à utiliser. Choisir parmi [en_GB, fr_FR].',
 
             # Colors
             'white': 'blanc',
@@ -174,8 +176,8 @@ class I18n(object):
         }
     }
 
-    lang_code = locale.getdefaultlocale()[0]
+    _locale = locale.getdefaultlocale()[0]
     try:
-        _all[lang_code]
+        _all[_locale]
     except KeyError:
-        lang_code = 'en_GB'
+        _locale = 'en_GB'
