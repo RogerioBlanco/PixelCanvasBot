@@ -45,7 +45,6 @@ class Bot(object):
         self.xreversed = xreversed
         self.yreversed = yreversed
         self.prioritized = prioritized
-        self.prioritized = prioritized
 
     def init(self):
         self.canvas = self.setup_canvas()
