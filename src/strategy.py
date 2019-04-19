@@ -15,9 +15,25 @@ from .matrix import Matrix
 logger = logging.getLogger('bot')
 
 
+
 class Strategy(object):
     def apply(self):
         raise NotImplementedError()
+
+    def match(self, canvas, image):
+        for x in range(image.width):
+            for y in range(image.height):
+                color = EnumColor.rgba(self.bot.image.pix[x,y], True)
+                if canvas.get_color(x + self.bot.start_x, y + self.bot.start_y) != color and color.rgba[3] > 0:
+                    return False
+        return True
+
+    def scan_canvas(self):
+        while True:  
+            for pixel in self.priorities:
+                old_pixel = (pixel[0], pixel[1], self.bot.canvas.get_color(pixel[0],pixel[1]))
+                if pixel != old_pixel:  
+                    return pixel
 
 
 class Randomize(Strategy):
@@ -41,10 +57,8 @@ class Randomize(Strategy):
             random.shuffle(self.priorities)
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
@@ -68,10 +82,8 @@ class Linear(Strategy):
                         self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 class LinearVertical(Strategy):
@@ -94,10 +106,8 @@ class LinearVertical(Strategy):
                         self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
@@ -125,10 +135,8 @@ class QuickFill(Strategy):
             self.b = False
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
@@ -197,10 +205,8 @@ class Sketch(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
 
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
@@ -263,10 +269,8 @@ class Radiate(Strategy):
             self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
@@ -328,10 +332,8 @@ class Spiral(Strategy):
             self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        for pixel in self.priorities:
-            old_color = self.bot.canvas.get_color(pixel[0],pixel[1])
-            if old_color != pixel[2]:
-                self.bot.paint(*pixel)
+        while not self.match(self.bot.canvas, self.bot.image):
+            self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
 
