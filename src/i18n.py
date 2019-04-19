@@ -97,10 +97,10 @@ class I18n(object):
 
         'fr_FR': {
             'exit': 'Au revoir!',
-            'colors.round': '{rgba} couleurs arrondies par {diff_min} ({name}).',
+            'colors.round': '{rgba} colors rounded by {diff_min} ({name}).',
             'chunk.blind.east': 'Il se pourrait que ce bot ne puisse pas voir à l\'est de {x}.',
             'chunk.blind.south': 'Il se pourrait que ce bot ne puisse pas voir au sud de {y}.',
-            'chunk.load': 'Je charge un gros morceau ({x}, {y})...',
+            'chunk.load': 'Je charge chunk ({x}, {y})...',
 
             'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore de le faire.',
             'error.proxy': 'Oh la! Tu utilises un proxy.',
@@ -173,7 +173,88 @@ class I18n(object):
             'blue': 'bleu',
             'violet': 'violet',
             'purple': 'violet foncé',
-        }
+        },
+
+        'pt_BR': {
+            'exit': 'Ate Logo!',
+            'colors.round': '{rgba} colors rounded by {diff_min} ({name})',
+            'chunk.blind.east': 'Esse bot pode não ler pixels ao leste de {x}',
+            'chunk.blind.south': 'Esse bot pode não ler pixels ao sul de {y}',
+            'chunk.load': 'Carregando chunk ({x}, {y})...',
+
+            'error.try_again': 'Ocorreu um erro. Tentando novamente.',
+            'error.proxy': 'Ops! Parece que voce esta usando um Proxy',
+            'error.token': 'Um token é necessario. Abra pixelcanvas.io e pinte um pixel',
+            'error.rate_limit': 'Oh nao! Limite de tentativas excedido',
+            'error.connection': 'Erro de conexao :(',
+
+            'paint.has_painted': 'Voce pintou um pixel no pixelcanvas.io? y(sim)/n(nao):',
+            'paint.user': 'Voce pintou {x},{y} com {color}',
+            'paint.ally': 'Alguem pintou {x},{y} com {color} [ALIADO]',
+            'paint.outside': 'Alguem pintou {x},{y} com {color} [FORA DO TEMPLATE]',
+            'paint.enemy': 'Alguem pintou {x},{y} com {color} [INIMIGO]',
+            'paint.wait': 'Esperando {seconds} segundos',
+            'progress': 'Total de pixels: {total}. Pixels corretos: {correct}. Pixels incorretos: {incorrect}. Progresso: {progress}%.',
+
+
+            'websocket.closed': 'Websocket fechado',
+            'websocket.opened': 'Websocket aberto',
+
+            'strategy.left_right_top_bottom': 'Desenha da esquerda para a direita, de cima para baixo',
+            'strategy.right_left_top_bottom': 'Desenha da direita para a esquerda, de cima para baixo',
+            'strategy.top_bottom_left_right': 'Desenha de cima para baixo, da esquerda para a direita',
+            'strategy.bottom_top_left_right': 'Desenha de baixo para cima, da esquerda para a direita',
+            'strategy.auto_select': 'Estrategia invalida "{strategy}". Automaticamente selecionando "spiral"',
+
+            'external.load_cache': 'Carregndo imagem em cache',
+            'external.generating': 'Gerando imagem convertida em: {path}',
+            'external.saved_cache': 'Imagem salva no cache, carregando...',
+            'qr_created': 'QR code salvo em: {path}',
+
+            # Argumentos
+            '--image': 'Imagem a ser desenhada.Converte automaticamente para as cores do Canvas.',
+            '--fingerprint': 'Sua fingerprint. Veja README.md (em ingles)para instrucoes de como configurar.',
+            '--start_x': 'Coordenada X do topo esquerdo do desenho',
+            '--start_y': 'Coordenada Y do topo esquerdo do desenho',
+            '--colors_ignored': 'Cores escolhidas serão tratadas como transparentes pelo bot.',
+            '--colors_not_overwrite': 'As cores escolhidas não serão sobrepostas no Canvas.',
+            '--draw_strategy': 'Estrategia de desenho. Escolha da lista de estrategias [linear, p_linear, qf, randomize, status, sketch, radiate, spiral] default: randomize',
+            '--mode_defensive': 'Ativa o modo demoniaco (roda em segundo plano). Isso irá durar para sempre.',
+            '--proxy_url': 'url do Proxy e porta. Ex: url:porta . DEPRECATED',
+            '--proxy_auth': 'Autenticacao do Proxy. Ex: usuario:senha . DEPRECATED',
+            '--round_sensitive': 'Sensibilidade da cor. O valor deve ser > 0. Ex: 3',
+            '--image_brightness': 'Altera o brilho da imagem. Suporta valores negativos. Ex: 15 ou -15',
+            '--detect_area_min_range': 'Suporta valores negativos. Ex: 3000 ou -3000',
+            '--detect_area_max_range': 'Suporta valores negativos. Ex: 3000 ou -3000',
+            '--QR_text': 'link ou texto para gerar o QR code',
+            '--QR_scale': 'Proporcao do QR code',
+            '--xreversed': 'Desenha da direita para a esquerda. Definir com \'True\'(verdadeiro) ou \'False\'(falso) (Por padrão: falso)',
+            '--yreversed': 'Desenha de baixo para cima. Definir com \'True\'(verdadeiro) ou \'False\'(falso) (Por padrão: falso)',
+            '--point_x': 'Ponto de partida para coordenadas X em estrategias que partem de um unico ponto, como radial e spiral. (Por padrão: do centro)',
+            '--point_y': 'Ponto de partida para coordenadas Y em estrategias que partem de um unico ponto, como radial e spiral. (Por padrão: do centro)',
+            '--prioritized': 'Prioriza pixels baseado no nível de transparencia do template, pixels com maior transpareencia são pintados primeiro pelo bot; permite definir pontos estrategicos no template',
+            '--notify': 'Enviar uma notificação de sistema quando o bot detecta um Captcha. A notificação dura 30 segundos, ou até ser removida.',
+            '--output_file': 'Arquivo de logs. (Por padrão: logfile.log)',
+            '--locale': 'Língua a usar. Escolha entre [en_GB, fr_FR, pt_BR].',
+
+            # Colors
+            'white': 'branco',
+            'gainsboro': 'cinza claro',
+            'grey': 'cinza escuro',
+            'nero': 'preto',
+            'carnation pink': 'rosa',
+            'red': 'vermelho',
+            'orange': 'laranja',
+            'brown': 'marrom',
+            'yellow': 'amarelo',
+            'conifer': 'verde claro',
+            'green': 'verde escuro',
+            'dark turquoise': 'turquesa',
+            'pacific blue': 'azul marinho',
+            'blue': 'azul',
+            'violet': 'violeta',
+            'purple': 'roxo',
+        },
     }
 
     _locale = locale.getdefaultlocale()[0]
