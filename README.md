@@ -125,6 +125,10 @@ Additional color: index 16, hexcode #5B0909
     * *sketch* :    attempt to sketch edges in the template image. See: https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
 
     * *detect* :    ~~Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]~~ currently broken
+    
+    * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and py arguments.
+    
+    * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and py arguments.
 
     * *tlc* :       fill outwards from the Top Left Corner
 
@@ -173,6 +177,10 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 * [optional] **--yreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
 
 * [optional] **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
+
+* [optional] **-px** or **--point_x** is the x coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
+
+* [optional] **-py** or **--point_y** is the y coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
 
 #### Note:
 
