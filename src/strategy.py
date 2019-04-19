@@ -75,7 +75,7 @@ class Linear(Strategy):
         self.bot.wait_time({'waitSeconds': 20})
 
 class LinearVertical(Strategy):
-    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed):
+    def __init__(self, bot, colors_ignored, colors_not_overwrite, xreversed, yreversed, prioritized):
         self.bot = bot
         self.colors_ignored = colors_ignored
         self.colors_not_overwrite = colors_not_overwrite
