@@ -44,7 +44,7 @@ class I18n(object):
             '# From right to left, from top to bottom,': '# From right to left, from top to bottom,',
             '# From top to bottom, from left to right,': '# From top to bottom, from left to right,',
             '# From bottom to top, from left to right,': '# From bottom to top, from left to right,',
-            'not found strategy %s auto selected randomize': 'Invalid strategy "%s". Defaulting to strategy "randomize"',
+            'not found strategy %s auto selected spiral': 'Invalid strategy "%s". Defaulting to strategy "spiral"',
 
             ##  Arguments
 

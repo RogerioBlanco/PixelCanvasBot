@@ -32,7 +32,7 @@ def parse_args():
                         help=I18n.get('--colors_ignored', 'true'))
     parser.add_argument('-cno', '--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
                         help=I18n.get('--colors_not_overwrite', 'true'))
-    parser.add_argument('-ds', '--draw_strategy', required=False, default='randomize', dest='draw_strategy',
+    parser.add_argument('-ds', '--draw_strategy', required=False, default='spiral', dest='draw_strategy',
                         help=I18n.get('--draw_strategy', 'true'))
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
                         help=I18n.get('--mode_defensive', 'true'))

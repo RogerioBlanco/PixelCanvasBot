@@ -450,6 +450,6 @@ class FactoryStrategy(object):
             py = (2 * bot.start_y + bot.image.height) // 2
             return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
 
-        print(I18n.get('not found strategy %s auto selected randomize') % str(strategy))
+        print(I18n.get('not found strategy %s auto selected spiral') % str(strategy))
 
-        return Randomize(bot, colors_ignored, colors_not_overwrite, prioritized)  # Default strategy
+        return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)  # Default strategy
