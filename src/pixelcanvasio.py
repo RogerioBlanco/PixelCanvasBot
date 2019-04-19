@@ -59,7 +59,7 @@ class PixelCanvasIO(object):
         self.cookies = response.cookies
         return response.json()
 
-    @retry(KeyError, UnknownError)
+    @retry((KeyError, UnknownError))
     def send_pixel(self, x, y, color):
         payload = {
             'x': x,
