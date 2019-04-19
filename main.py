@@ -68,8 +68,6 @@ def parse_args():
                         dest='notify', action='store_true', help=I18n.get('--notify', True))
     parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
                         dest='log_file', help=I18n.get('--output_file', True))
-    parser.add_argument('-l', '--locale', required=False, default='', dest='locale',
-                        help=I18n.get('--locale', True).format(languages=', '.join(I18n._all.keys())))
 
     return parser.parse_args()
 
@@ -100,11 +98,6 @@ def main():
     if not args.QR_text == "":
         args.file = "./img/QRcode.png"
         Image.create_QR_image(args.QR_text, args.QR_scale)
-
-    # Setup user defined locale.
-    if args.locale != '':
-        if args.locale in I18n._all.keys():
-            I18n._locale = args.locale
 
     # Setup file log.
     formatter = logging.Formatter('%(message)s')

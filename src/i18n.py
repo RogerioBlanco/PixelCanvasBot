@@ -2,7 +2,7 @@
 
 import locale
 import time
-
+import os
 
 class I18n(object):
 
@@ -257,7 +257,7 @@ class I18n(object):
         },
     }
 
-    _locale = locale.getdefaultlocale()[0]
+    _locale = os.environ.get('LOCALE', locale.getdefaultlocale()[0])
     try:
         _all[_locale]
     except KeyError:
