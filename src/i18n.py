@@ -16,7 +16,7 @@ class I18n(object):
     _all = {
         'en_GB': {
             'exit': 'Bye!',
-            'colors.round': '{rgba} colors rounded {diff_min} ({name})',
+            'colors.round': '{rgba} colors rounded by {diff_min} ({name})',
             'chunk.blind.east': 'This bot may be blind for all pixels east of {x}',
             'chunk.blind.south': 'This bot may be blind for all pixels south of {y}',
             'chunk.load': 'Loading chunk ({x}, {y})...',
@@ -29,12 +29,12 @@ class I18n(object):
 
             'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? y/n:',
             'paint.user': 'You painted {color} at {x},{y}',
-            'paint.wait': 'Waiting {seconds} seconds',
-            'progress': 'Total active pixel count: {total}. Correct pixels: {correct}. Incorrect pixels: {incorrect}. Progress: {progress}%.',
-
             'paint.ally': 'Somebody updated {x},{y} with {color} [ALLY]',
             'paint.outside': 'Somebody updated {x},{y} with {color} [OUTSIDE TEMPLATE]',
             'paint.enemy': 'Somebody updated {x},{y} with {color} [ENEMY]',
+            'paint.wait': 'Waiting {seconds} seconds',
+            'progress': 'Total active pixel count: {total}. Correct pixels: {correct}. Incorrect pixels: {incorrect}. Progress: {progress}%.',
+
 
             'websocket.closed': 'Websocket closed',
             'websocket.opened': 'Websocket opened',
@@ -46,7 +46,7 @@ class I18n(object):
             'strategy.auto_select': 'Invalid strategy "{strategy}". Defaulting to strategy "spiral"',
 
             'external.load_cache': 'Loading cached image',
-            'external.generating': 'Generating converted image here : {path}',
+            'external.generating': 'Generating converted image here: {path}',
             'external.saved_cache': 'Saved image cache file, loading now...',
             'qr_created': 'QR Code successfully saved here: {path}',
 
@@ -73,7 +73,7 @@ class I18n(object):
             '--point_y': 'Target y coordinate for strategies that radiate from a single point, such as radiate and spiral; defaults to center',
             '--prioritized': 'Sorts the order in which pixels are placed so that pixels that are more opaque in the source image are given priority over the more transparent pixels; allows for establishing strategic hotspots in a template',
             '--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
-            '--output_file': 'Output the logs to a file. This is completely optional.',
+            '--output_file': 'Output the logs to this file. (default: logfile.log)',
 
             # Colors
             'white': 'white',
@@ -93,6 +93,85 @@ class I18n(object):
             'violet': 'violet',
             'purple': 'purple',
         },
+
+        'fr_FR': {
+            'exit': 'Au revoir!',
+            'colors.round': '{rgba} couleurs arrondies par {diff_min} ({name}).',
+            'chunk.blind.east': 'Il se pourrait que ce bot ne puisse pas voir à l\'est de {x}',
+            'chunk.blind.south': 'Il se pourrait que ce bot ne puisse pas voir au sud de {y}',
+            'chunk.load': 'Je charge un gros morceau ({x}, {y})...',
+
+            'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore de le faire.',
+            'error.proxy': 'Oh la! Tu utilises un proxy.',
+            'error.token': 'J\'ai besoin d\'une nouvelle zone de texte. Merci d\'ouvrir pixelcanvas.io et poser un pixel',
+            'error.rate_limit': 'J\'ai envoyé trop de requêtes.',
+            'error.connection': 'La connexion s\'est brisé prématurément',
+
+            'paint.has_painted': 'Est-ce que tu as posé un pixel sur pixelcanvas.io? y/n:',
+            'paint.user': 'Tu as peint le pixel {x},{y} en {color}',
+            'paint.ally': 'Un(e) ami(e) a peint le pixel {x},{y} en {color}',
+            'paint.outside': 'Quelqu\'un a peint le pixel {x},{y} en {color} (en dehors de la modèle)',
+            'paint.enemy': 'Un(e) ennemi(e) a peint le pixel {x},{y} en {color}',
+            'paint.wait': 'J\'attends {seconds} secondes',
+            'progress': 'Tous pixels: {total}. Pixels corrects: {correct}. Pixels incorrects: {incorrect}. Avancement: {progress}%.',
+
+            'websocket.closed': 'Websocket s\'est fermé',
+            'websocket.opened': 'Websocket s\'est ouvert',
+
+            'strategy.left_right_top_bottom': 'Je dessine de gauche à droite, de haut en bas',
+            'strategy.right_left_top_bottom': 'Je dessine de droite à gauche, de haut en bas',
+            'strategy.top_bottom_left_right': 'Je dessine de haut en bas, de gauche à droite',
+            'strategy.bottom_top_left_right': 'Je dessine de bas en haut, de gauche à droite',
+            'strategy.auto_select': 'Stratégie erronée "{strategy}". Defaulting to strategy "spiral"',
+
+            'external.load_cache': 'Je charge l\'image de la mémoire-cache',
+            'external.generating': 'Je crée l\'image transformée ici : {path}',
+            'external.saved_cache': 'J\'ai mis l\'image en mémoire-cache, je le charge...',
+            'qr_created': 'Le code QR est sauvegardé ici : {path}',
+
+            # Arguments
+            '--image': 'L\'image à peindre. Corriger les couleurs de l\'image (comme défini en colors.py) pour que le bot puisse peindre.',
+            '--fingerprint': 'Ton empreinte digitale. Voir README.md pour des instructions sur la façon de l\'obtenir.',
+            '--start_x': 'La coordonnée X à laquelle commencer à peindre.',
+            '--start_y': 'La coordonnée Y à laquelle commencer à peindre',
+            '--colors_ignored': 'Ces couleurs seront ignorées.',
+            '--colors_not_overwrite': 'Ces couleurs ne seront pas écrasés.',
+            '--draw_strategy': 'Stratégie optionnelle. Choisir parmi [linear, p_linear, qf, randomize, status, sketch, radiate, spiral] la stratégie de valeur par défaut: randomize',
+            '--mode_defensive': 'La façon défensive.',
+            '--proxy_url': 'L\'URL de proxy avec le port. ex: url:port . DEPRECATED',
+            '--proxy_auth': 'L\'authentification de proxy. ex: user:pass . DEPRECATED',
+            '--round_sensitive': 'La sensibilité à l\'arrondi des couleurs. Ce nombre doit être > 0. ex: 3',
+            '--image_brightness': 'Changer la luminosité de l\'image. ex: 15 or -15',
+            '--detect_area_min_range': 'Supporter les nombres négatifs. ex: 3000 or -3000',
+            '--detect_area_max_range': 'Supporter les nombres négatifs. ex: 3000 or -3000',
+            '--QR_text': 'URL ou texte',
+            '--QR_scale': 'La largeur de pixels du code QR.',
+            '--xreversed': 'Dessiner de droite à gauche. Mettre True (Vrai) or False (Faux) (le valeur par défaut: False (Faux))',
+            '--yreversed': 'Dessiner de bas en haut. Mettre True (Vrai) or False (Faux) (le valeur par défaut: False (Faux))',
+            '--point_x': 'La coordonnée X pour des stratégies qui rayonne autor d\'un endroit, comme "radiate" et "spiral"; (le valeur par défaut: le centre de la modèle)',
+            '--point_y': 'La coordonnée Y pour des stratégies qui rayonne autor d\'un endroit, comme "radiate" et "spiral"; (le valeur par défaut: le centre de la modèle)',
+            '--prioritized': 'Peindre des pixels plus paques le premier',
+            '--notify': 'Envoyer-toi un notification quand le bot a besoin d\'une nouvelle zone de texte.',
+            '--output_file': 'Écrire le journal d\'événements dans ce fichier.',
+
+            # Colors
+            'white': 'blanc',
+            'gainsboro': 'gris clair',
+            'grey': 'gris',
+            'nero': 'noir',
+            'carnation pink': 'rose',
+            'red': 'rouge',
+            'orange': 'orange',
+            'brown': 'marron',
+            'yellow': 'jaune',
+            'conifer': 'vert clair',
+            'green': 'vert',
+            'dark turquoise': 'turquoise',
+            'pacific blue': 'bleu marine',
+            'blue': 'bleu',
+            'violet': 'violet',
+            'purple': 'violet foncé',
+        }
     }
 
     lang_code = locale.getdefaultlocale()[0]
