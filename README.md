@@ -186,15 +186,6 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
 
-#### Note:
-
-If you wish to use a language that is not your system language, or the bot isn't using your system language...
-
-* On *nix systems, run `LANG=` followed by your preferred language in the command line.
-* On Windows systems, run `set LANG=` followed by your preferred language in the command line.
-
-See specified languages in `i18n.py`.
-
 # Update bot with last changes
 
 ### Clear local changes (if you changed the source code)
@@ -208,3 +199,19 @@ See specified languages in `i18n.py`.
 # External: thanks for reference
 
 https://github.com/possatti/pixelbot/blob/master/README.md
+
+
+# Languages:
+
+## Choosing language.
+
+If you wish to use a language that is not your system language, or the bot isn't using your system language...
+
+* On *nix systems, run `LANG=` followed by your preferred language in the command line.
+* On Windows systems, run `set LANG=` followed by your preferred language in the command line.
+
+See specified languages in `i18n.py`.
+
+## Changing/adding translations.
+
+If you need a language added, get our attention by [submitting an issue](https://github.com/traa-pixelcanvas/TraanvasBot/issues/new) or doing the translations yourself and sending a pull request [here](https://github.com/traa-pixelcanvas/TraanvasBot/pulls).
