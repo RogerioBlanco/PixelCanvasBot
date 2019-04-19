@@ -59,7 +59,7 @@ class PixelCanvasIO(object):
         self.cookies = response.cookies
         return response.json()
 
-    @retry(UnknownError)
+    @retry(KeyError, UnknownError)
     def send_pixel(self, x, y, color):
         payload = {
             'x': x,
@@ -94,7 +94,11 @@ class PixelCanvasIO(object):
             return {'success': 0, 'waitSeconds': 5}
 
         try:
-            return response.json()
+            response_dict = response.json()
+            if 'waitSeconds' in response_dict:
+                return response_dict
+            else:
+                raise KeyError("No wait time specified by the server.")
         except Exception:
             raise UnknownError(str(response.text) + '-' + str(response.status_code))
 
