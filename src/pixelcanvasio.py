@@ -70,7 +70,7 @@ class PixelCanvasIO(object):
         response = None
         try:
             response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
-        except requests.exceptions.ConnectionError as e:
+        except requests.exceptions.ConnectionError:
             logger.debug(I18n.get('error.connection'))
             return {'success': 0, 'waitSeconds': 5}
 
@@ -93,7 +93,7 @@ class PixelCanvasIO(object):
 
         try:
             return response.json()
-        except Exception as e:
+        except:
             raise Exception(str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
