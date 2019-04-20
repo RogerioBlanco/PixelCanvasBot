@@ -80,7 +80,7 @@ class Bot(object):
         response = self.pixelio.send_pixel(x, y, color)
         end = time.time()
         self.paint_lag = end - start
-        logger.debug("paint lag: %s" % self.paint_lag)
+        # logger.debug("paint lag: %s" % self.paint_lag)
         while not response['success']:
             logger.debug(I18n.get('error.try_again'))
             self.wait_time(response)
@@ -113,7 +113,7 @@ class Bot(object):
             else:
                 mod_time = data['waitSeconds'] + self.get_delta()
                 wait = mod_time if mod_time > 0 else data['waitSeconds']
-                logger.debug("delta is: %s" % round(self.get_delta(), 5))
+                # logger.debug("delta is: %s" % round(self.get_delta(), 5))
 
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
