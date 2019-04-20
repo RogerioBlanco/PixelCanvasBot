@@ -31,8 +31,7 @@ class I18n(object):
             'paint.ally': 'Somebody updated {x},{y} with {color} [ALLY].',
             'paint.outside': 'Somebody updated {x},{y} with {color} [OUTSIDE TEMPLATE].',
             'paint.enemy': 'Somebody updated {x},{y} with {color} [ENEMY].',
-            'paint.waitmin': 'Waiting {time} minutes.',
-            'paint.waitsec': 'Waiting {time} seconds.',
+            'paint.wait': 'Waiting {time}.',
             'progress': 'Total active pixel count: {total}. Correct pixels: {correct}. Incorrect pixels: {incorrect}. Progress: {progress}%.',
 
 

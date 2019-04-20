@@ -90,10 +90,7 @@ class Bot(object):
             wait = (data['waitSeconds'] + (random.randint(2, 4) / 3.33))
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
-            if wait > 60:
-                logger.debug(I18n.get('paint.waitmin').format(time=formattedWait))
-            else:
-                logger.debug(I18n.get('paint.waitsec').format(time=formattedWait))
+            logger.debug(I18n.get('paint.wait').format(time=formattedWait))
 
             c = i = 0
             while c < 50:
