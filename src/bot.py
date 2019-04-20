@@ -107,8 +107,8 @@ class Bot(object):
         if data['waitSeconds'] is not None:
             # no delta if wait error
             if 'errors' in data and {'msg': 'You must wait'} in data['errors']:
-                    wait = data['waitSeconds']
-                    logger.debug('Wait err')
+                wait = data['waitSeconds']
+                logger.debug('Wait err')
             # apply delta
             else:
                 mod_time = data['waitSeconds'] + self.get_delta()
