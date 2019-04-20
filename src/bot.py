@@ -49,7 +49,11 @@ class Bot(object):
         self.xreversed = xreversed
         self.yreversed = yreversed
         self.prioritized = prioritized
-        self.save_time = 5
+        self.paint_lag = 0
+        self.wait_delta = -2
+
+    def get_delta(self):
+        return self.wait_delta - self.paint_lag / 2
 
     def init(self):
         self.canvas = self.setup_canvas()
@@ -72,10 +76,13 @@ class Bot(object):
 
     def paint(self, x, y, color):
         self.pixel_intent = (x, y, color.index)
+        start = time.time()
         response = self.pixelio.send_pixel(x, y, color)
+        end = time.time()
+        self.paint_lag = end - start
+        logger.debug("paint lag: %s" % self.paint_lag)
         while not response['success']:
             logger.debug(I18n.get('error.try_again'))
-            self.save_time -= 1
             self.wait_time(response)
             # Redeclare intent after a timer
             self.pixel_intent = (x, y, color.index)
@@ -90,16 +97,23 @@ class Bot(object):
 
         bar_width = 50 # keep this less than 66
 
-        # Print iterations progress
+        # Print timer progress
         def print_progress_bar (iteration, total, prefix = '', suffix = '', length = 100, fill = '█'):
-            filledLength = int(length * iteration / total)
-            bar = fill * filledLength + '-' * (length - filledLength)
+            filled_length = int(length * iteration / total)
+            bar = fill * filled_length + '-' * (length - filled_length)
             print('%s|%s| %.2f %s' % (prefix, bar, round(total - iteration, 2), suffix), end = '\r')
 
 
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] - self.save_time if data['waitSeconds'] - self.save_time > 0 else data['waitSeconds']
-            # print("save is: %s" % self.save_time)
+            # no delta if wait error
+            if 'errors' in data and {'msg': 'You must wait'} in data['errors']:
+                    wait = data['waitSeconds']
+                    logger.debug('Wait err')
+            # apply delta
+            else:
+                mod_time = data['waitSeconds'] + self.get_delta()
+                wait = mod_time if mod_time > 0 else data['waitSeconds']
+                logger.debug("delta is: %s" % round(self.get_delta(), 5))
 
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
