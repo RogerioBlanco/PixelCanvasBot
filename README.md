@@ -102,7 +102,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 Additional color: index 16, hexcode #5B0909
 
-* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *randomize* is used by default.
+* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *spiral* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
 
@@ -126,7 +126,7 @@ Additional color: index 16, hexcode #5B0909
 
     * *detect* :    ~~Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]~~ currently broken
     
-    * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and py arguments.
+    * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and -py arguments.
     
     * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and py arguments. This currently only works if you specify -px and -py.
 
