@@ -88,13 +88,13 @@ class Bot(object):
 
     def wait_time(self, data={'waitSeconds': None}):
 
-        bar_width = 50 # keep this less than 80
+        bar_width = 50 # keep this less than 66
 
         # Print iterations progress
         def print_progress_bar (iteration, total, prefix = '', suffix = '', length = 100, fill = '█'):
             filledLength = int(length * iteration / total)
             bar = fill * filledLength + '-' * (length - filledLength)
-            print('%s |%s| %.2f %s' % (prefix, bar, round(iteration, 2), suffix), end = '\r')
+            print('%s|%s| %.2f %s' % (prefix, bar, round(total - iteration, 2), suffix), end = '\r')
 
 
         if data['waitSeconds'] is not None:
