@@ -19,7 +19,7 @@ You can use any image. The bot will convert your image colors to nearest PixelCa
 
 Download and install python for your operating system from here https://www.python.org/downloads/
 
-Only Python 3.7 and higher is officially supported, but 2.7+ should work as long as you're just running the bot.
+**Only Python 3.7 and higher is officially supported**. Using python 2.7 will almost definitely cause issues.
 
 If you are on Windows, ensure you add Python to PATH when installing. Python sometimes calls this setting "Add Python to environment variables". If it is already installed and not in PATH, follow the instructions on this website to add it: https://geek-university.com/python/add-python-to-the-windows-path/
 
