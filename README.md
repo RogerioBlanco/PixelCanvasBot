@@ -128,7 +128,7 @@ Additional color: index 16, hexcode #5B0909
     
     * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and -py arguments.
     
-    * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and -py arguments. This currently only works if you specify -px and -py.
+    * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and -py arguments.
 
     * *tlc* :       fill outwards from the Top Left Corner
 
