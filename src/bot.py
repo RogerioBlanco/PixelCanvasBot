@@ -101,7 +101,7 @@ class Bot(object):
         def print_progress_bar (iteration, total, prefix = '', suffix = '', length = 100, fill = '█'):
             filled_length = int(length * iteration / total)
             bar = fill * filled_length + '-' * (length - filled_length)
-            print('%s|%s| %.2f %s' % (prefix, bar, round(total - iteration, 2), suffix), end = '\r', flush=True)
+            print('%s|%s| %.2f %s' % (prefix, bar, round(total - iteration, 2), suffix) + (4 * ' '), end = '\r', flush=True)
 
 
         if data['waitSeconds'] is not None:
