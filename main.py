@@ -58,7 +58,7 @@ def parse_args():
                         help=I18n.get('--xreversed', True))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', True))
-    parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
+    parser.add_argument('-px', '--point_x', required=False, type=int, default=None, dest='point_x',
                         help=I18n.get('--point_x', True))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
                         help=I18n.get('--point_y', True))
