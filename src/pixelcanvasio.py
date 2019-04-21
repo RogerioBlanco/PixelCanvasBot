@@ -22,10 +22,10 @@ logger = logging.getLogger('bot')
 
 class PixelCanvasIO(object):
     URL = 'https://pixelcanvas.io/'
-    HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
-    HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
-                         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
-                        }
+    HEADER_USER_AGENT = {
+        'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'
+    }
     HEADERS = {
         'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
         'accept': 'application/json',
@@ -44,14 +44,13 @@ class PixelCanvasIO(object):
         self.notify = notify
 
     def post(self, url, payload):
-        return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy,
-                                cookies=self.cookies)
+        return requests.post(url, json=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy, cookies=self.cookies)
 
     def get(self, url, stream=False):
         return requests.get(url, stream=stream, headers=PixelCanvasIO.HEADER_USER_AGENT, proxies=self.proxy)
 
     def myself(self):
-        response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
+        response = self.post(PixelCanvasIO.URL + 'api/me', {'fingerprint': self.fingerprint})
         self.duck = 'a'
 
         if ('duck' in response.cookies):
@@ -60,12 +59,18 @@ class PixelCanvasIO(object):
         return response.json()
 
     def send_pixel(self, x, y, color):
-        payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (
-            x, y, self.duck, x + y + 8, color.index, self.fingerprint)
+        payload = {
+            'x': x,
+            'y': y,
+            self.duck: x + y + 8,
+            'color': color.index,
+            'fingerprint': self.fingerprint,
+            'token': None
+        }
         response = None
         try:
             response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
-        except requests.exceptions.ConnectionError as e:
+        except requests.exceptions.ConnectionError:
             logger.debug(I18n.get('error.connection'))
             return {'success': 0, 'waitSeconds': 5}
 
@@ -88,7 +93,7 @@ class PixelCanvasIO(object):
 
         try:
             return response.json()
-        except Exception as e:
+        except:
             raise Exception(str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
