@@ -102,7 +102,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 Additional color: index 16, hexcode #5B0909
 
-* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *randomize* is used by default.
+* [optional] **-ds** or **--draw_strategy**            is the strategy the bot will use when deciding how to paint your image.  *spiral* is used by default.
 
     * *linear* :    paint line by line, left to right, top to bottom.
 
@@ -125,6 +125,10 @@ Additional color: index 16, hexcode #5B0909
     * *sketch* :    attempt to sketch edges in the template image. See: https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
 
     * *detect* :    ~~Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]~~ currently broken
+    
+    * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and -py arguments.
+    
+    * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and -py arguments.
 
     * *tlc* :       fill outwards from the Top Left Corner
 
@@ -174,18 +178,13 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 
 * [optional] **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
 
+* [optional] **-px** or **--point_x** is the x coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
+
+* [optional] **-py** or **--point_y** is the y coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
+
 #### Note:
 
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
-
-#### Note:
-
-If you wish to use a language that is not your system language, or the bot isn't using your system language...
-
-* On *nix systems, run `LANG=` followed by your preferred language in the command line.
-* On Windows systems, run `set LANG=` followed by your preferred language in the command line.
-
-See specified languages in `i18n.py`.
 
 # Update bot with last changes
 
@@ -200,3 +199,19 @@ See specified languages in `i18n.py`.
 # External: thanks for reference
 
 https://github.com/possatti/pixelbot/blob/master/README.md
+
+
+# Languages:
+
+## Choosing language.
+
+If you wish to use a language that is not your system language, or the bot isn't using your system language...
+
+* On *nix systems, run `LANG=` followed by your preferred language in the command line.
+* On Windows systems, run `set LANG=` followed by your preferred language in the command line.
+
+See specified languages in `i18n.py`.
+
+## Changing/adding translations.
+
+If you need a language added, get our attention by [submitting an issue](https://github.com/traa-pixelcanvas/TraanvasBot/issues/new) or doing the translations yourself and sending a pull request [here](https://github.com/traa-pixelcanvas/TraanvasBot/pulls).
