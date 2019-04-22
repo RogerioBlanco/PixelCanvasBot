@@ -106,11 +106,11 @@ class PixelCanvasIO(object):
         x = bytearray(self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
         return x
 
-    @retry(json.decoder.JSONDecodeError, log_on_failure=I18n.get('failed_collect_websocket'), fatal=True)
+    @retry(json.decoder.JSONDecodeError, log_on_failure=I18n.get('websocket.failed_collect'), fatal=True)
     def get_ws(self):
         return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
 
-    @retry(Exception, log_on_failure=I18n.get('failed_connect_websocket'), fatal=True)
+    @retry(Exception, log_on_failure=I18n.get('websocket.failed_connect'), fatal=True)
     def connect_websocket(self, canvas, axis={'start_x': 0, 'end_x': 0, 'start_y': 0, 'end_y': 0},
                           print_all_websocket_log=False):
         def on_message(ws, message):
