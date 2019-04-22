@@ -3,15 +3,19 @@
 import locale
 import time
 
+from colorama import Style, init
+
 
 class I18n(object):
-
+    init()
     @staticmethod
-    def get(key, inline=False):
+    def get(key, inline=False, color=None, end=Style.RESET_ALL):
+        prefix = color if color else ""
+        suffix = end if end else ""
         if inline:
-            return I18n._all[I18n._locale][key]
+            return prefix + I18n._all[I18n._locale][key] + suffix
         else:
-            return '[' + time.strftime("%H:%M:%S") + '] ' + I18n._all[I18n._locale][key]
+            return prefix + '[' + time.strftime("%H:%M:%S") + '] ' + I18n._all[I18n._locale][key] + suffix
 
     _all = {
         'en_GB': {
