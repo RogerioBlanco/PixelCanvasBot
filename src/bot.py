@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
+import datetime
 import logging
 import random
 import threading
 import time
-import datetime
 from sys import stdout as out
 
+from colorama import Fore
 from six.moves import range
 
 from .calc_axis import CalcAxis
@@ -78,8 +79,8 @@ class Bot(object):
             response = self.pixelio.send_pixel(x, y, color)
 
             self.canvas.update(x, y, color)
-        logger.debug(I18n.get('paint.user').format(
-            color=I18n.get(str(color.name), True), x=x, y=y))
+        logger.debug(I18n.get('paint.user', color=Fore.CYAN).format(
+            color=I18n.get(str(color.name), inline=True, end=None), x=x, y=y))
         return self.wait_time(response)
 
     def wait_time(self, data={'waitSeconds': None}):

@@ -8,6 +8,7 @@ from struct import unpack_from
 
 import requests
 import websocket
+from colorama import Fore
 from plyer import notification
 from six.moves import range
 from six.moves.urllib.parse import urlparse
@@ -129,15 +130,15 @@ class PixelCanvasIO(object):
                             y in range(axis['start_y'], axis['end_y'])) and
                             (x, y, color.index) != self.bot.pixel_intent):
                         template_color = EnumColor.rgba(self.bot.image.pix[x - self.bot.start_x, y - self.bot.start_y])
-                        color_name = I18n.get(color.name, True)
+                        color_name = I18n.get(color.name, inline=True, end=None)
                         if template_color in self.bot.colors_ignored or template_color.rgba[3] == 0:
-                            logger.debug(I18n.get('paint.outside').format(
+                            logger.debug(I18n.get('paint.outside', color=Fore.YELLOW).format(
                                 x=x, y=y, color=color_name))
                         elif color == template_color:
-                            logger.debug(I18n.get('paint.ally').format(
+                            logger.debug(I18n.get('paint.ally', color=Fore.GREEN).format(
                                 x=x, y=y, color=color_name))
                         else:
-                            logger.debug(I18n.get('paint.enemy').format(
+                            logger.debug(I18n.get('paint.enemy', color=Fore.RED).format(
                                 x=x, y=y, color=color_name))
                     elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
