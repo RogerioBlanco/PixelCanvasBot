@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import json
 import logging
 import math
 import threading
@@ -7,15 +8,15 @@ from struct import unpack_from
 
 import requests
 import websocket
+from plyer import notification
 from six.moves import range
 from six.moves.urllib.parse import urlparse
 
-from plyer import notification
-
 from .colors import EnumColor
-from .custom_exception import NeedUserInteraction
+from .custom_exception import NeedUserInteraction, UnknownError
 from .i18n import I18n
 from .matrix import Matrix
+from .safetynet import retry
 
 logger = logging.getLogger('bot')
 
@@ -58,6 +59,7 @@ class PixelCanvasIO(object):
         self.cookies = response.cookies
         return response.json()
 
+    @retry((KeyError, UnknownError))
     def send_pixel(self, x, y, color):
         payload = {
             'x': x,
@@ -92,17 +94,23 @@ class PixelCanvasIO(object):
             return {'success': 0, 'waitSeconds': 5}
 
         try:
-            return response.json()
-        except:
-            raise Exception(str(response.text) + '-' + str(response.status_code))
+            response_dict = response.json()
+            if 'waitSeconds' in response_dict:
+                return response_dict
+            else:
+                raise KeyError("No wait time specified by the server.")
+        except Exception:
+            raise UnknownError(str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
         x = bytearray(self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
         return x
 
+    @retry(json.decoder.JSONDecodeError, log_on_failure=I18n.get('websocket.failed_collect'), fatal=True)
     def get_ws(self):
         return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
 
+    @retry(Exception, log_on_failure=I18n.get('websocket.failed_connect'), fatal=True)
     def connect_websocket(self, canvas, axis={'start_x': 0, 'end_x': 0, 'start_y': 0, 'end_y': 0},
                           print_all_websocket_log=False):
         def on_message(ws, message):

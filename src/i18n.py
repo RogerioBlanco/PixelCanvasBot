@@ -3,6 +3,7 @@
 import locale
 import time
 
+
 class I18n(object):
 
     @staticmethod
@@ -38,6 +39,8 @@ class I18n(object):
 
             'websocket.closed': 'Websocket closed.',
             'websocket.opened': 'Websocket opened.',
+            'websocket.failed_collect': 'Failed to collect a websocket from PixelCanvas.',
+            'websocket.failed_connect': 'Failed to connect to the websocket.',
 
             'strategy.left_right_top_bottom': 'Drawing from left to right, from top to bottom.',
             'strategy.right_left_top_bottom': 'Drawing from right to left, from top to bottom.',
@@ -118,6 +121,8 @@ class I18n(object):
 
             'websocket.closed': 'Websocket s\'est fermé.',
             'websocket.opened': 'Websocket s\'est ouvert.',
+            'websocket.failed_collect': 'Failed to collect a webhook from PixelCanvas. [NEEDS TRANSLATION]',
+            'websocket.failed_connect': 'Failed to connect to the websocket. [NEEDS TRANSLATION]',
 
             'strategy.left_right_top_bottom': 'Je dessine de gauche à droite, de haut en bas.',
             'strategy.right_left_top_bottom': 'Je dessine de droite à gauche, de haut en bas.',
@@ -199,6 +204,8 @@ class I18n(object):
 
             'websocket.closed': 'Websocket fechado',
             'websocket.opened': 'Websocket aberto',
+            'websocket.failed_collect': 'Failed to collect a webhook from PixelCanvas. [NEEDS TRANSLATION]',
+            'websocket.failed_connect': 'Failed to connect to the websocket. [NEEDS TRANSLATION]',
 
             'strategy.left_right_top_bottom': 'Desenha da esquerda para a direita, de cima para baixo',
             'strategy.right_left_top_bottom': 'Desenha da direita para a esquerda, de cima para baixo',
