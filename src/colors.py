@@ -26,6 +26,10 @@ class EnumColor:
             return not self.__eq__(other)
 
         @property
+        def rgb(self):
+            return self.rgba[0:3]
+
+        @property
         def alpha(self):
             return self.rgba[3]
 
