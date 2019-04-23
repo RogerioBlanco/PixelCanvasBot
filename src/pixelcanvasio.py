@@ -5,6 +5,7 @@ import logging
 import math
 import threading
 from struct import unpack_from
+import datetime as dt
 
 import requests
 import websocket
@@ -17,6 +18,7 @@ from .colors import EnumColor
 from .custom_exception import NeedUserInteraction, UnknownError
 from .i18n import I18n
 from .safetynet import retry
+from .rate_track import RateTrack
 
 logger = logging.getLogger('bot')
 
@@ -48,6 +50,8 @@ class PixelCanvasIO(object):
         self.duck = 'z'
         self.bot = bot
         self.notify = notify
+        # max 37.5 pixel requests per 5 minutes
+        self.pxrate = RateTrack(dt.timedelta(minutes=5), 37.5)
 
     def post(self, url, payload):
         return requests.post(url, json=payload, headers=PixelCanvasIO.HEADERS,
@@ -81,7 +85,9 @@ class PixelCanvasIO(object):
         }
         response = None
         try:
-            response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
+            # Use RateTrack to manage pixel rate limit
+            response = self.pxrate.update(self.post(PixelCanvasIO.URL
+                                                    + "api/pixel", payload))
         except requests.exceptions.ConnectionError:
             logger.debug(I18n.get('error.connection'))
             return {'success': 0, 'waitSeconds': 5}
