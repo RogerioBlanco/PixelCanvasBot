@@ -73,7 +73,7 @@ def test_requests_expire_correctly(time, range1, range2, expected_len):
 @pytest.mark.parametrize("time, expected",
                          [('12:01', 60),  # basic
                           ('12:01:00.01', 59.99)])  # fractional sec
-def test_avoid_rate_violations(time, expected):
+def test_update_allows_appropriate_relief_time(time, expected):
     paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
     dummy_req = {'waitSeconds': 0}
     # nearly fill
@@ -85,3 +85,32 @@ def test_avoid_rate_violations(time, expected):
         result = paint_rate.update(dummy_req)
         # return wait time that will allow at least one request to expire
         assert result['waitSeconds'] == expected
+
+
+def test_correct_relief_for_rate_overflow():
+    paint_rate = RateTrack(dt.timedelta(minutes=5), 2)
+    dummy_req = {'waitSeconds': 0}
+    # Fill past rate limit
+    with freeze_time('12:00'):
+        paint_rate.update(dummy_req)
+    with freeze_time('12:01'):
+        paint_rate.update(dummy_req)
+    with freeze_time('12:02'):
+        paint_rate.update(dummy_req)
+    with freeze_time('12:03'):
+        result = paint_rate.update(dummy_req)
+        # Relief time should allow room for one new request
+        assert result['waitSeconds'] == 4 * 60
+
+
+@pytest.mark.parametrize("maxrate",
+                         [(10), (37.5)])
+def test_prevent_rate_limit_vioation(maxrate):
+    paint_rate = RateTrack(dt.timedelta(minutes=2), maxrate)
+    dummy_req = {'waitSeconds': 0}
+    with freeze_time('12:00'):
+        for x in range(int(maxrate) - 1):
+            paint_rate.update(dummy_req)
+    with freeze_time('12:01'):
+        result = paint_rate.update(dummy_req)
+        assert result['waitSeconds'] == 60
