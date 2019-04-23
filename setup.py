@@ -10,7 +10,8 @@ except ImportError as e:
     import pip
 
 print("Checking required packages")
-pkgs = ['websocket-client', 'Pillow', 'requests', 'pyqrcode', 'pypng', 'six','plyer']
+pkgs = ['websocket-client', 'Pillow', 'requests', 'pyqrcode', 'pypng', 'six',
+        'plyer', 'colorama']
 
 try:
     for package in pkgs:
@@ -20,7 +21,7 @@ try:
                 pip.main(['install', package])
 
     print("OK")
-except AttributeError as e:
+except AttributeError:
     print("It seems you pip version is over 10.0, please install the required packages manually, "
           "by executing following command:\n"
-          "pip install websocket-client Pillow requests pyqrcode pypng six plyer")
+          "pip install websocket-client Pillow requests pyqrcode pypng six plyer colorama")
