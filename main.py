@@ -162,12 +162,16 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            logger.info(I18n.get('paint.has_painted'))
-            if input().lower().strip() == 'y':
-                # Account for two pixel requests due to user doing captcha
-                for i in range(2):
-                    bot.pixelio.pxrate.update({'waitSeconds': 0})
-                run()
+            response = input(I18n.get('paint.has_painted')).lower().strip()[0]
+            if response == 'f':
+                fingerprint = input(I18n.get('fingerprint_input'))
+                bot.pixelio.fingerprint = fingerprint
+                # Request self after changing fingerprint.
+                bot.pixelio.myself()
+            elif response == 'n':
+                return
+            
+            run()
 
     run()
 
