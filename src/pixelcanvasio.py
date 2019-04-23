@@ -84,15 +84,15 @@ class PixelCanvasIO(object):
             'token': None
         }
         response = None
+        # Use RateTrack to manage pixel rate limit
         try:
-            # Use RateTrack to manage pixel rate limit
-            response = self.pxrate.update(self.post(PixelCanvasIO.URL
-                                                    + "api/pixel", payload))
+            response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
         except requests.exceptions.ConnectionError:
             logger.debug(I18n.get('error.connection'))
-            return {'success': 0, 'waitSeconds': 5}
+            return self.pxrate.update({'success': 0, 'waitSeconds': 5})
 
         if response.status_code == 403:
+            self.pxrate.update()
             raise Exception(I18n.get('error.proxy'))
 
         if response.status_code == 422:
@@ -106,24 +106,28 @@ class PixelCanvasIO(object):
                     app_name='PixelTraanvas Bot',
                     app_icon='res/robotto.ico',
                     timeout=60)
+            self.pxrate.update()
             raise NeedUserInteraction(I18n.get('error.token'))
 
         if response.status_code == 429:
+            self.pxrate.update()
             raise Exception(I18n.get('error.rate_limit'))
 
         if response.status_code == 504:
-            return {'success': 0, 'waitSeconds': 120}
+            return self.pxrate.update({'success': 0, 'waitSeconds': 120})
 
         if response.status_code >= 500:
-            return {'success': 0, 'waitSeconds': 5}
+            return self.pxrate.update({'success': 0, 'waitSeconds': 5})
 
         try:
             response_dict = response.json()
             if 'waitSeconds' in response_dict:
-                return response_dict
+                return self.pxrate.update(response_dict)
             else:
+                self.pxrate.update()
                 raise KeyError("No wait time specified by the server.")
         except Exception:
+            self.pxrate.update()
             raise UnknownError(str(response.text) + '-'
                                + str(response.status_code))
 
