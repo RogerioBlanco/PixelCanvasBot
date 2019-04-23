@@ -6,34 +6,34 @@ from src.rate_track import RateTrack
 
 
 def test_update_returns_a_wait_time():
-    paint_rate = RateTrack()
+    paint_rate = RateTrack(dt.timedelta(minutes=5))
     result = paint_rate.update()
     assert 'waitSeconds' in result
 
 
 def test_requests_are_stored_by_update():
-    paint_rate = RateTrack(1, dt.timedelta(minutes=5))
+    paint_rate = RateTrack(dt.timedelta(minutes=5))
     dummy_req = {}
     paint_rate.update(dummy_req)
     assert len(paint_rate.rate_queue) >= 1
 
 
 def test_wait_time_changed_if_rate_saturated():
-    paint_rate = RateTrack(1, dt.timedelta(minutes=5))
+    paint_rate = RateTrack(dt.timedelta(minutes=5))
     dummy_req = {'waitSeconds': 0}
     result = paint_rate.update(dummy_req)
     assert result['waitSeconds'] > 0
 
 
 def test_wait_time_if_rate_not_saturated():
-    paint_rate = RateTrack(2, dt.timedelta(minutes=5))
+    paint_rate = RateTrack(dt.timedelta(minutes=5), 2)
     dummy_req = {'waitSeconds': 0}
     result = paint_rate.update(dummy_req)
     assert result['waitSeconds'] == 0
 
 
 def test_expired_requests_removed_on_update():
-    paint_rate = RateTrack(2, dt.timedelta(seconds=30))
+    paint_rate = RateTrack(dt.timedelta(seconds=30), 2)
     dummy_req = {'waitSeconds': 0}
     # add now
     paint_rate.update(dummy_req)
@@ -46,7 +46,7 @@ def test_expired_requests_removed_on_update():
 
 
 def test_valid_requests_not_removed_on_update():
-    paint_rate = RateTrack(6, dt.timedelta(minutes=2))
+    paint_rate = RateTrack(dt.timedelta(minutes=2), 6)
     dummy_req = {'waitSeconds': 0}
     # add 5 requests now
     for x in range(5):
@@ -60,7 +60,7 @@ def test_valid_requests_not_removed_on_update():
 
 
 def test_correct_amount_of_requests_after_some_expire():
-    paint_rate = RateTrack(6, dt.timedelta(minutes=2))
+    paint_rate = RateTrack(dt.timedelta(minutes=2), 6)
     dummy_req = {'waitSeconds': 0}
     # add 3 requests
     for x in range(3):
@@ -75,7 +75,7 @@ def test_correct_amount_of_requests_after_some_expire():
 
 
 def test_return_correct_wait_to_avoid_rate_voilation():
-    paint_rate = RateTrack(3, dt.timedelta(minutes=2))
+    paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
     dummy_req = {'waitSeconds': 0}
     # nearly fill rate limit
     with freeze_time('12:00'):
@@ -89,7 +89,7 @@ def test_return_correct_wait_to_avoid_rate_voilation():
 
 
 def test_handling_fractions_of_seconds():
-    paint_rate = RateTrack(3, dt.timedelta(minutes=2))
+    paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
     dummy_req = {'waitSeconds': 0}
     # nearly fill rate limit
     with freeze_time('12:00'):
