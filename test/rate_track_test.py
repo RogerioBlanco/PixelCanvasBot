@@ -1,5 +1,6 @@
 import datetime as dt
 
+import pytest
 from freezegun import freeze_time
 
 from src.rate_track import RateTrack
@@ -18,18 +19,13 @@ def test_requests_are_stored_by_update():
     assert len(paint_rate.rate_queue) >= 1
 
 
-def test_wait_time_changed_if_rate_saturated():
-    paint_rate = RateTrack(dt.timedelta(minutes=5))
+@pytest.mark.parametrize("rate, expected", [(1, 300),  # saturated
+                                            (2, 0)])  # not saturated
+def test_saturation_wait_time(rate, expected):
+    paint_rate = RateTrack(dt.timedelta(minutes=5), rate)
     dummy_req = {'waitSeconds': 0}
     result = paint_rate.update(dummy_req)
-    assert result['waitSeconds'] > 0
-
-
-def test_wait_time_if_rate_not_saturated():
-    paint_rate = RateTrack(dt.timedelta(minutes=5), 2)
-    dummy_req = {'waitSeconds': 0}
-    result = paint_rate.update(dummy_req)
-    assert result['waitSeconds'] == 0
+    assert result['waitSeconds'] == expected
 
 
 def test_expired_requests_removed_on_update():
@@ -74,29 +70,18 @@ def test_correct_amount_of_requests_after_some_expire():
         assert len(paint_rate.rate_queue) == 5
 
 
-def test_return_correct_wait_to_avoid_rate_voilation():
+@pytest.mark.parametrize("t1, t2, expected",
+                         [('12:00', '12:01', 60),  # basic
+                          ('12:00', '12:01:00.01', 59.99)])  # fractional sec
+def test_avoid_rate_violations(t1, t2, expected):
     paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
     dummy_req = {'waitSeconds': 0}
-    # nearly fill rate limit
-    with freeze_time('12:00'):
+    # nearly fill
+    with freeze_time(t1):
         for x in range(2):
             paint_rate.update(dummy_req)
-    # fill to limit 1 min later
-    with freeze_time('12:01'):
+    # fill to limit at t2
+    with freeze_time(t2):
         result = paint_rate.update(dummy_req)
         # return wait time that will allow at least one request to expire
-        assert result['waitSeconds'] == 60
-
-
-def test_handling_fractions_of_seconds():
-    paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
-    dummy_req = {'waitSeconds': 0}
-    # nearly fill rate limit
-    with freeze_time('12:00'):
-        for x in range(2):
-            paint_rate.update(dummy_req)
-    # fill to limit 1 min + 0.01 sec later
-    with freeze_time('12:01:00.01'):
-        result = paint_rate.update(dummy_req)
-        # return wait time that will allow at least one request to expire
-        assert result['waitSeconds'] == 59.99
+        assert result['waitSeconds'] == expected
