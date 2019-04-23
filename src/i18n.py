@@ -41,7 +41,9 @@ class I18n(object):
             'error.connection': 'Connection broke :(',
             'error.cooldown': 'Existing cooldown not expired.',
 
-            'fingerprint_input': 'Please enter your new fingerprint: ',
+            'fingerprint.input': 'Please enter your new fingerprint: ',
+            # TODO: NEEDS TRANSLATION
+            'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
             'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? Yes (y), no (n) or change fingerprint (f): ',
             'paint.user': 'You painted {color} at {x},{y}.',
@@ -131,7 +133,8 @@ class I18n(object):
             'error.connection': 'La connexion s\'est brisé prématurément.',
             'error.cooldown': 'Existing cooldown not expired. '
 
-            'fingerprint_input': 'Tape ton empreinte digitale nouveau, s\'il te plaît: ',
+            'fingerprint.input': 'Tape ton empreinte digitale nouveau, s\'il te plaît: ',
+            'fingerprint.invalid': 'L\'empreinte digitale que tu as tapé, c\'est non valide.',
 
             'paint.has_painted': 'Est-ce que tu as posé un pixel sur pixelcanvas.io? Oui (y), non (n) ou changer ton empreinte digitale (f): ',
             'paint.user': 'Tu as peint le pixel {x},{y} en {color}.',
@@ -221,7 +224,9 @@ class I18n(object):
             'error.cooldown': 'O timer atual ainda não expirou.',
 
             # TODO: NEEDS TRANSLATION
-            'fingerprint_input': 'Please enter your new fingerprint: ',
+            'fingerprint.input': 'Please enter your new fingerprint: ',
+            # TODO: NEEDS TRANSLATION
+            'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
             # TODO: NEEDS TRANSLATION
             'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? Yes (y), no (n) or change fingerprint (f):',

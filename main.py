@@ -7,6 +7,8 @@ from argparse import ArgumentParser
 import re
 import sys
 
+from colorama import Fore
+
 from src.bot import Bot
 from src.custom_exception import NeedUserInteraction
 from src.i18n import I18n
@@ -164,13 +166,16 @@ def main():
             alert(str(exception))
             response = input(I18n.get('paint.has_painted')).lower().strip()[0]
             if response == 'f':
-                fingerprint = input(I18n.get('fingerprint_input'))
+                fingerprint = input(I18n.get('fingerprint.input'))
+                while len(fingerprint) != 32:
+                    print(I18n.get('fingerprint.invalid', color=Fore.RED))
+                    fingerprint = input(I18n.get('fingerprint.input'))
                 bot.pixelio.fingerprint = fingerprint
                 # Request self after changing fingerprint.
                 bot.pixelio.myself()
             elif response == 'n':
                 return
-            
+
             run()
 
     run()
