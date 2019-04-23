@@ -37,60 +37,51 @@ def test_saturation_wait_time(rate, expected):
     assert result['waitSeconds'] == expected
 
 
-def test_expired_requests_removed_on_update():
-    paint_rate = RateTrack(dt.timedelta(seconds=30), 2)
+@pytest.mark.parametrize("in_time, expected",
+                         # Relief time is 300
+                         [(25200, 25200),
+                          (299, 300),
+                          (300, 300),
+                          (20, 300)])
+@freeze_time('12:00')
+def test_wait_only_changed_if_relief_time_larger(in_time, expected):
+    paint_rate = RateTrack(dt.timedelta(seconds=300), 1)
+    dummy_req = {'waitSeconds': in_time}  # 7 hour timer
+    result = paint_rate.update(dummy_req)
+    assert result['waitSeconds'] == expected
+
+
+@pytest.mark.parametrize("time, range1, range2, expected_len",
+                         [('12:03', 1, 1, 1),
+                          ('12:01', 3, 0, 3),
+                          ('12:03', 3, 5, 5)])
+def test_requests_expire_correctly(time, range1, range2, expected_len):
+    paint_rate = RateTrack(dt.timedelta(minutes=2))
     dummy_req = {'waitSeconds': 0}
-    # add now
-    paint_rate.update(dummy_req)
-    assert len(paint_rate.rate_queue) == 1
-    # update 1m later
-    with freeze_time(lambda: dt.datetime.now() + dt.timedelta(minutes=1)):
-        paint_rate.update()
-    # stored req should have expired
-    assert len(paint_rate.rate_queue) == 0
-
-
-def test_valid_requests_not_removed_on_update():
-    paint_rate = RateTrack(dt.timedelta(minutes=2), 6)
-    dummy_req = {'waitSeconds': 0}
-    # add 5 requests now
-    for x in range(5):
-        paint_rate.update(dummy_req)
-    assert len(paint_rate.rate_queue) == 5
-    # update 1m later
-    with freeze_time(lambda: dt.datetime.now() + dt.timedelta(minutes=1)):
-        paint_rate.update()
-    # no reqs should expire
-    assert len(paint_rate.rate_queue) == 5
-
-
-def test_correct_amount_of_requests_after_some_expire():
-    paint_rate = RateTrack(dt.timedelta(minutes=2), 6)
-    dummy_req = {'waitSeconds': 0}
-    # add 3 requests
-    for x in range(3):
-        paint_rate.update(dummy_req)
-    # add 5 requests 130s later
-    with freeze_time(lambda: dt.datetime.now() + dt.timedelta(minutes=2,
-                                                              seconds=10)):
-        for x in range(5):
+    # Add first batch of requests
+    with freeze_time('12:00'):
+        for x in range(range1):
             paint_rate.update(dummy_req)
-        # 3 requests should expire, for total 5 remaining
-        assert len(paint_rate.rate_queue) == 5
+    # Add second batch
+    with freeze_time(time):
+        for x in range(range2):
+            paint_rate.update(dummy_req)
+        paint_rate.update()
+    assert len(paint_rate.rate_queue) == expected_len
 
 
-@pytest.mark.parametrize("t1, t2, expected",
-                         [('12:00', '12:01', 60),  # basic
-                          ('12:00', '12:01:00.01', 59.99)])  # fractional sec
-def test_avoid_rate_violations(t1, t2, expected):
+@pytest.mark.parametrize("time, expected",
+                         [('12:01', 60),  # basic
+                          ('12:01:00.01', 59.99)])  # fractional sec
+def test_avoid_rate_violations(time, expected):
     paint_rate = RateTrack(dt.timedelta(minutes=2), 3)
     dummy_req = {'waitSeconds': 0}
     # nearly fill
-    with freeze_time(t1):
+    with freeze_time('12:00'):
         for x in range(2):
             paint_rate.update(dummy_req)
     # fill to limit at t2
-    with freeze_time(t2):
+    with freeze_time(time):
         result = paint_rate.update(dummy_req)
         # return wait time that will allow at least one request to expire
         assert result['waitSeconds'] == expected
