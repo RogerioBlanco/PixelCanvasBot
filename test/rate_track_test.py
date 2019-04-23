@@ -14,13 +14,22 @@ def test_update_returns_a_wait_time():
 
 def test_requests_are_stored_by_update():
     paint_rate = RateTrack(dt.timedelta(minutes=5))
-    dummy_req = {}
+    dummy_req = {'waitSeconds': 0}
     paint_rate.update(dummy_req)
-    assert len(paint_rate.rate_queue) >= 1
+    assert len(paint_rate.rate_queue) == 1
+
+
+@pytest.mark.parametrize("wait", [(1), (55.56), (300), (25200)])
+def test_passthrough_if_not_saturated(wait):
+    paint_rate = RateTrack(dt.timedelta(minutes=5), 2)
+    dummy_req = {'waitSeconds': wait}
+    result = paint_rate.update(dummy_req)
+    assert result['waitSeconds'] == wait
 
 
 @pytest.mark.parametrize("rate, expected", [(1, 300),  # saturated
                                             (2, 0)])  # not saturated
+@freeze_time('12:00')
 def test_saturation_wait_time(rate, expected):
     paint_rate = RateTrack(dt.timedelta(minutes=5), rate)
     dummy_req = {'waitSeconds': 0}
