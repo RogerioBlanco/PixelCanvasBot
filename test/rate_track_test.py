@@ -1,4 +1,5 @@
 import datetime as dt
+import math
 
 import pytest
 from freezegun import freeze_time
@@ -114,3 +115,24 @@ def test_prevent_rate_limit_vioation(maxrate):
     with freeze_time('12:01'):
         result = paint_rate.update(dummy_req)
         assert result['waitSeconds'] == 60
+
+
+def test_get_current_pixel_rate():
+    pixel = b'\xc1\x08\x8a\xfe\xa3\x8a4'
+    with freeze_time('12:00'):
+        alliedpxrate = RateTrack(dt.timedelta(minutes=5))
+        alliedpxrate.update(pixel)
+        # 1 / 0 = inf
+        assert alliedpxrate.ppm() == math.inf
+    with freeze_time('12:02'):
+        # 1 / 2 = 0.5
+        assert alliedpxrate.ppm() == 0.5
+    with freeze_time('12:03'):
+        alliedpxrate.update(pixel)
+        alliedpxrate.update(pixel)
+        # 3 / 3 = 1
+        assert alliedpxrate.ppm() == 1
+    # All pixels expired
+    with freeze_time('12:08:01'):
+        # 0 / 5 = 0
+        assert alliedpxrate.ppm() == 0
