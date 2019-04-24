@@ -127,6 +127,9 @@ def main():
         except NeedUserInteraction as exception:
             alert(str(exception))
             if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
+                # Account for two pixel requests due to user doing captcha
+                for i in range(2):
+                    bot.pixelio.pxrate.update({'waitSeconds': 0})
                 run()
 
     run()

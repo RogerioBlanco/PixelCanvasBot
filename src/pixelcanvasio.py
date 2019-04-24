@@ -106,7 +106,6 @@ class PixelCanvasIO(object):
                     app_name='PixelTraanvas Bot',
                     app_icon='res/robotto.ico',
                     timeout=60)
-            self.pxrate.update()
             raise NeedUserInteraction(I18n.get('error.token'))
 
         if response.status_code == 429:
