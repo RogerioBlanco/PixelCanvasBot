@@ -108,7 +108,7 @@ class Bot(object):
                   % (prefix, bar, round(total - iteration, 2), suffix)
                   + (4 * ' '), end='\r', flush=True)
 
-        if data['waitSeconds'] is not None:
+        if data['waitSeconds'] is not None and data['waitSeconds'] > 0:
             # no delta if wait error
             if 'errors' in data and {'msg': 'You must wait'} in data['errors']:
                 wait = data['waitSeconds']

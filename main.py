@@ -6,7 +6,7 @@ import os
 from argparse import ArgumentParser
 
 from src.bot import Bot
-from src.custom_exception import *
+from src.custom_exception import NeedUserInteraction
 from src.i18n import I18n
 from src.image import Image
 
@@ -126,6 +126,8 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
+            # Clear the line for the prompt
+            print(80 * ' ', end='\r')
             if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
                 # Account for two pixel requests due to user doing captcha
                 for i in range(2):
