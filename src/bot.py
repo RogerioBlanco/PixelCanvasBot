@@ -112,7 +112,7 @@ class Bot(object):
             # no delta if wait error
             if 'errors' in data and {'msg': 'You must wait'} in data['errors']:
                 wait = data['waitSeconds']
-                logger.debug('Existing cooldown not expired.')
+                logger.debug(I18n.get('error.cooldown'))
             # apply delta
             else:
                 mod_time = data['waitSeconds'] + self.get_delta()
