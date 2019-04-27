@@ -200,8 +200,7 @@ class I18n(object):
             'error.token': 'Um token é necessário. Abra pixelcanvas.io e pinte um pixel',
             'error.rate_limit': 'Oh não! Limite de tentativas excedido',
             'error.connection': 'Erro de conexão :(',
-            'error.cooldown': 'Existing cooldown not expired. '
-            '[NEEDS TRANSLATION]',
+            'error.cooldown': 'O timer atual ainda não expirou.',
 
             'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? y(sim)/n(não):',
             'paint.user': 'Você pintou {x},{y} com {color}',
