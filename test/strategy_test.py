@@ -6,10 +6,11 @@ from src.image import Image
 from src.matrix import Matrix
 
 
-STRATEGIES = [(strategies.Randomize),
-              (strategies.Linear),
-              (strategies.LinearVertical),
-              (strategies.QuickFill)]
+STRATEGIES = [(strategies.Randomize, {}),
+              (strategies.Linear, {}),
+              (strategies.LinearVertical, {}),
+              (strategies.QuickFill, {}),
+              (strategies.Radiate, {"px": 10, "py": -5})]
 
 
 @pytest.fixture(scope="module")
@@ -33,10 +34,10 @@ def canvas_and_image(image):
     return _canvas_and_image
 
 
-@pytest.mark.parametrize("strategy", STRATEGIES)
-def test_strategies_choose_all_valid_pixels(strategy, canvas_and_image):
+@pytest.mark.parametrize("strategy, opts", STRATEGIES)
+def test_strategies_choose_all_valid_pixels(strategy, opts, canvas_and_image):
     canvas, image = canvas_and_image(100, -123)
-    strat = strategy(canvas, image, 100, -123)
+    strat = strategy(canvas, image, 100, -123, **opts)
     i = 0
     for pixel in strat.pixels():
         assert image.pix[pixel[0] - 100, pixel[1] + 123][0:3] == pixel[2].rgb
@@ -45,10 +46,10 @@ def test_strategies_choose_all_valid_pixels(strategy, canvas_and_image):
     assert i == 20  # don't paint when alpha == 0
 
 
-@pytest.mark.parametrize("strategy", STRATEGIES)
-def test_strategies_detect_updates(strategy, canvas_and_image):
+@pytest.mark.parametrize("strategy, opts", STRATEGIES)
+def test_strategies_detect_updates(strategy, opts, canvas_and_image):
     canvas, image = canvas_and_image(-4, 300, complete=True)
-    strat = strategy(canvas, image, -4, 300)
+    strat = strategy(canvas, image, -4, 300, **opts)
     assert len(list(strat.pixels())) == 0
 
     canvas.update(-3, 304, EnumColor.ENUM[0])

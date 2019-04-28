@@ -12,9 +12,13 @@ logger = logging.getLogger('bot')
 
 
 class Strategy(object):
-    def __init__(self, canvas, image, start_x, start_y, colors_ignored=[],
-                 colors_not_overwrite=[], prioritized=[], x_reversed=False,
+    def __init__(self, canvas, image, start_x, start_y, colors_ignored=None,
+                 colors_not_overwrite=None, prioritized=False, x_reversed=False,
                  y_reversed=False):
+        if colors_ignored is None:
+            colors_ignored = []
+        if colors_not_overwrite is None:
+            colors_not_overwrite = []
         self.canvas = canvas
         self.image = image
         self.colors_ignored = colors_ignored
@@ -228,34 +232,27 @@ class Status(Strategy):
 
 
 class Radiate(Strategy):
-    def __init__(self, bot, colors_ignored, colors_not_overwrite, px, py, prioritized):
-        self.bot = bot
-        self.canvas = bot.canvas
-        self.image = bot.image
-        self.colors_ignored = colors_ignored
-        self.colors_not_overwrite = colors_not_overwrite
-        self.px = px
-        self.py = py
-        self.x_range = range(self.bot.image.width)
-        self.y_range = range(self.bot.image.height)
-        self.prioritized = prioritized
-        self.priorities = []
+    def __init__(self, *args, **kwargs):
+        self.px = kwargs["px"]
+        self.py = kwargs["py"]
+        super().__init__(*args)
 
-    def apply(self):
+    def pixels(self):
         if self.priorities == []:
             for y in self.y_range:
                 for x in self.x_range:
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if color not in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+                    color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
+                    old_color = self.canvas.get_color(x, y)
+                    if color not in self.colors_ignored \
+                            and old_color not in self.colors_not_overwrite \
+                            and color.alpha > 0:
+                        self.priorities.append((x, y, color))
             random.shuffle(self.priorities)
-            self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
+            self.priorities.sort(key=lambda priorities: ((priorities[0] - self.px) ** 2 + (priorities[1] - self.py) ** 2))
             if self.prioritized:
-                self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
+                self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self.template_is_done():
-            self.bot.paint(*self.scan_canvas())
-        self.bot.wait_time({'waitSeconds': 20})
+            yield self.next_pixel()
 
 
 class Spiral(Strategy):
@@ -395,7 +392,9 @@ class FactoryStrategy(object):
             return Sketch(bot, colors_ignored, colors_not_overwrite, prioritized)
 
         if strategy == 'radiate':
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x,
+                           bot.start_y, colors_ignored, colors_not_overwrite,
+                           prioritized, px=px, py=py)
 
         if strategy == 'spiral':
             return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
