@@ -31,6 +31,7 @@ class I18n(object):
             'error.token': 'Oh no, a new token is required. Please open pixelcanvas.io and paint a pixel.',
             'error.rate_limit': 'Oh no, you tried too hard! Rate limit exceeded.',
             'error.connection': 'Connection broke :(',
+            'error.cooldown': 'Existing cooldown not expired.',
 
             'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? y/n:',
             'paint.user': 'You painted {color} at {x},{y}.',
@@ -115,6 +116,8 @@ class I18n(object):
             'error.token': 'J\'ai besoin d\'une nouvelle zone de texte. Merci d\'ouvrir pixelcanvas.io et poser un pixel.',
             'error.rate_limit': 'J\'ai envoyé trop de requêtes.',
             'error.connection': 'La connexion s\'est brisé prématurément.',
+            'error.cooldown': 'Existing cooldown not expired. '
+            '[NEEDS TRANSLATION]',
 
             'paint.has_painted': 'Est-ce que tu as posé un pixel sur pixelcanvas.io? y/n:',
             'paint.user': 'Tu as peint le pixel {x},{y} en {color}.',
@@ -197,6 +200,7 @@ class I18n(object):
             'error.token': 'Um token é necessário. Abra pixelcanvas.io e pinte um pixel',
             'error.rate_limit': 'Oh não! Limite de tentativas excedido',
             'error.connection': 'Erro de conexão :(',
+            'error.cooldown': 'O timer atual ainda não expirou.',
 
             'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? y(sim)/n(não):',
             'paint.user': 'Você pintou {x},{y} com {color}',

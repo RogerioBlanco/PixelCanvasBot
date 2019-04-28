@@ -6,7 +6,7 @@ import os
 from argparse import ArgumentParser
 
 from src.bot import Bot
-from src.custom_exception import *
+from src.custom_exception import NeedUserInteraction
 from src.i18n import I18n
 from src.image import Image
 
@@ -58,7 +58,7 @@ def parse_args():
                         help=I18n.get('--xreversed', True))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', True))
-    parser.add_argument('-px', '--point_x', required=False, type=int, default=100000000, dest='point_x',
+    parser.add_argument('-px', '--point_x', required=False, type=int, default=None, dest='point_x',
                         help=I18n.get('--point_x', True))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
                         help=I18n.get('--point_y', True))
@@ -100,14 +100,17 @@ def main():
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
     # Setup file log.
-    formatter = logging.Formatter('%(message)s')
+    file_formatter = logging.Formatter('%(message)s')
+    # Clear line first to prevent issues with the timer
+    stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
-    filehandler = logging.handlers.RotatingFileHandler(
-        logfile, maxBytes=8*1024*1024, backupCount=5)
-    filehandler.setFormatter(formatter)
+    filehandler = logging.handlers.RotatingFileHandler(logfile,
+                                                       maxBytes=8*1024*1024,
+                                                       backupCount=5)
+    filehandler.setFormatter(file_formatter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
-    streamhandler.setFormatter(formatter)
+    streamhandler.setFormatter(stream_formatter)
     logger.addHandler(streamhandler)
     logger.setLevel(logging.DEBUG)
 
@@ -123,7 +126,12 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
+            # Clear the line for the prompt
+            print(80 * ' ', end='\r')
             if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
+                # Account for two pixel requests due to user doing captcha
+                for i in range(2):
+                    bot.pixelio.pxrate.update({'waitSeconds': 0})
                 run()
 
     run()
