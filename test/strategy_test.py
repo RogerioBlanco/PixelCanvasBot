@@ -10,7 +10,11 @@ STRATEGIES = [(strategies.Randomize, {}),
               (strategies.Linear, {}),
               (strategies.LinearVertical, {}),
               (strategies.QuickFill, {}),
-              (strategies.Radiate, {"px": 10, "py": -5})]
+              (strategies.Radiate, {"px": 10, "py": -5}),
+              (strategies.Spiral, {"px": 2, "py": 3}),
+              (strategies.Spiral, {"px": -1000, "py": 3}),
+              (strategies.Spiral, {"px": 2, "py": 3000}),
+              (strategies.Spiral, {"px": 1000, "py": -3000})]
 
 
 @pytest.fixture(scope="module")
@@ -36,27 +40,30 @@ def canvas_and_image(image):
 
 @pytest.mark.parametrize("strategy, opts", STRATEGIES)
 def test_strategies_choose_all_valid_pixels(strategy, opts, canvas_and_image):
-    canvas, image = canvas_and_image(100, -123)
-    strat = strategy(canvas, image, 100, -123, **opts)
+    canvas, image = canvas_and_image(1, -1)
+    strat = strategy(canvas, image, 1, -1, **opts)
     i = 0
+    chosen_coords = set()
     for pixel in strat.pixels():
-        assert image.pix[pixel[0] - 100, pixel[1] + 123][0:3] == pixel[2].rgb
+        chosen_coords.add(pixel[0:2])
+        assert image.pix[pixel[0] - 1, pixel[1] + 1][0:3] == pixel[2].rgb
         canvas.update(*pixel)
         i += 1
     assert i == 20  # don't paint when alpha == 0
+    assert len(chosen_coords) == 20  # ensure all pixels chosen uniquely
 
 
 @pytest.mark.parametrize("strategy, opts", STRATEGIES)
 def test_strategies_detect_updates(strategy, opts, canvas_and_image):
-    canvas, image = canvas_and_image(-4, 300, complete=True)
-    strat = strategy(canvas, image, -4, 300, **opts)
+    canvas, image = canvas_and_image(-1, 1, complete=True)
+    strat = strategy(canvas, image, -1, 1, **opts)
     assert len(list(strat.pixels())) == 0
 
-    canvas.update(-3, 304, EnumColor.ENUM[0])
+    canvas.update(2, 1, EnumColor.ENUM[0])
     i = 0
     for pixel in strat.pixels():
-        assert (-3, 304) == pixel[0:2]
-        assert EnumColor.ENUM[6].rgba == pixel[2].rgba
+        assert (2, 1) == pixel[0:2]
+        assert EnumColor.ENUM[11].rgb == pixel[2].rgb
         canvas.update(*pixel)
         i += 1
     assert i == 1

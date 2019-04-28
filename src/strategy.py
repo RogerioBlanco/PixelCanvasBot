@@ -35,7 +35,7 @@ class Strategy(object):
     def pixels(self):
         raise NotImplementedError()
 
-    def template_is_done(self):
+    def _template_is_done(self):
         for x in self.x_range:
             for y in self.y_range:
                 color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
@@ -43,11 +43,16 @@ class Strategy(object):
                     return False
         return True
 
-    def next_pixel(self):
+    def _next_pixel(self):
         for pixel in self.priorities:
             old_pixel = (pixel[0], pixel[1], self.canvas.get_color(pixel[0], pixel[1]))
             if pixel != old_pixel:
                 return pixel
+
+    def _should_replace(self, new_color, old_color):
+        return new_color not in self.colors_ignored \
+            and old_color not in self.colors_not_overwrite \
+            and new_color.alpha > 0
 
 
 class Randomize(Strategy):
@@ -57,15 +62,13 @@ class Randomize(Strategy):
                 for x in self.x_range:
                     color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
                     old_color = self.canvas.get_color(x, y)
-                    if color not in self.colors_ignored \
-                            and old_color not in self.colors_not_overwrite \
-                            and color.alpha > 0:
+                    if self._should_replace(color, old_color):
                         self.priorities.append((x, y, color))
             random.shuffle(self.priorities)
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
-        while not self.template_is_done():
-            yield self.next_pixel()
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class Linear(Strategy):
@@ -75,14 +78,12 @@ class Linear(Strategy):
                 for x in self.x_range:
                     color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
                     old_color = self.canvas.get_color(x, y)
-                    if color not in self.colors_ignored \
-                            and old_color not in self.colors_not_overwrite \
-                            and color.alpha > 0:
+                    if self._should_replace(color, old_color):
                         self.priorities.append((x, y, color))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
-        while not self.template_is_done():
-            yield self.next_pixel()
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class LinearVertical(Strategy):
@@ -92,14 +93,12 @@ class LinearVertical(Strategy):
                 for y in self.y_range:
                     color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
                     old_color = self.canvas.get_color(x, y)
-                    if color not in self.colors_ignored \
-                            and old_color not in self.colors_not_overwrite \
-                            and color.alpha > 0:
+                    if self._should_replace(color, old_color):
                         self.priorities.append((x, y, color))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
-        while not self.template_is_done():
-            yield self.next_pixel()
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class QuickFill(Strategy):
@@ -110,16 +109,13 @@ class QuickFill(Strategy):
                     for x in self.x_range:
                         color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
                         old_color = self.canvas.get_color(x, y)
-                        if old_color != color \
-                                and color not in self.colors_ignored \
-                                and old_color not in self.colors_not_overwrite \
-                                and color.alpha > 0:
+                        if self._should_replace(color, old_color):
                             if (x % 2 == is_even):
                                 self.priorities.append((x, y, color))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
-        while not self.template_is_done():
-            yield self.next_pixel()
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class Sketch(Strategy):
@@ -189,7 +185,7 @@ class Sketch(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
 
-        while not self.template_is_done():
+        while not self._template_is_done():
             self.bot.paint(*self.scan_canvas())
         self.bot.wait_time({'waitSeconds': 20})
 
@@ -243,81 +239,73 @@ class Radiate(Strategy):
                 for x in self.x_range:
                     color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
                     old_color = self.canvas.get_color(x, y)
-                    if color not in self.colors_ignored \
-                            and old_color not in self.colors_not_overwrite \
-                            and color.alpha > 0:
+                    if self._should_replace(color, old_color):
                         self.priorities.append((x, y, color))
             random.shuffle(self.priorities)
             self.priorities.sort(key=lambda priorities: ((priorities[0] - self.px) ** 2 + (priorities[1] - self.py) ** 2))
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
-        while not self.template_is_done():
-            yield self.next_pixel()
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class Spiral(Strategy):
-    def __init__(self, bot, colors_ignored, colors_not_overwrite, px, py, prioritized):
-        self.bot = bot
-        self.canvas = bot.canvas
-        self.image = bot.image
-        self.colors_ignored = colors_ignored
-        self.colors_not_overwrite = colors_not_overwrite
-        self.px = px
-        self.py = py
-        if px <= self.bot.start_x:
-            self.leftx_range = []
-            self.rightx_range = range(self.bot.image.width)
-        elif px < self.bot.start_x + self.bot.image.width:
-            self.leftx_range = range(px - self.bot.start_x)
-            self.rightx_range = range(px - self.bot.start_x, self.bot.image.width)
-        else:
-            self.leftx_range = range(self.bot.image.width)
-            self.rightx_range = []
-        if py <= self.bot.start_y:
-            self.topy_range = []
-            self.bottomy_range = range(self.bot.image.height)
-        elif py < self.bot.start_y + self.bot.image.height:
-            self.topy_range = range(py - self.bot.start_y)
-            self.bottomy_range = range(py - self.bot.start_y, self.bot.image.height)
-        else:
-            self.topy_range = range(self.bot.image.height)
-            self.bottomy_range = []
-        self.y_range = range(self.bot.image.height)
-        self.prioritized = prioritized
-        self.priorities = []
+    def __init__(self, *args, **kwargs):
+        self.px = kwargs["px"]
+        self.py = kwargs["py"]
+        super().__init__(*args)
 
-    def apply(self):
+        if self.px <= self.start_x:
+            self.leftx_range = []
+            self.rightx_range = range(self.start_x, self.start_x + self.image.width)
+        elif self.px < self.start_x + self.image.width:
+            self.leftx_range = range(self.start_x, self.px)
+            self.rightx_range = range(self.px, self.start_x + self.image.width)
+        else:
+            self.leftx_range = range(self.start_x, self.start_x + self.image.width)
+            self.rightx_range = []
+
+        if self.py <= self.start_y:
+            self.topy_range = []
+            self.bottomy_range = range(self.start_y, self.start_y + self.image.height)
+        elif self.py < self.start_y + self.image.height:
+            self.topy_range = range(self.start_y, self.py)
+            self.bottomy_range = range(self.py, self.start_y + self.image.height)
+        else:
+            self.topy_range = range(self.start_y, self.start_y + self.image.height)
+            self.bottomy_range = []
+
+    def pixels(self):
         if self.priorities == []:
             for y in self.topy_range:
                 for x in self.rightx_range:
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if color not in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+                    color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
+                    old_color = self.canvas.get_color(x, y)
+                    if self._should_replace(color, old_color):
+                        self.priorities.append((x, y, color))
             for x in reversed(self.rightx_range):
                 for y in self.bottomy_range:
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if color not in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+                    color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
+                    old_color = self.canvas.get_color(x, y)
+                    if self._should_replace(color, old_color):
+                        self.priorities.append((x, y, color))
             for y in reversed(self.bottomy_range):
                 for x in reversed(self.leftx_range):
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if color not in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
+                    color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
+                    old_color = self.canvas.get_color(x, y)
+                    if self._should_replace(color, old_color):
+                        self.priorities.append((x, y, color))
             for x in self.leftx_range:
                 for y in reversed(self.topy_range):
-                    color = EnumColor.rgba(self.bot.image.pix[x, y], True)
-                    old_color = self.bot.canvas.get_color(self.bot.start_x + x, self.bot.start_y + y)
-                    if color not in self.colors_ignored and old_color not in self.colors_not_overwrite and color.rgba[3] > 0:
-                        self.priorities += [(self.bot.start_x + x, self.bot.start_y + y, color)]
-            self.priorities.sort(key=lambda priorities: ((priorities[0]-self.px)**2+(priorities[1]-self.py)**2))
+                    color = EnumColor.rgba(self.image.pix[x - self.start_x, y - self.start_y], True)
+                    old_color = self.canvas.get_color(x, y)
+                    if self._should_replace(color, old_color):
+                        self.priorities.append((x, y, color))
+            self.priorities.sort(key=lambda priorities: ((priorities[0] - self.px) ** 2 + (priorities[1] - self.py) ** 2))
             if self.prioritized:
-                self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].rgba[3])
-        while not self.template_is_done():
-            self.bot.paint(*self.scan_canvas())
-        self.bot.wait_time({'waitSeconds': 20})
+                self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
+        while not self._template_is_done():
+            yield self._next_pixel()
 
 
 class DetectMinTime(Strategy):
@@ -397,7 +385,9 @@ class FactoryStrategy(object):
                            prioritized, px=px, py=py)
 
         if strategy == 'spiral':
-            return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Spiral(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                          colors_ignored, colors_not_overwrite, prioritized,
+                          px=px, py=py)
 
         if strategy == 'detect':
             return DetectMinTime(bot, colors_ignored, colors_not_overwrite)
@@ -405,48 +395,68 @@ class FactoryStrategy(object):
         if strategy == 'tlc':
             px = bot.start_x
             py = bot.start_y
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'trc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'blc':
             px = bot.start_x
             py = bot.start_y + bot.image.height - 1
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'brc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y + bot.image.height - 1
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'cnb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'csb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y + bot.image.height - 1
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'cwb':
             px = bot.start_x
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'ceb':
             px = bot.start_x + bot.image.width - 1
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         if strategy == 'cpd':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = (2 * bot.start_y + bot.image.height) // 2
-            return Radiate(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)
+            return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                           colors_ignored, colors_not_overwrite, prioritized,
+                           px=px, py=py)
 
         print(I18n.get('strategy.auto_select').format(strategy=strategy))
 
-        return Spiral(bot, colors_ignored, colors_not_overwrite, px, py, prioritized)  # Default strategy
+        return Spiral(bot.canvas, bot.image, bot.start_x, bot.start_y,
+                    colors_ignored, colors_not_overwrite, prioritized,
+                    px=px, py=py)
