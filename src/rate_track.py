@@ -22,7 +22,7 @@ class RateTrack:
         k_minutes = k_period.total_seconds() / 60
         return len(self.rate_queue) / k_minutes
 
-    def getrelief(self):
+    def relief(self):
         # Index of request that we need to expire
         pressure = self.maxrate - len(self.rate_queue) - 1
         elapsed = dt.datetime.now() - self.rate_queue[pressure][0]
@@ -44,6 +44,6 @@ class RateTrack:
         if len(self.rate_queue) > 0 and len(self.rate_queue) >= self.maxrate:
             if type(out_req) is dict:
                 # Allow relief until there's space for a new request
-                out_req['waitSeconds'] = max(self.getrelief(),
+                out_req['waitSeconds'] = max(self.relief(),
                                              out_req['waitSeconds'])
         return out_req
