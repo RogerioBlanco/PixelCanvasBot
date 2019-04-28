@@ -8,16 +8,21 @@ from src.matrix import Matrix
 
 STRATEGIES = [(strategies.Randomize),
               (strategies.Linear),
-              (strategies.LinearVertical)]
+              (strategies.LinearVertical),
+              (strategies.QuickFill)]
+
+
+@pytest.fixture(scope="module")
+def image():
+    file = os.path.join(os.path.dirname(__file__), 'img', 'test_5x5.png')
+    return Image(file, 3, 15)
 
 
 @pytest.fixture
-def canvas_and_image():
+def canvas_and_image(image):
 
     def _canvas_and_image(start_x, start_y, complete=False):
         canvas = Matrix(1, 0, 0)
-        file = os.path.join(os.path.dirname(__file__), 'img', 'test_5x5.png')
-        image = Image(file, 3, 15)
         if complete:
             for x in range(image.image.width):
                 for y in range(image.image.height):
