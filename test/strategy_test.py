@@ -1,9 +1,14 @@
 import os
 import pytest
-import src.strategy as strategy
+import src.strategy as strategies
 from src.colors import EnumColor
 from src.image import Image
 from src.matrix import Matrix
+
+
+STRATEGIES = [(strategies.Randomize),
+              (strategies.Linear),
+              (strategies.LinearVertical)]
 
 
 @pytest.fixture
@@ -23,35 +28,29 @@ def canvas_and_image():
     return _canvas_and_image
 
 
-# Randomize
-
-def test_randomize_chooses_valid_pixels(canvas_and_image):
+@pytest.mark.parametrize("strategy", STRATEGIES)
+def test_strategies_choose_all_valid_pixels(strategy, canvas_and_image):
     canvas, image = canvas_and_image(100, -123)
-    randomize = strategy.Randomize(canvas, image, 100, -123)
+    strat = strategy(canvas, image, 100, -123)
     i = 0
-    for pixel in randomize.pixels():
+    for pixel in strat.pixels():
         assert image.pix[pixel[0] - 100, pixel[1] + 123][0:3] == pixel[2].rgb
         canvas.update(*pixel)
         i += 1
     assert i == 20  # don't paint when alpha == 0
 
 
-def test_randomize_detects_updates(canvas_and_image):
+@pytest.mark.parametrize("strategy", STRATEGIES)
+def test_strategies_detect_updates(strategy, canvas_and_image):
     canvas, image = canvas_and_image(-4, 300, complete=True)
-    randomize = strategy.Randomize(canvas, image, -4, 300)
-    assert len(list(randomize.pixels())) == 0
+    strat = strategy(canvas, image, -4, 300)
+    assert len(list(strat.pixels())) == 0
 
     canvas.update(-3, 304, EnumColor.ENUM[0])
     i = 0
-    for pixel in randomize.pixels():
+    for pixel in strat.pixels():
         assert (-3, 304) == pixel[0:2]
         assert EnumColor.ENUM[6].rgba == pixel[2].rgba
         canvas.update(*pixel)
         i += 1
     assert i == 1
-
-
-# Linear
-
-def test_linear_chooses_valid_pixels(canvas_and_image):
-    pass
