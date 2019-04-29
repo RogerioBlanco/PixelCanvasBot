@@ -13,7 +13,6 @@ class RateTrack:
 
     def ppm(self):
         self.update()
-        print(len(self.rate_queue))
         sincegenesis = dt.datetime.now() - self.genesis
         # Return infinity if no time since genesis
         if sincegenesis.total_seconds() == 0:

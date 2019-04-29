@@ -124,7 +124,7 @@ def main():
     def run():
         try:
             bot.run()
-        except NeedUserInteraction as exception:
+        except NeedUserInteraction:
             alert(str(exception))
             # Clear the line for the prompt
             print(80 * ' ', end='\r')
