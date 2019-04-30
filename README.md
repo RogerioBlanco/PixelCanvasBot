@@ -98,7 +98,7 @@ Use `python ./main.py --help` for documentation in your terminal.
 
 * [optional] **-cno** or **--colors_not_overwrite**     is the index of a color in pixelcanvas.io's palette (see reference image below). The bot will avoid overwriting existing canvas pixels of the specified color.
 
-![image](https://i.imgur.com/8F6CRRD.png)
+![image](https://i.imgur.com/xUr22sn.png)
 
 Additional color: index 16, hexcode #5B0909
 
@@ -125,9 +125,9 @@ Additional color: index 16, hexcode #5B0909
     * *sketch* :    attempt to sketch edges in the template image. See: https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
 
     * *detect* :    ~~Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]~~ currently broken
-    
+
     * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and -py arguments.
-    
+
     * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and -py arguments.
 
     * *tlc* :       fill outwards from the Top Left Corner
