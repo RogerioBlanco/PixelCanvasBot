@@ -29,11 +29,10 @@ class Strategy(object):
         return True
 
     def scan_canvas(self):
-        while True:  
-            for pixel in self.priorities:
-                old_pixel = (pixel[0], pixel[1], self.bot.canvas.get_color(pixel[0],pixel[1]))
-                if pixel != old_pixel:  
-                    return pixel
+        for pixel in self.priorities:
+            old_pixel = (pixel[0], pixel[1], self.bot.canvas.get_color(pixel[0],pixel[1]))
+            if pixel != old_pixel:  
+                return pixel
 
 
 class Randomize(Strategy):
