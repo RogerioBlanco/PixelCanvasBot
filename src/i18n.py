@@ -64,6 +64,7 @@ class I18n(object):
             'strategy.top_bottom_left_right': 'Drawing from top to bottom, from left to right.',
             'strategy.bottom_top_left_right': 'Drawing from bottom to top, from left to right.',
             'strategy.auto_select': 'Invalid strategy "{strategy}". Defaulting to strategy "spiral".',
+            'strategy.sketch_is_dead': 'Sketch is no longer supported. You can reimplement it if you like.',
 
             'external.load_cache': 'Loading cached image.',
             'external.generating': 'Generating converted image here: {path}.',

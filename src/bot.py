@@ -12,7 +12,7 @@ from .colors import EnumColor
 from .i18n import I18n
 from .matrix import Matrix
 from .pixelcanvasio import PixelCanvasIO
-from .strategy import FactoryStrategy
+from .strategy import FactoryStrategy, Status
 
 logger = logging.getLogger('bot')
 
@@ -73,9 +73,13 @@ class Bot(object):
         self.wait_time(me)
 
         while True:
-            for pixel in self.strategy.pixels():
-                self.paint(*pixel)
-            time.sleep(2)
+            # ugly hack, status should be its own thing probably
+            if isinstance(self.strategy, Status):
+                self.strategy.run()
+            else:
+                for pixel in self.strategy.pixels():
+                    self.paint(*pixel)
+            self.wait_time({'waitSeconds': 20})
 
     def paint(self, x, y, color):
         self.pixel_intent = (x, y, color.index)

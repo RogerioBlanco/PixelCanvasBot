@@ -67,3 +67,14 @@ def test_strategies_detect_updates(strategy, opts, canvas_and_image):
         canvas.update(*pixel)
         i += 1
     assert i == 1
+
+
+def test_status_outputs_percentage_complete(canvas_and_image):
+    canvas, image = canvas_and_image(10, 10)
+    status = strategies.Status(canvas, image, 10, 10)
+    progress = status.run()
+    assert progress == 0.0
+
+    canvas.update(10, 10, EnumColor.ENUM[1])
+    progress = status.run()
+    assert progress == 5.0
