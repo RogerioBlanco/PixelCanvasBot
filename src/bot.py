@@ -90,7 +90,7 @@ class Bot(object):
             self.pixel_intent = (x, y, color.index)
             response = self.pixelio.send_pixel(x, y, color)
 
-            self.canvas.update(x, y, color)
+        self.canvas.update(x, y, color)
         logger.debug(I18n.get('paint.user', color=Fore.CYAN).format(
             color=I18n.get(str(color.name), inline=True, end=None), x=x, y=y))
         return self.wait_time(response)
