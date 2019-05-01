@@ -75,6 +75,9 @@ def parse_args():
                         dest='notify', action='store_true', help=I18n.get('--notify'))
     parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
                         dest='log_file', help=I18n.get('--output_file'))
+    parser.add_argument('-v', '--verbose', required=False, default=False,
+                        dest='verbose', action='store_true',
+                        help=I18n.get('--verbose'))
 
     return parser.parse_args()
 
@@ -93,7 +96,7 @@ def setup_proxy(proxy_url, proxy_auth):
 
 def alert(message=''):
     # \a is ASCII Bell, it makes noise if the terminal supports it
-    print(('\a' * 5))
+    print(('\a' * 5), end='', flush=True)
     logger.info(message)
 
 
@@ -130,7 +133,7 @@ def main():
                                          + '[%(asctime)s] %(message)s',
                                          '%H:%M:%S')
     streamhandler = logging.StreamHandler(sys.stdout)
-    if False:  # TODO: verbose flag
+    if args.verbose:
         streamhandler.setLevel(logging.DEBUG)
     else:
         streamhandler.setLevel(logging.INFO)

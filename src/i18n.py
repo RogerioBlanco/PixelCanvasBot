@@ -92,6 +92,8 @@ class I18n(object):
             '--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
             '--output_file': 'Output the logs to this file. (default: logfile.log).',
             '--locale': 'The language to use. Choose from [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file.',
 
             # Colors
             'white': 'white',
@@ -178,6 +180,9 @@ class I18n(object):
             '--notify': 'Envoyer-toi un notification quand le bot a besoin d\'une nouvelle zone de texte.',
             '--output_file': 'Écrire le journal d\'événements dans ce fichier.',
             '--locale': 'La langue à utiliser. Choisir parmi [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file. '
+                         '[NEEDS TRANSLATION]',
 
             # Colors
             'white': 'blanc',
@@ -265,6 +270,9 @@ class I18n(object):
             '--notify': 'Enviar uma notificação de sistema quando o bot detecta um Captcha. A notificação dura 30 segundos, ou até ser removida.',
             '--output_file': 'Arquivo de logs. (Por padrão: logfile.log)',
             '--locale': 'Língua a usar. Escolha entre [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file. '
+                         '[NEEDS TRANSLATION]',
 
             # Colors
             'white': 'branco',
