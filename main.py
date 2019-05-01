@@ -133,6 +133,7 @@ def main():
                                          + '[%(asctime)s] %(message)s',
                                          '%H:%M:%S')
     streamhandler = logging.StreamHandler(sys.stdout)
+    streamhandler.flush = sys.stdout.flush
     if args.verbose:
         streamhandler.setLevel(logging.DEBUG)
     else:
