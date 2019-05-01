@@ -4,6 +4,7 @@ import logging
 import logging.handlers
 import os
 from argparse import ArgumentParser
+import re
 
 from src.bot import Bot
 from src.custom_exception import NeedUserInteraction
@@ -78,7 +79,14 @@ def setup_proxy(proxy_url, proxy_auth):
 
 
 def alert(message=''):
+    # \a is ASCII Bell, it makes noise if the terminal supports it
     print(('\a' * 5) + message)
+
+
+class ANSIFilter(logging.Filter):
+    def filter(self, record):
+        record.nocolor = re.sub('\x1b\\[[0-9;]*m', '', record.getMessage())
+        return True
 
 
 def main():
@@ -93,7 +101,8 @@ def main():
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
     # Setup file log.
-    file_formatter = logging.Formatter('%(message)s')
+    file_formatter = logging.Formatter('%(nocolor)s')
+    ansi_filter = ANSIFilter()
     # Clear line first to prevent issues with the timer
     stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
@@ -101,6 +110,7 @@ def main():
                                                        maxBytes=8*1024*1024,
                                                        backupCount=5)
     filehandler.setFormatter(file_formatter)
+    filehandler.addFilter(ansi_filter)
     logger.addHandler(filehandler)
     streamhandler = logging.StreamHandler()
     streamhandler.setFormatter(stream_formatter)
