@@ -84,14 +84,14 @@ class Bot(object):
         end = time.time()
         self.paint_lag = end - start
         while not response['success']:
-            logger.debug(I18n.get('error.try_again'))
+            logger.error(I18n.get('error.try_again'))
             self.wait_time(response)
             # Redeclare intent after a timer
             self.pixel_intent = (x, y, color.index)
             response = self.pixelio.send_pixel(x, y, color)
 
         self.canvas.update(x, y, color)
-        logger.debug(I18n.get('paint.user', color=Fore.CYAN).format(
+        logger.info(I18n.get('paint.user', color=Fore.CYAN).format(
             color=I18n.get(str(color.name), inline=True, end=None), x=x, y=y))
         return self.wait_time(response)
 
@@ -112,7 +112,7 @@ class Bot(object):
             # no delta if wait error
             if 'errors' in data and {'msg': 'You must wait'} in data['errors']:
                 wait = data['waitSeconds']
-                logger.debug(I18n.get('error.cooldown'))
+                logger.error(I18n.get('error.cooldown'))
             # apply delta
             else:
                 mod_time = data['waitSeconds'] + self.get_delta()
@@ -121,11 +121,11 @@ class Bot(object):
             formattedWait = str(datetime.timedelta(seconds=int(wait)))
             formattedWait = formattedWait[2:]
             if wait > 60:
-                logger.debug(I18n.get('paint.waitmin')
-                             .format(time=formattedWait))
+                logger.info(I18n.get('paint.waitmin')
+                            .format(time=formattedWait))
             else:
-                logger.debug(I18n.get('paint.waitsec')
-                             .format(time=formattedWait))
+                logger.info(I18n.get('paint.waitsec')
+                            .format(time=formattedWait))
 
             # initial bar
             print_progress_bar(0, wait, prefix='', suffix='Seconds',
@@ -188,6 +188,7 @@ class Bot(object):
         canvas = Matrix(num_blocks, center_block_x, center_block_y)
 
         threads = []
+        logger.info(I18n.get('chunk.begin_load'))
         for center_x in range(center_block_x - num_blocks,
                               1 + center_block_x + num_blocks, 15):
             for center_y in range(center_block_y - num_blocks,

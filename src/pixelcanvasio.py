@@ -86,7 +86,7 @@ class PixelCanvasIO(object):
         try:
             response = self.post(PixelCanvasIO.URL + "api/pixel", payload)
         except requests.exceptions.ConnectionError:
-            logger.debug(I18n.get('error.connection'))
+            logger.error(I18n.get('error.connection'))
             return self.pxrate.update({'success': 0, 'waitSeconds': 5})
 
         if response.status_code == 403:
@@ -167,15 +167,15 @@ class PixelCanvasIO(object):
                                               end=None)
                         if (template_color in self.bot.colors_ignored
                                 or template_color.rgba[3] == 0):
-                            logger.debug(
+                            logger.info(
                                 I18n.get('paint.outside', color=Fore.YELLOW)
                                 .format(x=x, y=y, color=color_name))
                         elif color == template_color:
-                            logger.debug(
+                            logger.info(
                                 I18n.get('paint.ally', color=Fore.GREEN)
                                 .format(x=x, y=y, color=color_name))
                         else:
-                            logger.debug(
+                            logger.info(
                                 I18n.get('paint.enemy', color=Fore.RED)
                                 .format(x=x, y=y, color=color_name))
                     elif (x, y, color.index) == self.bot.pixel_intent:
@@ -189,11 +189,11 @@ class PixelCanvasIO(object):
             ws.close()
 
         def on_close(ws):
-            logger.debug(I18n.get('websocket.closed'))
+            logger.warning(I18n.get('websocket.closed'))
             open_connection()
 
         def on_open(ws):
-            logger.debug(I18n.get("websocket.opened"))
+            logger.info(I18n.get("websocket.opened"))
 
         def open_connection():
             url = self.get_ws()

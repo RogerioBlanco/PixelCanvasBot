@@ -34,6 +34,7 @@ class I18n(object):
             'chunk.blind.east': 'This bot may be blind for all pixels east of {x}.',
             'chunk.blind.south': 'This bot may be blind for all pixels south of {y}.',
             'chunk.load': 'Loading chunk ({x}, {y})...',
+            'chunk.begin_load': 'Loading canvas...',
 
             'error.try_again': 'Oh no, an error occurred. Trying again.',
             'error.proxy': 'Oh no, you are using a proxy.',
@@ -120,6 +121,7 @@ class I18n(object):
             'chunk.blind.east': 'Il se pourrait que ce bot ne puisse pas voir à l\'est de {x}.',
             'chunk.blind.south': 'Il se pourrait que ce bot ne puisse pas voir au sud de {y}.',
             'chunk.load': 'Je charge chunk ({x}, {y})...',
+            'chunk.begin_load': 'Chargement...',
 
             'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore de le faire.',
             'error.proxy': 'Oh la! Tu utilises un proxy.',
@@ -205,6 +207,7 @@ class I18n(object):
             'chunk.blind.east': 'Esse bot pode não ler pixels ao leste de {x}',
             'chunk.blind.south': 'Esse bot pode não ler pixels ao sul de {y}',
             'chunk.load': 'Carregando chunk ({x}, {y})...',
+            'chunk.begin_load': 'Carregando...',
 
             'error.try_again': 'Ocorreu um erro. Tentando novamente.',
             'error.proxy': 'Ops! Parece que você esta usando um Proxy',

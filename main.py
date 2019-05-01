@@ -5,6 +5,7 @@ import logging.handlers
 import os
 from argparse import ArgumentParser
 import re
+import sys
 
 from src.bot import Bot
 from src.custom_exception import NeedUserInteraction
@@ -12,6 +13,18 @@ from src.i18n import I18n
 from src.image import Image
 
 logger = logging.getLogger('bot')
+
+
+class FileFilter(logging.Filter):
+    def filter(self, record):
+        # Remove ANSI codes
+        record.nocolor = re.sub('\x1b\\[[0-9;]*m', '', record.getMessage())
+        # Add level tags
+        if record.levelno == logging.WARNING:
+            record.nocolor += ' [WARNING]'
+        elif record.levelno == logging.ERROR:
+            record.nocolor += ' [ERROR]'
+        return True
 
 
 def parse_args():
@@ -80,13 +93,8 @@ def setup_proxy(proxy_url, proxy_auth):
 
 def alert(message=''):
     # \a is ASCII Bell, it makes noise if the terminal supports it
-    print(('\a' * 5) + message)
-
-
-class ANSIFilter(logging.Filter):
-    def filter(self, record):
-        record.nocolor = re.sub('\x1b\\[[0-9;]*m', '', record.getMessage())
-        return True
+    print(('\a' * 5))
+    logger.info(message)
 
 
 def main():
@@ -100,20 +108,32 @@ def main():
         args.file = "./img/QRcode.png"
         Image.create_QR_image(args.QR_text, args.QR_scale)
 
-    # Setup file log.
-    file_formatter = logging.Formatter('%(nocolor)s')
-    ansi_filter = ANSIFilter()
-    # Clear line first to prevent issues with the timer
-    stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
+    # Setup file handler
+    # Remove ANSI codes, log all levels
+    # Add date to  file logs
+    file_formatter = logging.Formatter('[%(asctime)s]%(nocolor)s', '%Y-%m-%d')
+    file_filter = FileFilter()
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
+    # 5 rotating log files, max 8mb each for discord compatability
     filehandler = logging.handlers.RotatingFileHandler(logfile,
                                                        maxBytes=8*1024*1024,
                                                        backupCount=5)
+    filehandler.setLevel(logging.DEBUG)
     filehandler.setFormatter(file_formatter)
-    filehandler.addFilter(ansi_filter)
-    logger.addHandler(filehandler)
-    streamhandler = logging.StreamHandler()
+    filehandler.addFilter(file_filter)
+
+    # Setup stdout handler
+    # Don't print DEBUG or WARNING messages unless verbose flag is set
+    # Clear line first to prevent issues with the timer
+    stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
+    streamhandler = logging.StreamHandler(sys.stdout)
+    if False:  # TODO: verbose flag
+        streamhandler.setLevel(logging.DEBUG)
+    else:
+        streamhandler.setLevel(logging.INFO)
     streamhandler.setFormatter(stream_formatter)
+
+    logger.addHandler(filehandler)
     logger.addHandler(streamhandler)
     logger.setLevel(logging.DEBUG)
 
@@ -127,9 +147,8 @@ def main():
             bot.run()
         except NeedUserInteraction as exception:
             alert(str(exception))
-            # Clear the line for the prompt
-            print(80 * ' ', end='\r')
-            if input(I18n.get('paint.has_painted')).lower().strip() == 'y':
+            logger.info(I18n.get('paint.has_painted'))
+            if input().lower().strip() == 'y':
                 # Account for two pixel requests due to user doing captcha
                 for i in range(2):
                     bot.pixelio.pxrate.update({'waitSeconds': 0})
@@ -142,4 +161,4 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        logger.debug(I18n.get('exit'))
+        logger.info(I18n.get('exit'))
