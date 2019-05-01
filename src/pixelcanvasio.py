@@ -163,8 +163,7 @@ class PixelCanvasIO(object):
                         template_color = EnumColor.rgba(
                             self.bot.image.pix[x - self.bot.start_x,
                                                y - self.bot.start_y])
-                        color_name = I18n.get(color.name, inline=True,
-                                              end=None)
+                        color_name = I18n.get(color.name, end=None)
                         if (template_color in self.bot.colors_ignored
                                 or template_color.rgba[3] == 0):
                             logger.info(

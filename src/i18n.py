@@ -8,7 +8,7 @@ init()
 
 class I18n(object):
     @staticmethod
-    def get(key, inline=False, color=None, end=Style.RESET_ALL):
+    def get(key, color=None, end=Style.RESET_ALL):
         prefix = color if color else ""
         suffix = end if end and color else ""
 
@@ -22,10 +22,7 @@ class I18n(object):
                 # If it doesn't exist whatsoever
                 raise original_exception
 
-        if inline:
-            return prefix + value + suffix
-        else:
-            return prefix + '[' + time.strftime("%H:%M:%S") + '] ' + value + suffix
+        return prefix + value + suffix
 
     _all = {
         'en_GB': {

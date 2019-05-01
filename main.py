@@ -30,51 +30,51 @@ class FileFilter(logging.Filter):
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
-                        help=I18n.get('--image', True))
+                        help=I18n.get('--image'))
     parser.add_argument('-f', '--fingerprint', required=True, dest='fingerprint',
-                        help=I18n.get('--fingerprint', True))
+                        help=I18n.get('--fingerprint'))
     parser.add_argument('-x', '--start_x', required=True, type=int, dest='start_x',
-                        help=I18n.get('--start_x', True))
+                        help=I18n.get('--start_x'))
     parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
-                        help=I18n.get('--start_y', True))
+                        help=I18n.get('--start_y'))
     parser.add_argument('-ci', '--colors_ignored', required=False, type=int, default=[], nargs='+', dest='colors_ignored',
-                        help=I18n.get('--colors_ignored', True))
+                        help=I18n.get('--colors_ignored'))
     parser.add_argument('-cno', '--colors_not_overwrite', required=False, type=int, default=[], nargs='+', dest='colors_not_overwrite',
-                        help=I18n.get('--colors_not_overwrite', True))
+                        help=I18n.get('--colors_not_overwrite'))
     parser.add_argument('-ds', '--draw_strategy', required=False, default='spiral', dest='draw_strategy',
-                        help=I18n.get('--draw_strategy', True))
+                        help=I18n.get('--draw_strategy'))
     parser.add_argument('--mode_defensive', required=False, default=True, dest='mode_defensive',
-                        help=I18n.get('--mode_defensive', True))
+                        help=I18n.get('--mode_defensive'))
     parser.add_argument('--proxy_url', required=False, dest='proxy_url',
-                        help=I18n.get('--proxy_url', True))
+                        help=I18n.get('--proxy_url'))
     parser.add_argument('--proxy_auth', required=False, dest='proxy_auth',
-                        help=I18n.get('--proxy_auth', True))
+                        help=I18n.get('--proxy_auth'))
     parser.add_argument('--round_sensitive', required=False, type=int, default=3, dest='round_sensitive',
-                        help=I18n.get('--round_sensitive', True))
+                        help=I18n.get('--round_sensitive'))
     parser.add_argument('--image_brightness', required=False, type=int, default=15, dest='image_brightness',
-                        help=I18n.get('--image_brightness', True))
+                        help=I18n.get('--image_brightness'))
     parser.add_argument('--detect_area_min_range', required=False, type=int, default=-5000, dest='min_range',
-                        help=I18n.get('--detect_area_min_range', True))
+                        help=I18n.get('--detect_area_min_range'))
     parser.add_argument('--detect_area_max_range', required=False, type=int, default=5000, dest='max_range',
-                        help=I18n.get('--detect_area_max_range', True))
+                        help=I18n.get('--detect_area_max_range'))
     parser.add_argument('--QR_text', required=False, default="", dest='QR_text',
-                        help=I18n.get('--QR_text', True))
+                        help=I18n.get('--QR_text'))
     parser.add_argument('--QR_scale', required=False, type=int, default=3, dest='QR_scale',
-                        help=I18n.get('--QR_scale', True))
+                        help=I18n.get('--QR_scale'))
     parser.add_argument('--xreversed', required=False, default=False, dest='xreversed',
-                        help=I18n.get('--xreversed', True))
+                        help=I18n.get('--xreversed'))
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
-                        help=I18n.get('--yreversed', True))
+                        help=I18n.get('--yreversed'))
     parser.add_argument('-px', '--point_x', required=False, type=int, default=None, dest='point_x',
-                        help=I18n.get('--point_x', True))
+                        help=I18n.get('--point_x'))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
-                        help=I18n.get('--point_y', True))
+                        help=I18n.get('--point_y'))
     parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
-                        help=I18n.get('--yreversed', True))
+                        help=I18n.get('--yreversed'))
     parser.add_argument('-n', '--notify', required=False, default=False,
-                        dest='notify', action='store_true', help=I18n.get('--notify', True))
+                        dest='notify', action='store_true', help=I18n.get('--notify'))
     parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
-                        dest='log_file', help=I18n.get('--output_file', True))
+                        dest='log_file', help=I18n.get('--output_file'))
 
     return parser.parse_args()
 
@@ -111,7 +111,8 @@ def main():
     # Setup file handler
     # Remove ANSI codes, log all levels
     # Add date to  file logs
-    file_formatter = logging.Formatter('[%(asctime)s]%(nocolor)s', '%Y-%m-%d')
+    file_formatter = logging.Formatter('[%(asctime)s] %(nocolor)s',
+                                       '%Y-%m-%d %H:%M:%S')
     file_filter = FileFilter()
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
     # 5 rotating log files, max 8mb each for discord compatability
@@ -125,7 +126,9 @@ def main():
     # Setup stdout handler
     # Don't print DEBUG or WARNING messages unless verbose flag is set
     # Clear line first to prevent issues with the timer
-    stream_formatter = logging.Formatter(80 * ' ' + '\r' + '%(message)s')
+    stream_formatter = logging.Formatter(80 * ' ' + '\r'
+                                         + '[%(asctime)s] %(message)s',
+                                         '%H:%M:%S')
     streamhandler = logging.StreamHandler(sys.stdout)
     if False:  # TODO: verbose flag
         streamhandler.setLevel(logging.DEBUG)
