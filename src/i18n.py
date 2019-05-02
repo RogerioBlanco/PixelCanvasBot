@@ -13,10 +13,21 @@ class I18n(object):
     def get(key, inline=False, color=None, end=Style.RESET_ALL):
         prefix = color if color else ""
         suffix = end if end and color else ""
+
+        try:
+            value = I18n._all[I18n._locale][key]
+        except KeyError as original_exception:
+            try:
+                # Rely on en_GB to contain the text.
+                value = I18n._all['en_GB'][key]
+            except:
+                # If it doesn't exist whatsoever
+                raise original_exception
+
         if inline:
-            return prefix + I18n._all[I18n._locale][key] + suffix
+            return prefix + value + suffix
         else:
-            return prefix + '[' + time.strftime("%H:%M:%S") + '] ' + I18n._all[I18n._locale][key] + suffix
+            return prefix + '[' + time.strftime("%H:%M:%S") + '] ' + value + suffix
 
     _all = {
         'en_GB': {
@@ -124,7 +135,8 @@ class I18n(object):
             'paint.ally': 'Un(e) ami(e) a peint le pixel {x},{y} en {color}.',
             'paint.outside': 'Quelqu\'un a peint le pixel {x},{y} en {color} (en dehors de la modèle).',
             'paint.enemy': 'Un(e) ennemi(e) a peint le pixel {x},{y} en {color}.',
-            'paint.wait': 'J\'attends {seconds} secondes.',
+            'paint.waitmin': 'J\'attends {time} minutes.',
+            'paint.waitsec': 'J\'attends {time} secondes.',
             'progress': 'Tous pixels: {total}. Pixels corrects: {correct}. Pixels incorrects: {incorrect}. Avancement: {progress}%.',
 
             'websocket.closed': 'Websocket s\'est fermé.',
@@ -207,7 +219,9 @@ class I18n(object):
             'paint.ally': 'Alguém pintou {x},{y} com {color} [ALIADO]',
             'paint.outside': 'Alguém pintou {x},{y} com {color} [FORA DO TEMPLATE]',
             'paint.enemy': 'Alguém pintou {x},{y} com {color} [INIMIGO]',
-            'paint.wait': 'Esperando {seconds} segundos',
+            # TODO: NEEDS TRANSLATION.
+            'paint.waitmin': 'Waiting {time} minutes.',
+            'paint.waitsec': 'Esperando {time} segundos.',
             'progress': 'Total de pixels: {total}. Pixels corretos: {correct}. Pixels incorretos: {incorrect}. Progresso: {progress}%.',
 
 
