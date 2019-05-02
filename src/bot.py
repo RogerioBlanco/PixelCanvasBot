@@ -15,6 +15,7 @@ from .pixelcanvasio import PixelCanvasIO
 from .strategy import FactoryStrategy, Status
 
 logger = logging.getLogger('bot')
+bar_print = logging.getLogger('loading_bar')
 
 
 class Bot(object):
@@ -104,9 +105,9 @@ class Bot(object):
                                length=100, fill='█'):
             filled_length = int(length * iteration / total)
             bar = fill * filled_length + '-' * (length - filled_length)
-            print('%s|%s| %.2f %s'
-                  % (prefix, bar, round(total - iteration, 2), suffix)
-                  + (4 * ' '), end='\r', flush=True)
+            bar_print.info('%s|%s| %.2f %s'
+                           % (prefix, bar, round(total - iteration, 2), suffix)
+                           + (4 * ' '))
 
         if data['waitSeconds'] is not None and data['waitSeconds'] > 0:
             # no delta if wait error

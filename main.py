@@ -13,6 +13,7 @@ from src.i18n import I18n
 from src.image import Image
 
 logger = logging.getLogger('bot')
+bar_print = logging.getLogger('loading_bar')
 
 
 class FileFilter(logging.Filter):
@@ -143,6 +144,13 @@ def main():
     logger.addHandler(filehandler)
     logger.addHandler(streamhandler)
     logger.setLevel(logging.DEBUG)
+
+    # Setup bar logger, to avoid threading issues with print
+    bar_stream = logging.StreamHandler(sys.stdout)
+    bar_stream.flush = sys.stdout.flush
+    bar_stream.terminator = "\r"
+    bar_print.addHandler(bar_stream)
+    bar_print.setLevel(logging.INFO)
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
 
