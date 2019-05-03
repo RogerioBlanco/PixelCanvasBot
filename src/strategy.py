@@ -319,13 +319,13 @@ class FactoryStrategy(object):
         if strategy == 'linear_vertical':
             return LinearVertical(bot.canvas, bot.image, bot.start_x,
                                   bot.start_y, colors_ignored,
-                                  colors_not_overwrite, xreversed, yreversed,
-                                  prioritized)
+                                  colors_not_overwrite, prioritized, xreversed,
+                                  yreversed)
 
         if strategy == 'qf':
             return QuickFill(bot.canvas, bot.image, bot.start_x, bot.start_y,
-                             colors_ignored, colors_not_overwrite, xreversed,
-                             yreversed, prioritized)
+                             colors_ignored, colors_not_overwrite, prioritized,
+                             xreversed, yreversed)
 
         if strategy == 'status':
             return Status(bot.canvas, bot.image, bot.start_x, bot.start_y,
