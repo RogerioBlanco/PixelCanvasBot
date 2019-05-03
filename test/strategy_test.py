@@ -59,11 +59,20 @@ def test_strategies_detect_updates(strategy, opts, canvas_and_image):
     strat = strategy(canvas, image, -1, 1, **opts)
     assert len(list(strat.pixels())) == 0
 
+    # pre-existing damage case
     canvas.update(2, 1, EnumColor.ENUM[0])
+    pixels = strat.pixels()
+    pixel = next(pixels)
+    assert (2, 1) == pixel[0:2]
+    assert EnumColor.ENUM[11].rgb == pixel[2].rgb
+    canvas.update(*pixel)
+
+    # new damage case
+    canvas.update(-1, 1, EnumColor.ENUM[5])
     i = 0
-    for pixel in strat.pixels():
-        assert (2, 1) == pixel[0:2]
-        assert EnumColor.ENUM[11].rgb == pixel[2].rgb
+    for pixel in pixels:
+        assert (-1, 1) == pixel[0:2]
+        assert EnumColor.ENUM[1].rgb == pixel[2].rgb
         canvas.update(*pixel)
         i += 1
     assert i == 1

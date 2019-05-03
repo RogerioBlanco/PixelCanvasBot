@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import logging
 import logging.handlers
@@ -11,13 +11,6 @@ from src.i18n import I18n
 from src.image import Image
 
 logger = logging.getLogger('bot')
-
-try:
-    # Python 2
-    input = raw_input
-except:
-    # Python 3
-    pass
 
 
 def parse_args():

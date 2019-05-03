@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import logging
 import math
 from copy import deepcopy
