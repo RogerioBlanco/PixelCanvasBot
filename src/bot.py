@@ -58,8 +58,6 @@ class Bot(object):
         return self.wait_delta - self.paint_lag / 2
 
     def init(self):
-        self.canvas = self.setup_canvas()
-
         interest_area = {'start_x': self.start_x,
                          'end_x': self.start_x + self.image.width,
                          'start_y': self.start_y,
