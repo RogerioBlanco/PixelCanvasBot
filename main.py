@@ -115,8 +115,8 @@ def main():
     # Setup file handler
     # Remove ANSI codes, log all levels
     # Add date to  file logs
-    file_formatter = logging.Formatter('[%(asctime)s] %(nocolor)s',
-                                       '%Y-%m-%d %H:%M:%S')
+    file_formatter = logging.Formatter('%(asctime)s %(nocolor)s',
+                                       '%Y-%m-%d:%H:%M:%S%z')
     file_filter = FileFilter()
     logfile = os.path.join(os.getcwd(), "log", args.log_file)
     # 5 rotating log files, max 8mb each for discord compatability
