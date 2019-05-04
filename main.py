@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import logging
 import logging.handlers
@@ -11,13 +11,6 @@ from src.i18n import I18n
 from src.image import Image
 
 logger = logging.getLogger('bot')
-
-try:
-    # Python 2
-    input = raw_input
-except:
-    # Python 3
-    pass
 
 
 def parse_args():
@@ -118,8 +111,6 @@ def main():
 
     bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, args.point_x, args.point_y, proxy,
               args.draw_strategy, args.xreversed, args.yreversed, args.prioritized, args.notify)
-
-    bot.init()
 
     def run():
         try:

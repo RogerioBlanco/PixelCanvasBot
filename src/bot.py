@@ -12,7 +12,7 @@ from .colors import EnumColor
 from .i18n import I18n
 from .matrix import Matrix
 from .pixelcanvasio import PixelCanvasIO
-from .strategy import FactoryStrategy
+from .strategy import FactoryStrategy, Status
 
 logger = logging.getLogger('bot')
 
@@ -38,11 +38,12 @@ class Bot(object):
             self.point_y = random.randrange(start_y, start_y + image.height, 1)
         else:
             self.point_y = point_y
+        self.pixelio = PixelCanvasIO(fingerprint, proxy, self, notify)
+        self.canvas = self.setup_canvas()
         self.strategy = FactoryStrategy.build(
             draw_strategy, self, self.colors_ignored,
             [EnumColor.index(i) for i in colors_not_overwrite],
             xreversed, yreversed, self.point_x, self.point_y, prioritized)
-        self.pixelio = PixelCanvasIO(fingerprint, proxy, self, notify)
         self.print_all_websocket_log = False  # TODO make an argument
         self.min_range = min_range
         self.max_range = max_range
@@ -52,13 +53,6 @@ class Bot(object):
         self.prioritized = prioritized
         self.paint_lag = 0
         self.wait_delta = -2
-
-    def get_delta(self):
-        return self.wait_delta - self.paint_lag / 2
-
-    def init(self):
-        self.canvas = self.setup_canvas()
-
         interest_area = {'start_x': self.start_x,
                          'end_x': self.start_x + self.image.width,
                          'start_y': self.start_y,
@@ -66,16 +60,22 @@ class Bot(object):
         self.pixelio.connect_websocket(
             self.canvas, interest_area, self.print_all_websocket_log)
 
+    def get_delta(self):
+        return self.wait_delta - self.paint_lag / 2
+
     def run(self):
         me = self.pixelio.myself()
 
         self.wait_time(me)
 
-        self.strategy.apply()
-
-        while self.mode_defensive:
-            self.strategy.apply()
-            time.sleep(2)
+        while True:
+            # ugly hack, status should be its own thing probably
+            if isinstance(self.strategy, Status):
+                self.strategy.run()
+            else:
+                for pixel in self.strategy.pixels():
+                    self.paint(*pixel)
+            self.wait_time({'waitSeconds': 20})
 
     def paint(self, x, y, color):
         self.pixel_intent = (x, y, color.index)

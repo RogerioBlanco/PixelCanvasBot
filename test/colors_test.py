@@ -13,6 +13,10 @@ def test_index_handles_nonsense():
     color = EnumColor.index("frog")
     assert color.name == "white"
 
+# .rgb
+def test_rgb_returns_a_3_tuple_of_rgb_values():
+    assert EnumColor.ENUM[0].rgb == (255, 255, 255)
+
 # .rgba
 def test_rgba_returns_same_color_with_given_alpha_if_rgb_matches_exactly():
     color = EnumColor.ENUM[10]

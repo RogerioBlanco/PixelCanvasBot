@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from six.moves import range
 
 class Matrix:

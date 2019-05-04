@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 
 try:
     import pip
-except ImportError as e:
+except ImportError:
     print("installing pip")
     os.system("get-pip.py")
     import pip
@@ -17,7 +17,7 @@ try:
     for package in pkgs:
         try:
             import package
-        except ImportError as e:
+        except ImportError:
                 pip.main(['install', package])
 
     print("OK")

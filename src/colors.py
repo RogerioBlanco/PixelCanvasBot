@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import logging
 import math
 from copy import deepcopy
@@ -24,6 +22,10 @@ class EnumColor:
 
         def __ne__(self, other):
             return not self.__eq__(other)
+
+        @property
+        def rgb(self):
+            return self.rgba[0:3]
 
         @property
         def alpha(self):

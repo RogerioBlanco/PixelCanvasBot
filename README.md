@@ -5,13 +5,13 @@
 This is a fork of Rogerio's bot for pixelcanvas.io, it has blackjack *and* hookers!
 It does not draw faster than placing pixels manually, but it can automate drawing for short spans of time until pixelcanvas.io requests a new captcha token.
 
-### What you can do with this?
+### What can you do with this?
 
-Well, you can draw some image and try replicate it in pixelcanvas.io. You can unite with your friends or clan to coordinate your pixel placement better, or defend your 'territory'.
+You can draw some image and try replicate it in pixelcanvas.io. You can unite with your friends or clan to coordinate your pixel placement better, or defend your 'territory'.
 
-### I can use any image and this bot will draw for me?
+### Can I use any image?
 
-You can use any image. The bot will convert your image colors to nearest PixelCanvas.io color for every pixel. Converted images will be placed the ./img/.cache folder if they don't already exist.
+You can use any PNG image. The bot will convert your image colors to nearest PixelCanvas.io color for every pixel. Converted images will be placed the ./img/.cache folder if they don't already exist.
 
 # Installation
 
@@ -29,13 +29,13 @@ If you are on Windows, ensure you add Python to PATH when installing. Python som
 
 PixelCanvas.io frequently changes the API validation system. The bot will be updated when we notice. It may be a bit late, and updates are not guaranteed in any way. We recommend using git for the most up to date version.
 
-#### If you have not installed git?
+#### Need git?
 
 * Get git and install from https://git-scm.com/downloads
 
 #### Clone bot
 
-Open Terminal (git bash, cmd, etc.) and enter this command
+Open Terminal (git bash, cmd, etc.) and enter this command:
 
 * `git clone https://github.com/traa-pixelcanvas/TraanvasBot.git`
 
@@ -122,10 +122,6 @@ Additional color: index 16, hexcode #5B0909
 
     * *status* :    no painting; bot prints comparison of progress on the canvas compared to the given template. Supports **--colors_ignored** and **--colors_not_overwrite**.
 
-    * *sketch* :    attempt to sketch edges in the template image. See: https://github.com/RogerioBlanco/PixelCanvasBot/issues/6
-
-    * *detect* :    ~~Wait time detector. Don't fill image drawing random color pixel to random coordinates every time. Ignored start point and ignored image. this strategy return wait time in any coordinates with pixelcanvas.io [experimental:notFinished]~~ currently broken
-
     * *radiate* :    fill outwards in a circle from a random point on the template, picks points on it's edge at random. You can pick the point it paints from with the -px and -py arguments.
 
     * *spiral* :    fill outwards in a circle from a random point on the template, paints these points in a spiral. You can pick the point it paints from with the -px and -py arguments.
@@ -176,17 +172,17 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 
 * [optional] **--yreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
 
-* [optional] **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
+* [optional] **-n** or **--notify** is a True or False flag that toggles desktop notifications when your bot needs you to do a capcha. Default: False
 
-* [optional] **-px** or **--point_x** is the x coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
+* [optional] **-px** or **--point_x** is the x coordinate (relative to the canvas) you wish the spiral or radiate strategy to start from on your template.
 
-* [optional] **-py** or **--point_y** is the y coordinate (relative to the canvas) you wish the spiral or ratiate strategy to start from on your template.
+* [optional] **-py** or **--point_y** is the y coordinate (relative to the canvas) you wish the spiral or radiate strategy to start from on your template.
 
 #### Note:
 
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
 
-# Update bot with last changes
+# Update bot with latest changes
 
 ### Clear local changes (if you changed the source code)
 
