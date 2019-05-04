@@ -8,7 +8,7 @@ init()
 
 class I18n(object):
     @staticmethod
-    def get(key, inline=False, color=None, end=Style.RESET_ALL):
+    def get(key, color=None, end=Style.RESET_ALL):
         prefix = color if color else ""
         suffix = end if end and color else ""
 
@@ -22,10 +22,7 @@ class I18n(object):
                 # If it doesn't exist whatsoever
                 raise original_exception
 
-        if inline:
-            return prefix + value + suffix
-        else:
-            return prefix + '[' + time.strftime("%H:%M:%S") + '] ' + value + suffix
+        return prefix + value + suffix
 
     _all = {
         'en_GB': {
@@ -34,6 +31,7 @@ class I18n(object):
             'chunk.blind.east': 'This bot may be blind for all pixels east of {x}.',
             'chunk.blind.south': 'This bot may be blind for all pixels south of {y}.',
             'chunk.load': 'Loading chunk ({x}, {y})...',
+            'chunk.begin_load': 'Loading canvas...',
 
             'error.try_again': 'Oh no, an error occurred. Trying again.',
             'error.proxy': 'Oh no, you are using a proxy.',
@@ -94,6 +92,8 @@ class I18n(object):
             '--notify': 'Send a system notification if a captcha is encountered by the bot. Notification remains for 30 seconds or until dismissed.',
             '--output_file': 'Output the logs to this file. (default: logfile.log).',
             '--locale': 'The language to use. Choose from [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file.',
 
             # Colors
             'white': 'white',
@@ -120,6 +120,7 @@ class I18n(object):
             'chunk.blind.east': 'Il se pourrait que ce bot ne puisse pas voir à l\'est de {x}.',
             'chunk.blind.south': 'Il se pourrait que ce bot ne puisse pas voir au sud de {y}.',
             'chunk.load': 'Je charge chunk ({x}, {y})...',
+            'chunk.begin_load': 'Chargement...',
 
             'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore de le faire.',
             'error.proxy': 'Oh la! Tu utilises un proxy.',
@@ -179,6 +180,9 @@ class I18n(object):
             '--notify': 'Envoyer-toi un notification quand le bot a besoin d\'une nouvelle zone de texte.',
             '--output_file': 'Écrire le journal d\'événements dans ce fichier.',
             '--locale': 'La langue à utiliser. Choisir parmi [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file. '
+                         '[NEEDS TRANSLATION]',
 
             # Colors
             'white': 'blanc',
@@ -205,6 +209,7 @@ class I18n(object):
             'chunk.blind.east': 'Esse bot pode não ler pixels ao leste de {x}',
             'chunk.blind.south': 'Esse bot pode não ler pixels ao sul de {y}',
             'chunk.load': 'Carregando chunk ({x}, {y})...',
+            'chunk.begin_load': 'Carregando...',
 
             'error.try_again': 'Ocorreu um erro. Tentando novamente.',
             'error.proxy': 'Ops! Parece que você esta usando um Proxy',
@@ -265,6 +270,9 @@ class I18n(object):
             '--notify': 'Enviar uma notificação de sistema quando o bot detecta um Captcha. A notificação dura 30 segundos, ou até ser removida.',
             '--output_file': 'Arquivo de logs. (Por padrão: logfile.log)',
             '--locale': 'Língua a usar. Escolha entre [{languages}].',
+            '--verbose': 'Show debugging prints in the terminal. '
+                         'By default they are sent only to the log file. '
+                         '[NEEDS TRANSLATION]',
 
             # Colors
             'white': 'branco',

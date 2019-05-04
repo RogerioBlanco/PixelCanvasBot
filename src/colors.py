@@ -97,7 +97,7 @@ class EnumColor:
 
         # return rounding colour
 
-        name = I18n.get(str(EnumColor.rgba(diff_min[0]).name), True)
+        name = I18n.get(str(EnumColor.rgba(diff_min[0]).name))
         if not silent:
             logger.debug(I18n.get('colors.round').format(
                 rgba=rgba, diff_min=diff_min[0], name=name))

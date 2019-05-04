@@ -25,16 +25,16 @@ class Image(object):
         tmb_full_path = os.getcwd() + '/img/.cache/' + self.checksum + '.png'
 
         if (os.path.isfile(tmb_full_path)):
-            logger.debug(I18n.get('external.load_cache'))
+            logger.info(I18n.get('external.load_cache'))
             return pillow.open(tmb_full_path).convert('RGBA')
 
-        logger.debug(I18n.get('external.generating').format(
+        logger.info(I18n.get('external.generating').format(
             path=tmb_full_path))
 
         new_image = self.convert_pixels(pillow.open(file).convert('RGBA'))
         self.save_image(new_image, tmb_full_path)
 
-        logger.debug(I18n.get('external.saved_cache'))
+        logger.info(I18n.get('external.saved_cache'))
         return pillow.open(tmb_full_path).convert('RGBA')
 
     def md5(self, fname):
@@ -85,5 +85,5 @@ class Image(object):
         url = pyqrcode.create(text)
         url.png(full_QR_path, scale)
 
-        logger.debug(I18n.get('qr_created').format(path=full_QR_path))
-        logger.debug(url.text())
+        logger.info(I18n.get('qr_created').format(path=full_QR_path))
+        logger.info(url.text())

@@ -130,7 +130,7 @@ class Sketch(Strategy):
 
     def apply(self):
         if self.priorities == []:
-            print(I18n.get('strategy.left_right_top_bottom'))
+            logger.debug(I18n.get('strategy.left_right_top_bottom'))
             near_color = 0
 
             for y in range(self.bot.image.height):
@@ -142,7 +142,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('strategy.right_left_top_bottom'))
+            logger.debug(I18n.get('strategy.right_left_top_bottom'))
 
             near_color = 0
 
@@ -155,7 +155,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('strategy.top_bottom_left_right'))
+            logger.debug(I18n.get('strategy.top_bottom_left_right'))
 
             near_color = 0
 
@@ -168,7 +168,7 @@ class Sketch(Strategy):
                     near_color = color
                 near_color = 0
 
-            print(I18n.get('strategy.bottom_top_left_right'))
+            logger.debug(I18n.get('strategy.bottom_top_left_right'))
 
             near_color = 0
 
@@ -214,7 +214,7 @@ class Status(Strategy):
         incorrect_px = px_active_total - correct_px
         progress = round(float(correct_px) / px_active_total * 100., 2)
 
-        logger.debug(I18n.get('progress').format(total=px_active_total, correct=correct_px, incorrect=incorrect_px, progress=progress))
+        logger.info(I18n.get('progress').format(total=px_active_total, correct=correct_px, incorrect=incorrect_px, progress=progress))
         return progress
 
 
@@ -407,7 +407,8 @@ class FactoryStrategy(object):
                            colors_ignored, colors_not_overwrite, prioritized,
                            px=px, py=py)
 
-        print(I18n.get('strategy.auto_select').format(strategy=strategy))
+        logger.warning(I18n.get('strategy.auto_select')
+                       .format(strategy=strategy))
 
         return Spiral(bot.canvas, bot.image, bot.start_x, bot.start_y,
                     colors_ignored, colors_not_overwrite, prioritized,

@@ -178,6 +178,8 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 
 * [optional] **-py** or **--point_y** is the y coordinate (relative to the canvas) you wish the spiral or radiate strategy to start from on your template.
 
+* [optional] **-v** or **--verbose** is a flag to show debugging prints in the terminal. By default they are sent only to the log file.
+
 #### Note:
 
 The reverse parameters only work on the linear draw strategies (linear and quickfill). Use to choose which corner to draw linearly from (default is top left corner).
