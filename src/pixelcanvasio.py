@@ -53,12 +53,13 @@ class PixelCanvasIO(object):
 
     def post(self, url, payload):
         return requests.post(url, json=payload, headers=PixelCanvasIO.HEADERS,
-                             proxies=self.proxy, cookies=self.cookies)
+                             proxies=self.proxy, cookies=self.cookies,
+                             timeout=30)
 
     def get(self, url, stream=False):
         return requests.get(url, stream=stream,
                             headers=PixelCanvasIO.HEADER_USER_AGENT,
-                            proxies=self.proxy)
+                            proxies=self.proxy, timeout=30)
 
     def myself(self):
         response = self.post(PixelCanvasIO.URL + 'api/me',
