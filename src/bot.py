@@ -53,17 +53,15 @@ class Bot(object):
         self.prioritized = prioritized
         self.paint_lag = 0
         self.wait_delta = -2
-
-    def get_delta(self):
-        return self.wait_delta - self.paint_lag / 2
-
-    def init(self):
         interest_area = {'start_x': self.start_x,
                          'end_x': self.start_x + self.image.width,
                          'start_y': self.start_y,
                          'end_y': self.start_y + self.image.height}
         self.pixelio.connect_websocket(
             self.canvas, interest_area, self.print_all_websocket_log)
+
+    def get_delta(self):
+        return self.wait_delta - self.paint_lag / 2
 
     def run(self):
         me = self.pixelio.myself()
