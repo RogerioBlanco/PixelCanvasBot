@@ -42,7 +42,6 @@ class I18n(object):
             'error.cooldown': 'Existing cooldown not expired.',
 
             'fingerprint.input': 'Please enter your new fingerprint: ',
-            # TODO: NEEDS TRANSLATION
             'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
             'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? Yes (y), no (n) or change fingerprint (f): ',
@@ -223,13 +222,11 @@ class I18n(object):
             'error.connection': 'Erro de conexão :(',
             'error.cooldown': 'O timer atual ainda não expirou.',
 
-            # TODO: NEEDS TRANSLATION
-            'fingerprint.input': 'Please enter your new fingerprint: ',
+            'fingerprint.input': 'Digite sua nova fingerprint: '
             # TODO: NEEDS TRANSLATION
             'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
-            # TODO: NEEDS TRANSLATION
-            'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? Yes (y), no (n) or change fingerprint (f):',
+            'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? Sim (y), Não (n) ou Mudar fingerprint (f):'
             'paint.user': 'Você pintou {x},{y} com {color}',
             'paint.ally': 'Alguém pintou {x},{y} com {color} [ALIADO]',
             'paint.outside': 'Alguém pintou {x},{y} com {color} [FORA DO TEMPLATE]',
@@ -242,10 +239,8 @@ class I18n(object):
 
             'websocket.closed': 'Websocket fechado',
             'websocket.opened': 'Websocket aberto',
-            # TODO: NEEDS TRANSLATION
-            'websocket.failed_collect': 'Failed to collect a webhook from PixelCanvas.',
-            # TODO: NEEDS TRANSLATION
-            'websocket.failed_connect': 'Failed to connect to the websocket.',
+            'websocket.failed_collect': 'Falha ao coletar webhook do PixelCanvas.',
+            'websocket.failed_connect': 'Falha ao conectar ao Websocket.',
 
             'strategy.left_right_top_bottom': 'Desenha da esquerda para a direita, de cima para baixo',
             'strategy.right_left_top_bottom': 'Desenha da direita para a esquerda, de cima para baixo',
