@@ -72,8 +72,8 @@ def parse_args():
                         help=I18n.get('--point_x'))
     parser.add_argument('-py', '--point_y', required=False, type=int, default=None, dest='point_y',
                         help=I18n.get('--point_y'))
-    parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized',
-                        help=I18n.get('--yreversed'))
+    parser.add_argument('-p', '--prioritized', required=False, default=False, dest='prioritized', action='store_true',
+                        help=I18n.get('--prioritized'))
     parser.add_argument('-n', '--notify', required=False, default=False,
                         dest='notify', action='store_true', help=I18n.get('--notify'))
     parser.add_argument('-o', '--output_file', required=False, default='logfile.log',
