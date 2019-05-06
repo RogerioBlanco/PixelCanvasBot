@@ -6,6 +6,7 @@ from colorama import Style, init
 
 init()
 
+
 class I18n(object):
     @staticmethod
     def get(key, color=None, end=Style.RESET_ALL):
@@ -40,7 +41,10 @@ class I18n(object):
             'error.connection': 'Connection broke :(',
             'error.cooldown': 'Existing cooldown not expired.',
 
-            'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? y/n:',
+            'fingerprint.input': 'Please enter your new fingerprint: ',
+            'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
+
+            'paint.has_painted': 'Have you painted a pixel in pixelcanvas.io? Yes (y), no (n) or change fingerprint (f): ',
             'paint.user': 'You painted {color} at {x},{y}.',
             'paint.ally': 'Somebody updated {x},{y} with {color} [ALLY].',
             'paint.outside': 'Somebody updated {x},{y} with {color} [OUTSIDE TEMPLATE].',
@@ -48,7 +52,6 @@ class I18n(object):
             'paint.waitmin': 'Waiting {time} minutes.',
             'paint.waitsec': 'Waiting {time} seconds.',
             'progress': 'Total active pixel count: {total}. Correct pixels: {correct}. Incorrect pixels: {incorrect}. Progress: {progress}%.',
-
 
             'websocket.closed': 'Websocket closed.',
             'websocket.opened': 'Websocket opened.',
@@ -122,27 +125,28 @@ class I18n(object):
             'chunk.load': 'Je charge chunk ({x}, {y})...',
             'chunk.begin_load': 'Chargement...',
 
-            'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore de le faire.',
+            'error.try_again': 'Oh la! Une erreur est survenue. J\'essaie encore une fois de le faire.',
             'error.proxy': 'Oh la! Tu utilises un proxy.',
             'error.token': 'J\'ai besoin d\'une nouvelle zone de texte. Merci d\'ouvrir pixelcanvas.io et poser un pixel.',
             'error.rate_limit': 'J\'ai envoyé trop de requêtes.',
             'error.connection': 'La connexion s\'est brisé prématurément.',
-            'error.cooldown': 'Existing cooldown not expired. '
-            '[NEEDS TRANSLATION]',
+            'error.cooldown': 'Existing cooldown not expired. ',
 
-            'paint.has_painted': 'Est-ce que tu as posé un pixel sur pixelcanvas.io? y/n:',
+            'fingerprint.input': 'Tape ton empreinte digitale nouveau, s\'il te plaît: ',
+            'fingerprint.invalid': 'L\'empreinte digitale que tu as tapé, c\'est non valide.',
+
+            'paint.has_painted': 'Est-ce que tu as posé un pixel sur pixelcanvas.io? Oui (y), non (n) ou changer ton empreinte digitale (f): ',
             'paint.user': 'Tu as peint le pixel {x},{y} en {color}.',
-            'paint.ally': 'Un(e) ami(e) a peint le pixel {x},{y} en {color}.',
-            'paint.outside': 'Quelqu\'un a peint le pixel {x},{y} en {color} (en dehors de la modèle).',
-            'paint.enemy': 'Un(e) ennemi(e) a peint le pixel {x},{y} en {color}.',
-            'paint.waitmin': 'J\'attends {time} minutes.',
-            'paint.waitsec': 'J\'attends {time} secondes.',
+            'paint.ally': 'Quelqu\'un a peint le pixel {x},{y} en {color} [ALLIÉ].',
+            'paint.outside': 'Quelqu\'un a peint le pixel {x},{y} en {color} [EN DEHORS DE LA MODÈLE].',
+            'paint.enemy': 'Quelqu\'un a peint le pixel {x},{y} en {color} [ENNEMI].',
+            'paint.wait': 'J\'attends {seconds} secondes.',
             'progress': 'Tous pixels: {total}. Pixels corrects: {correct}. Pixels incorrects: {incorrect}. Avancement: {progress}%.',
 
             'websocket.closed': 'Websocket s\'est fermé.',
             'websocket.opened': 'Websocket s\'est ouvert.',
-            'websocket.failed_collect': 'Failed to collect a webhook from PixelCanvas. [NEEDS TRANSLATION]',
-            'websocket.failed_connect': 'Failed to connect to the websocket. [NEEDS TRANSLATION]',
+            'websocket.failed_collect': 'Je n\'ai pas réussi à obtenir un webhook de PixelCanvas.',
+            'websocket.failed_connect': 'Je n\'ai pas réussi à connecter au webhook.',
 
             'strategy.left_right_top_bottom': 'Je dessine de gauche à droite, de haut en bas.',
             'strategy.right_left_top_bottom': 'Je dessine de droite à gauche, de haut en bas.',
@@ -218,7 +222,11 @@ class I18n(object):
             'error.connection': 'Erro de conexão :(',
             'error.cooldown': 'O timer atual ainda não expirou.',
 
-            'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? y(sim)/n(não):',
+            'fingerprint.input': 'Digite sua nova fingerprint: ',
+            # TODO: NEEDS TRANSLATION
+            'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
+
+            'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? Sim (y), Não (n) ou Mudar fingerprint (f): ',
             'paint.user': 'Você pintou {x},{y} com {color}',
             'paint.ally': 'Alguém pintou {x},{y} com {color} [ALIADO]',
             'paint.outside': 'Alguém pintou {x},{y} com {color} [FORA DO TEMPLATE]',
@@ -231,8 +239,8 @@ class I18n(object):
 
             'websocket.closed': 'Websocket fechado',
             'websocket.opened': 'Websocket aberto',
-            'websocket.failed_collect': 'Failed to collect a webhook from PixelCanvas. [NEEDS TRANSLATION]',
-            'websocket.failed_connect': 'Failed to connect to the websocket. [NEEDS TRANSLATION]',
+            'websocket.failed_collect': 'Falha ao coletar webhook do PixelCanvas.',
+            'websocket.failed_connect': 'Falha ao conectar ao Websocket.',
 
             'strategy.left_right_top_bottom': 'Desenha da esquerda para a direita, de cima para baixo',
             'strategy.right_left_top_bottom': 'Desenha da direita para a esquerda, de cima para baixo',
