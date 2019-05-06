@@ -222,7 +222,7 @@ class I18n(object):
             'error.connection': 'Erro de conexão :(',
             'error.cooldown': 'O timer atual ainda não expirou.',
 
-            'fingerprint.input': 'Digite sua nova fingerprint: '
+            'fingerprint.input': 'Digite sua nova fingerprint: ',
             # TODO: NEEDS TRANSLATION
             'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
