@@ -130,7 +130,7 @@ class I18n(object):
             'error.token': 'J\'ai besoin d\'une nouvelle zone de texte. Merci d\'ouvrir pixelcanvas.io et poser un pixel.',
             'error.rate_limit': 'J\'ai envoyé trop de requêtes.',
             'error.connection': 'La connexion s\'est brisé prématurément.',
-            'error.cooldown': 'Existing cooldown not expired. '
+            'error.cooldown': 'Existing cooldown not expired. ',
 
             'fingerprint.input': 'Tape ton empreinte digitale nouveau, s\'il te plaît: ',
             'fingerprint.invalid': 'L\'empreinte digitale que tu as tapé, c\'est non valide.',
