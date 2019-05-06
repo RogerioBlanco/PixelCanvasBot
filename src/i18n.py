@@ -226,7 +226,7 @@ class I18n(object):
             # TODO: NEEDS TRANSLATION
             'fingerprint.invalid': 'The fingerprint that you entered is invalid.',
 
-            'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? Sim (y), Não (n) ou Mudar fingerprint (f):'
+            'paint.has_painted': 'Você pintou um pixel no pixelcanvas.io? Sim (y), Não (n) ou Mudar fingerprint (f): ',
             'paint.user': 'Você pintou {x},{y} com {color}',
             'paint.ally': 'Alguém pintou {x},{y} com {color} [ALIADO]',
             'paint.outside': 'Alguém pintou {x},{y} com {color} [FORA DO TEMPLATE]',
