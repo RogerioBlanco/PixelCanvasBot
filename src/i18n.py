@@ -87,7 +87,7 @@ class I18n(object):
             '--detect_area_max_range': 'Supports negative values ex: 3000 or -3000.',
             '--QR_text': 'url or some text.',
             '--QR_scale': 'QR code pixel width.',
-            '--xreversed': 'Draw from right to left. Set to True or False (default False).',
+            '--xreversed': 'Draw from right to left, or in the case of circular strategies, from the outside in. Set to True or False (default False).',
             '--yreversed': 'Draw from bottom to top. Set to True or False (default False).',
             '--point_x': 'Target x coordinate for strategies that radiate from a single point, such as radiate and spiral; defaults to center.',
             '--point_y': 'Target y coordinate for strategies that radiate from a single point, such as radiate and spiral; defaults to center.',

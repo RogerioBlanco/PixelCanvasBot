@@ -28,6 +28,7 @@ class Strategy(object):
             if x_reversed else range(start_x, start_x + image.width)
         self.y_range = list(reversed(range(start_y, start_y + image.height))) \
             if y_reversed else range(start_y, start_y + image.height)
+        self.x_reversed = x_reversed
         self.prioritized = prioritized
         self.priorities = []
         self.recently_changed = []
@@ -262,6 +263,8 @@ class Radiate(Strategy):
                         self.priorities.append((x, y, color))
             random.shuffle(self.priorities)
             self.priorities.sort(key=lambda priorities: ((priorities[0] - self.px) ** 2 + (priorities[1] - self.py) ** 2))
+            if self.x_reversed:
+                self.priorities.reverse()
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
@@ -324,6 +327,8 @@ class Spiral(Strategy):
                     if self._should_replace(old_color, color):
                         self.priorities.append((x, y, color))
             self.priorities.sort(key=lambda priorities: ((priorities[0] - self.px) ** 2 + (priorities[1] - self.py) ** 2))
+            if self.x_reversed:
+                self.priorities.reverse()
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
@@ -371,79 +376,79 @@ class FactoryStrategy(object):
         if strategy == 'radiate':
             return Radiate(bot.canvas, bot.image, bot.start_x,
                            bot.start_y, colors_ignored, colors_not_overwrite,
-                           prioritized, px=px, py=py)
+                           prioritized, xreversed, px=px, py=py)
 
         if strategy == 'spiral':
             return Spiral(bot.canvas, bot.image, bot.start_x, bot.start_y,
                           colors_ignored, colors_not_overwrite, prioritized,
-                          px=px, py=py)
+                          xreversed, px=px, py=py)
 
         if strategy == 'tlc':
             px = bot.start_x
             py = bot.start_y
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'trc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'blc':
             px = bot.start_x
             py = bot.start_y + bot.image.height - 1
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'brc':
             px = bot.start_x + bot.image.width - 1
             py = bot.start_y + bot.image.height - 1
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'cnb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'csb':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = bot.start_y + bot.image.height - 1
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'cwb':
             px = bot.start_x
             py = (2 * bot.start_y + bot.image.height) // 2
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'ceb':
             px = bot.start_x + bot.image.width - 1
             py = (2 * bot.start_y + bot.image.height) // 2
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         if strategy == 'cpd':
             px = (2 * bot.start_x + bot.image.width) // 2
             py = (2 * bot.start_y + bot.image.height) // 2
             return Radiate(bot.canvas, bot.image, bot.start_x, bot.start_y,
                            colors_ignored, colors_not_overwrite, prioritized,
-                           px=px, py=py)
+                           xreversed, px=px, py=py)
 
         logger.warning(I18n.get('strategy.auto_select')
                        .format(strategy=strategy))
 
         return Spiral(bot.canvas, bot.image, bot.start_x, bot.start_y,
                     colors_ignored, colors_not_overwrite, prioritized,
-                    px=px, py=py)
+                    xreversed, px=px, py=py)

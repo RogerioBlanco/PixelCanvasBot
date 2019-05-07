@@ -168,7 +168,7 @@ Using this flag will cause the bot to ignore the -i tag, and output a QR code in
 
 * [optional] **--QR_scale**    is a scale multiplier for generating a QR code. Minimum: 1 Default: 3
 
-* [optional] **--xreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
+* [optional] **--xreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear` or `linear_vertical`. Can also be used to determine whether to work from the outside in when using `--draw_strategy radiate` or `spiral`. Default: False
 
 * [optional] **--yreversed**    is a True or False flag that determines which side to begin drawing from when using `--draw_strategy linear`. Default: False
 
