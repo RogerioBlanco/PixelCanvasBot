@@ -78,7 +78,7 @@ class I18n(object):
             '--colors_ignored': 'Any colors listed here, if contained within the quantized image, will be treated as transparent for the purposes of drawing.',
             '--colors_not_overwrite': 'The colors listed here will not be overwritten if they appear on the canvas where the image is being drawn.',
             '--draw_strategy': 'Optional draw strategy. Choose from the strategy list [linear, p_linear, qf, randomize, status, sketch, radiate, spiral] default: randomize.',
-            '--mode_defensive': 'Put the bot in daemon mode (run in background). This will run forever.',
+            '--mode_defensive': 'Puts the bot into a defensive mode where it prioritizes the most recently changed enemy pixel to make sure that the bot is always targeting the pixels with the shortest timers in a defensive battle.',
             '--proxy_url': 'Proxy url with port. ex: url:port . DEPRECATED',
             '--proxy_auth': 'Proxy authentication. ex: user:pass . DEPRECATED',
             '--round_sensitive': 'Color rounding sensitivity. This number must be > 0. ex: 3.',

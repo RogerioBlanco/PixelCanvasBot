@@ -151,7 +151,7 @@ The rcm-domain based strategies are defined using a number of reference points s
 
 This strategy will walk the next pixel to be painted randomly from the chosen origin. There may be performance issues with large images.
 
-* [optional] **--mode_defensive**           is a flag to control what the bot will do after finishing a stragtegy. For example with `--draw_strategy linear --mode_defensive False` the bot will not begin again at the start when it finishes iterating through the template once. Usage: `--mode_defensive {True|False}` Default: True
+* [optional] **--mode_defensive**           is a flag to control how the bot responds to hostile pixel placement. When active, the bot will immediately target the most recently changed enemy pixel and work backward until all recent enemy pixel placements have been undone. This mode is on by default. Use `--mode_defensive False` to turn this off and have the bot behave as normal. Usage: `--mode_defensive {True|False}` Default: True
 
 * [optional] **--proxy_url**                is a proxy you want the bot to use. Usage: `--proxy_url <address>:<port>` Note: many proxys are detected and blocked by pixelcanvas.io
 j
