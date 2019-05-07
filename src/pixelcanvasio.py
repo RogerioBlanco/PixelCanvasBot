@@ -153,6 +153,7 @@ class PixelCanvasIO(object):
                 x = int(x * 64 + ((number % 64 + 64) % 64))
                 y = int(y * 64 + math.floor(number / 64))
                 color = EnumColor.index(15 & a)
+                pixel = (x,y)
                 try:
                     canvas.matrix[x][y] = color
                     # Check that message is relevant,
@@ -178,6 +179,8 @@ class PixelCanvasIO(object):
                             logger.debug(
                                 I18n.get('paint.enemy', color=Fore.RED)
                                 .format(x=x, y=y, color=color_name))
+                            if (self.bot.mode_defensive):
+                                self.bot.strategy.change_detected(*pixel)
                     elif (x, y, color.index) == self.bot.pixel_intent:
                         # Clear intent after one matching pixel is detected
                         self.bot.pixel_intent = ()
