@@ -30,6 +30,7 @@ class Strategy(object):
             if y_reversed else range(start_y, start_y + image.height)
         self.prioritized = prioritized
         self.priorities = []
+        self.recently_changed = []
 
     def pixels(self):
         raise NotImplementedError()
@@ -48,10 +49,25 @@ class Strategy(object):
             if pixel != old_pixel:
                 return pixel
 
+    def _next_recent(self):
+        for pixel in self.recently_changed:
+            self.recently_changed.remove(pixel)
+            old_pixel = (pixel[0], pixel[1], self.canvas.get_color(pixel[0], pixel[1]))
+            if pixel != old_pixel:
+                return pixel
+
     def _should_replace(self, old_color, new_color):
         return new_color not in self.colors_ignored \
             and old_color not in self.colors_not_overwrite \
             and new_color.alpha > 0
+
+    def change_detected(self, x, y):
+        for pixel in self.priorities:
+            if pixel[0] == x and pixel[1] == y:
+                self.recently_changed.reverse()
+                self.recently_changed.append(pixel)
+                self.recently_changed.reverse()
+                return
 
 
 class Randomize(Strategy):
@@ -67,7 +83,10 @@ class Randomize(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class Linear(Strategy):
@@ -82,7 +101,10 @@ class Linear(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class LinearVertical(Strategy):
@@ -97,7 +119,10 @@ class LinearVertical(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class QuickFill(Strategy):
@@ -114,7 +139,10 @@ class QuickFill(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class Sketch(Strategy):
@@ -237,7 +265,10 @@ class Radiate(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class Spiral(Strategy):
@@ -296,7 +327,10 @@ class Spiral(Strategy):
             if self.prioritized:
                 self.priorities.sort(reverse=True, key=lambda priorities: priorities[2].alpha)
         while not self._template_is_done():
-            yield self._next_pixel()
+            if self.recently_changed != []:
+                yield self._next_recent()
+            else:
+                yield self._next_pixel()
 
 
 class FactoryStrategy(object):
