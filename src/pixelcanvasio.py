@@ -11,7 +11,7 @@ from six.moves import range
 
 
 class PixelCanvasIO(object):
-    URL = 'http://pixelcanvas.io/'
+    URL = 'https://europe-west1-pixelcanvasv2.cloudfunctions.net/'
     HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
     HEADERS = {
         'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
@@ -26,7 +26,7 @@ class PixelCanvasIO(object):
         self.fingerprint = fingerprint
         self.proxy = proxy
         self.cookies = None
-        self.duck = 'z'
+        self.duck = 'wasabi'
 
     def post(self, url, payload):
         return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy,
