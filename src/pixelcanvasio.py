@@ -8,19 +8,27 @@ from .matrix import Matrix
 from .i18n import I18n
 from .custom_exception import NeedUserInteraction
 from six.moves import range
+import re
 
 
 class PixelCanvasIO(object):
-    URL = 'https://europe-west1-pixelcanvasv2.cloudfunctions.net/'
+    CLOUDFUNC_URL = 'https://europe-west1-pixelcanvasv2.cloudfunctions.net/' # pixel, me
+    API1_URL = 'https://api.pixelcanvas.io/' # api/bigchunk
+    API2_URL = 'https://pixelcanvas.io/' # api/online
+    WS_URL = 'wss://ws.pixelcanvas.io:8443/'
+    ORIGIN = 'https://pixelcanvas.io'
     HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
-    HEADERS = {
-        'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
-        'accept': 'application/json',
-        'content-type': 'application/json',
-        'Host': 'pixelcanvas.io',
-        'Origin': URL,
-        'Referer': URL
-    }
+
+    def headers(self, url):
+        host = re.match('^[^/]+://([^/:]+)', url).groups()[0]
+        return {
+            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
+            'accept': 'application/json',
+            'content-type': 'application/json',
+            'Host': host,
+            'Origin': self.ORIGIN,
+            'Referer': self.ORIGIN
+        }
 
     def __init__(self, fingerprint, proxy=None):
         self.fingerprint = fingerprint
@@ -29,15 +37,15 @@ class PixelCanvasIO(object):
         self.duck = 'wasabi'
 
     def post(self, url, payload):
-        return requests.request('POST', url, data=payload, headers=PixelCanvasIO.HEADERS, proxies=self.proxy,
+        return requests.request('POST', url, data=payload, headers=self.headers(url), proxies=self.proxy,
                                 cookies=self.cookies)
 
     def get(self, url, stream=False):
         return requests.get(url, stream=stream, headers=PixelCanvasIO.HEADER_USER_AGENT, proxies=self.proxy)
 
     def myself(self):
-        response = self.post(PixelCanvasIO.URL + 'api/me', '{"fingerprint":"%s"}' % self.fingerprint)
-        self.duck = 'a'
+        response = self.post(PixelCanvasIO.CLOUDFUNC_URL + 'me', '{"fingerprint":"%s"}' % self.fingerprint)
+        self.duck = 'wasabi'
 
         if ('duck' in response.cookies):
             self.duck = ('h' if response.cookies['DUCK'] is None else response.cookies['DUCK'])
@@ -46,8 +54,11 @@ class PixelCanvasIO(object):
 
     def send_pixel(self, x, y, color):
         payload = '{"x":%s,"y":%s,"%s":%s,"color":%s,"fingerprint":"%s","token":null}' % (
-            x, y, self.duck, x + y + 8, color.index, self.fingerprint)
-        response = self.post(PixelCanvasIO.URL + 'api/pixel', payload)
+            x, y, self.duck, x + y + 2342, color.index, self.fingerprint)
+        response = self.post(PixelCanvasIO.CLOUDFUNC_URL + 'pixel', payload)
+
+        if response.status_code == 401:
+            raise Exception(I18n.get('Unauthorized / bad request'))
 
         if response.status_code == 403:
             raise Exception(I18n.get('Oh no, you are using a proxy'))
@@ -66,11 +77,11 @@ class PixelCanvasIO(object):
             raise Exception(I18n.get('only_time') + str(response.text) + '-' + str(response.status_code))
 
     def download_canvas(self, center_x, center_y):
-        x = bytearray(self.get(PixelCanvasIO.URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
+        x = bytearray(self.get(PixelCanvasIO.API1_URL + 'api/bigchunk/%s.%s.bmp' % (center_x, center_y), stream=True).content)
         return x
 
     def get_ws(self):
-        return self.get(PixelCanvasIO.URL + 'api/ws').json()['url']
+        return PixelCanvasIO.WS_URL
 
     def connect_websocket(self, canvas, axis={'start_x': 0, 'end_x': 0, 'start_y': 0, 'end_y': 0},
                           print_all_websocket_log=False):
