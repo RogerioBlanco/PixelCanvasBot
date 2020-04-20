@@ -20,15 +20,15 @@ class Image(object):
 
         if (os.path.isfile(tmb_full_path)):
             print(I18n.get('Load cached image'))
-            return pillow.open(tmb_full_path).convert('RGB')
+            return pillow.open(tmb_full_path).convert('RGBA')
 
         print(I18n.get('generating converted image here : %s') % str(tmb_full_path))
 
-        new_image = self.convert_pixels(pillow.open(file).convert('RGB'))
+        new_image = self.convert_pixels(pillow.open(file).convert('RGBA'))
         self.save_image(new_image, tmb_full_path)
 
         print(I18n.get('Saved image cache file, Loading Now...'))
-        return pillow.open(tmb_full_path).convert('RGB')
+        return pillow.open(tmb_full_path).convert('RGBA')
 
     def md5(self, fname):
         hash_md5 = hashlib.md5()
@@ -44,7 +44,7 @@ class Image(object):
 
     # Create a new image with the given size
     def create_image(self, i, j):
-        image = pillow.new("RGB", (i, j), "white")
+        image = pillow.new("RGBA", (i, j), "white")
         return image
 
     def get_pixel(self, image, i, j):
@@ -66,7 +66,7 @@ class Image(object):
             for j in range(height):
                 pixel = self.get_pixel(image, i, j)
                 new_color = EnumColor.rgb(pixel, True, self.sensitive, self.brightness)
-                pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]))
+                pixels[i, j] = (int(new_color.rgb[0]), int(new_color.rgb[1]), int(new_color.rgb[2]), int(new_color.rgb[3]))
 
         return new
 
