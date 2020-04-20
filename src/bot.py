@@ -13,11 +13,12 @@ from six.moves import range
 
 class Bot(object):
 
-    def __init__(self, image, fingerprint, start_x, start_y, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
+    def __init__(self, image, fingerprint, start_x, start_y, stealth, mode_defensive, colors_ignored, colors_not_overwrite, min_range, max_range, proxy=None,
                  draw_strategy='randomize', xreversed=False, yreversed=False):
         self.image = image
         self.start_x = start_x
         self.start_y = start_y
+        self.stealth = stealth
         self.mode_defensive = mode_defensive
         self.strategy = FactoryStrategy.build(draw_strategy, self, [EnumColor.index(i) for i in colors_ignored],[EnumColor.index(i) for i in colors_not_overwrite], xreversed, yreversed)
         self.pixelio = PixelCanvasIO(fingerprint, proxy)
@@ -63,7 +64,11 @@ class Bot(object):
             return ((100 * (float(i) / float(wait))) * 50) / 100
 
         if data['waitSeconds'] is not None:
-            wait = data['waitSeconds'] + (random.randint(2, 4) / 3.33)
+            wait = data['waitSeconds']
+            if self.stealth:
+                wait += 0.33 + random.random()
+            else:
+                wait -= 2
             print(I18n.get('Waiting %s seconds') % str(wait))
 
             c = i = 0

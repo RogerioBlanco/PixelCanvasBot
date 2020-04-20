@@ -47,6 +47,7 @@ Navigate to the Directory with the Bot
 # Using
 
 ## Geting yours fingerprint Chrome or chromium
+Note that the fingerprint is optional and just needed if pixelcanvas has reCaptcha enabled.
 * go http://pixelcanvas.io
 * press **F12**
 * open **network** tab
@@ -69,11 +70,13 @@ replace '$FINGERPRINT$' values to your fingerprint (has include $ charecters)
     Try it 'python ./main.py --help' maybe more usefull.
 * [required] **-i** or **--image**          it is the image you want to draw.
 
-* [required] **-f** or **--fingerprint**    it is your unique code. You can get in the requisition when you open Chrome DevTools.
-
 * [required] **-x** or **--start_x**        it is the point X axis what you want to begin. Ex: 156
 
 * [required] **-y** or **--start_y**        it is the point y axis what you want to begin. Ex: -4000
+
+* [optional] **-f** or **--fingerprint**    it is your unique code. You can get in the requisition when you open Chrome DevTools.
+
+* [optional] **--stealth**                  Wait additional random 0.3 to 1.3s after cooldown to seem more human
 
 * [optional] **--colors_ignored**           Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15
 

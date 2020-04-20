@@ -17,12 +17,16 @@ class PixelCanvasIO(object):
     API2_URL = 'https://pixelcanvas.io/' # api/online
     WS_URL = 'wss://ws.pixelcanvas.io:8443/'
     ORIGIN = 'https://pixelcanvas.io'
-    HEADER_USER_AGENT = {'User-agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'}
+    HEADER_USER_AGENT = {
+            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            'Origin': ORIGIN,
+            'Referer': ORIGIN
+            }
 
     def headers(self, url):
         host = re.match('^[^/]+://([^/:]+)', url).groups()[0]
         return {
-            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
+            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
             'accept': 'application/json',
             'content-type': 'application/json',
             'Host': host,
