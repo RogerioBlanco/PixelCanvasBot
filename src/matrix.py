@@ -22,7 +22,7 @@ class Matrix:
     def exist_axis(self, x, y):
         try:
             self.matrix[x][y]
-        except IndexError:
+        except (IndexError, KeyError):
             return False
         return True
 

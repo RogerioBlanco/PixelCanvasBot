@@ -53,9 +53,12 @@ class Bot(object):
             print(I18n.get('try_again'))
             self.wait_time(response)
             response = self.pixelio.send_pixel(x, y, color)
-
-            self.canvas.update(x, y, color)
-        print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
+        try:
+            self.canvas.update(x,y, color)
+            print(I18n.get('You painted %s in the %s,%s') % (I18n.get(str(color.name), 'true'), str(x), str(y)))
+        except Exception as e:
+            print("Exception during paiting occured", e)
+            pass
 
         return self.wait_time(response)
 
