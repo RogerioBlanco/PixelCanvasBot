@@ -70,7 +70,7 @@ class Bot(object):
             wait = data['waitSeconds']
             if self.stealth:
                 wait += 0.33 + random.random()
-            else:
+            elif wait > 2:
                 wait -= 2
             print(I18n.get('Waiting %s seconds') % str(wait))
 
@@ -87,24 +87,33 @@ class Bot(object):
         return 99999999
 
     def setup_canvas(self):
-        point_x, point_y = CalcAxis.calc_middle_axis(self.start_x, self.image.width, self.start_y, self.image.height)
-        radius = CalcAxis.calc_radius(self.start_x, self.image.width, self.start_y, self.image.height)
-        iteration = CalcAxis.calc_iteration(radius)
-        axis_x, axis_y = CalcAxis.calc_centers_axis(point_x, point_y)
-        canvas = Matrix(iteration, axis_x, axis_y)
+        x = self.start_x
+        y = self.start_y
+        w = self.image.width
+        h = self.image.height
 
-        for center_x in range(axis_x, axis_x + iteration, 15):
-            for center_y in range(axis_y, axis_y + iteration, 15):
-                raw = self.pixelio.download_canvas(center_x, center_y)
-                index = 0
-                for block_y in range(center_y - 7, center_y + 8):
-                    for block_x in range(center_x - 7, center_x + 8):
-                        for y in range(64):
-                            actual_y = (block_y * 64) + y
-                            for x in range(0, 64, 2):
-                                actual_x = (block_x * 64) + x
-                                canvas.update(actual_x, actual_y, EnumColor.index(raw[index] >> 4))
-                                canvas.update(actual_x + 1, actual_y, EnumColor.index(raw[index] & 0x0F))
-                                index += 1
+        canvas = Matrix(x, y, w, h)
 
+        wc = (x + w + 448) // 960
+        hc = (y + h + 448) // 960
+        xc = (x + 448) // 960
+        yc = (y + 448) // 960
+        for iy in range(yc, hc + 1):
+            for ix in range(xc, wc + 1):
+                data = self.pixelio.download_canvas(ix * 15, iy * 15)
+                i = 0
+                off_x = ix * 960 - 448
+                off_y = iy * 960 - 448
+                for b in data:
+                    tx = off_x + ((i // (64 * 64))  % 15) * 64 + (i % (64 * 64)) % 64
+                    ty = off_y + i // (64 * 64 * 15) * 64 + (i % (64 * 64)) // 64
+                    c = b >> 4
+                    canvas.update(tx, ty, EnumColor.index(c))
+                    i += 1
+                    tx = off_x + ((i // (64 * 64))  % 15) * 64 + (i % (64 * 64)) % 64
+                    ty = off_y + i // (64 * 64 * 15) * 64 + (i % (64 * 64)) // 64
+                    c = b & 0xF
+                    canvas.update(tx, ty, EnumColor.index(c))
+                    i += 1
+                #print("Got chunk with " + str(i) + " pixels", "PixelCanvasGetter")
         return canvas

@@ -4,16 +4,13 @@ from six.moves import range
 
 class Matrix:
 
-    def __init__(self, iterator, start_x, start_y):
-        self.matrix = self.setup_matrix(iterator, start_x, start_y)
-
-    def setup_matrix(self, iterator, start_x, start_y):
+    def __init__(self, start_x, start_y, width, height):
         matrix = {}
-        for x in range((start_x - (7 + iterator)) * 64, (iterator + start_x + 8) * 64):
+        for x in range(start_x, start_x + width):
             matrix[x] = {}
-            for y in range((start_y - (7 + iterator)) * 64, (iterator + start_y + 8) * 64):
+            for y in range(start_y, start_y + height):
                 matrix[x][y] = None
-        return matrix
+        self.matrix = matrix
 
     def update(self, x, y, color):
         if self.exist_axis(x, y):
