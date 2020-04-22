@@ -87,7 +87,7 @@ class PixelCanvasIO(object):
     def get_ws(self):
         return PixelCanvasIO.WS_URL
 
-    def connect_websocket(self, canvas, axis={'start_x': 0, 'end_x': 0, 'start_y': 0, 'end_y': 0},
+    def connect_websocket(self, canvas, axis={'start_x': 0, 'end_x': 0, 'start_y': 0, 'end_y': 0, },
                           print_all_websocket_log=False):
         def on_message(ws, message):
             if unpack_from('B', message, 0)[0] == 193:
@@ -99,12 +99,13 @@ class PixelCanvasIO(object):
                 y = int(y * 64 + math.floor(number / 64))
                 color = EnumColor.index(15 & a)
                 try:
-                    canvas.matrix[x][y] = color
                     if (x in range(axis['start_x'], axis['end_x'] + 1) and y in range(axis['start_y'],
-                                                                                        axis['end_y'])) or log_all_info:
+                                                                                        axis['end_y'])) or print_all_websocket_log:
+                        canvas.update(x, y, color)
                         print(I18n.get('Somebody updated %s,%s with %s color') % (
                             str(x), str(y), I18n.get(color.name, 'true')))
                 except Exception as e:
+                    print("Websocket exception occured", e)
                     pass
 
         def on_error(ws, error):

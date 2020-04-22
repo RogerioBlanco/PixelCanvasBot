@@ -46,6 +46,20 @@ Navigate to the Directory with the Bot
 
 # Using
 
+## Easy to use, only required parameters:
+
+* python ./main.py -i image.png -x 0 -y 0
+
+or if the coordinates are in the filename:
+
+* python ./main.py -i image\_x\_y.png
+
+or if reCaptcha is currently enabled in pixelcanvas:
+
+* python ./main.py -i image.png -x 0 -y 0 -f $FINGERPRINT$
+
+replace '$FINGERPRINT$' values to your fingerprint (has include $ charecters)
+
 ## Geting yours fingerprint Chrome or chromium
 Note that the fingerprint is optional and just needed if pixelcanvas has reCaptcha enabled.
 * go http://pixelcanvas.io
@@ -59,20 +73,14 @@ Note that the fingerprint is optional and just needed if pixelcanvas has reCaptc
 
 ![image](https://user-images.githubusercontent.com/12828465/28237968-24ca07cc-694a-11e7-9df3-32b4d737b44e.png)
 
-## Easy to use, only required parameters:
-
-* python ./main.py -i image.png -f $FINGERPRINT$ -x 0 -y 0
-
-replace '$FINGERPRINT$' values to your fingerprint (has include $ charecters)
-
 ## What is each parameter?
     Need to help?
     Try it 'python ./main.py --help' maybe more usefull.
 * [required] **-i** or **--image**          it is the image you want to draw.
 
-* [required] **-x** or **--start_x**        it is the point X axis what you want to begin. Ex: 156
+* [required if not in filename] **-x** or **--start_x**        it is the point X axis what you want to begin. Ex: 156
 
-* [required] **-y** or **--start_y**        it is the point y axis what you want to begin. Ex: -4000
+* [required if not in filename] **-y** or **--start_y**        it is the point y axis what you want to begin. Ex: -4000
 
 * [optional] **-f** or **--fingerprint**    it is your unique code. You can get in the requisition when you open Chrome DevTools.
 

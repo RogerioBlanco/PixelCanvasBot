@@ -4,10 +4,11 @@ from src.custom_exception import *
 from src.bot import Bot
 from src.image import Image
 from src.i18n import I18n
-from argparse import ArgumentParser
-
+import argparse
+import sys
 import string
 from random import choice
+import ntpath
 
 
 def parse_args():
@@ -21,14 +22,14 @@ def parse_args():
         else:
             raise argparse.ArgumentTypeError('Boolean value expected.')
 
-    parser = ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--image', required=True, dest='file',
                         help=I18n.get('--image', 'true'))
     parser.add_argument('-f', '--fingerprint', required=False, dest='fingerprint',
                         help=I18n.get('--fingerprint', 'true'))
-    parser.add_argument('-x', '--start_x', required=True, type=int, dest='start_x',
+    parser.add_argument('-x', '--start_x', required=False, type=int, dest='start_x',
                         help=I18n.get('--start_x', 'true'))
-    parser.add_argument('-y', '--start_y', required=True, type=int, dest='start_y',
+    parser.add_argument('-y', '--start_y', required=False, type=int, dest='start_y',
                         help=I18n.get('--start_y', 'true'))
     parser.add_argument("--stealth", type=str2bool, nargs='?', const=True, default=False,
                         help=I18n.get('--stealth', 'true'))
@@ -61,7 +62,22 @@ def parse_args():
     parser.add_argument('--yreversed', required=False, default=False, dest='yreversed',
                         help=I18n.get('--yreversed', 'true'))
 
-    return parser.parse_args()
+    parsed_args = parser.parse_args()
+
+    if parsed_args.fingerprint is None:
+        parsed_args.fingerprint = ''.join(choice(string.ascii_lowercase + string.digits) for _ in range(32))
+
+    if parsed_args.start_x is None or parsed_args.start_y is None:
+        name = ntpath.splitext(ntpath.basename(parsed_args.file))[0]
+        arr = name.split('_')
+        if len(arr) != 3:
+            parser.print_usage()
+            print('Error: ' + I18n.get('no-coords', 'true'))
+            sys.exit(1)
+        parsed_args.start_x = int(arr[1])
+        parsed_args.start_y = int(arr[2])
+
+    return parsed_args
 
 
 def setup_proxy(proxy_url, proxy_auth):
@@ -92,12 +108,7 @@ def main():
 
     image = Image(args.file, args.round_sensitive, args.image_brightness)
     
-    if args.fingerprint is not None:
-        fingerprint = args.fingerprint
-    else:
-        fingerprint = ''.join(choice(string.ascii_lowercase + string.digits) for _ in range(32))
-
-    bot = Bot(image, fingerprint, args.start_x, args.start_y, args.stealth, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
+    bot = Bot(image, args.fingerprint, args.start_x, args.start_y, args.stealth, args.mode_defensive, args.colors_ignored, args.colors_not_overwrite, args.min_range, args.max_range, proxy,
               args.draw_strategy, args.xreversed, args.yreversed)
 
     bot.init()

@@ -61,6 +61,7 @@ class I18n(object):
             '--QR_scale': 'QR code pixel width',
             '--xreversed': 'Draw x axis from right to left. Set to True or False (default False)',
             '--yreversed': 'Draw y axis from bottom to top. Set to True or False (default False)',
+            'no-coords': 'No coordinates given, use --start_x and --start_y arguments or include them in the filename like templatename_x_y.png',
 
             ##  Colors
 
@@ -129,6 +130,7 @@ class I18n(object):
             '--QR_scale': 'QR code pixel length',
             '--xreversed': 'Draw x axis from right to left. Set to True or False (default False)',
             '--yreversed': 'Draw y axis from bottom to top. Set to True or False (default False)',
+            'no-coords': 'No coordinates given, use --start_x and --start_y arguments or include them in the filename like templatename_x_y.png',
 
             ##   colors
 
