@@ -81,15 +81,21 @@ def parse_args():
 
 
 def setup_proxy(proxy_url, proxy_auth):
+    if not proxy_url:
+        return None
+
     if proxy_auth is None:
         proxy_auth = ''
-    if proxy_url and proxy_auth:
+    else:
         proxy_auth = proxy_auth + '@'
 
-    if proxy_url:
-        return {'http': 'http://%s%s' % (proxy_auth, proxy_url)}
+    url_split = proxy_url.split('://')
+    if (len(url_split) == 2):
+        proxy_url = '%s://%s%s' % (url_split[0], proxy_auth, url_split[1])
+    else:
+        proxy_url = 'http://%s%s' % (proxy_auth, proxy_url)
 
-    return None
+    return {'http': proxy_url, 'https': proxy_url}
 
 
 def alert(message=''):
