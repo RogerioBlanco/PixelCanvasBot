@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 from src.custom_exception import *
 from src.bot import Bot
