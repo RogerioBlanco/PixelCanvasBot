@@ -33,7 +33,7 @@ We are updated after we notice. It can be a bit late, we can not guarantee it in
 Open Terminal (git bash, cmd vs.)
 enter this command
 
-* git clone https://github.com/RogerioBlanco/PixelCanvasBot.git
+* `git clone https://github.com/RogerioBlanco/PixelCanvasBot.git`
 
 ### Optional downlad lastest zip archive
 https://github.com/RogerioBlanco/PixelCanvasBot/archive/master.zip
@@ -48,15 +48,17 @@ Navigate to the Directory with the Bot
 
 ## Easy to use, only required parameters:
 
-* python ./main.py -i image.png -x 0 -y 0
+* `python ./main.py -i image.png -x 0 -y 0`
+  * Coordinates are where you want the top-left corner of the image to start  
+  * Image route is relative to main.py
 
 or if the coordinates are in the filename:
 
-* python ./main.py -i image\_x\_y.png
+* `python ./main.py -i image\_x\_y.png`
 
 or if reCaptcha is currently enabled in pixelcanvas:
 
-* python ./main.py -i image.png -x 0 -y 0 -f $FINGERPRINT$
+* `python ./main.py -i image.png -x 0 -y 0 -f $FINGERPRINT$`
 
 replace '$FINGERPRINT$' values to your fingerprint (has include $ charecters)
 
@@ -86,9 +88,9 @@ Note that the fingerprint is optional and just needed if pixelcanvas has reCaptc
 
 * [optional] **--stealth**                  Wait additional random 0.3 to 1.3s after cooldown to seem more human
 
-* [optional] **--colors_ignored**           Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15
+* [optional] **--colors_ignored**           Ignored current image colors For example image only black and red colors painting. Ex: 0 1 2   4   6 7 8 9 10 11 12 13 15 found in [colors.py](src/colors.py)
 
-* [optional] **--colors_not_overwrite**     Ignored pixelcanvas.io colors For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15
+* [optional] **--colors_not_overwrite**     Ignored pixelcanvas.io colors. For example only black colors removing if this image image not equals black. Ex: 0 1 2   4 5 6 7 8 9 10 11 12 13 15 found in [colors.py](src/colors.py)
 
 * [optional] **--draw_strategy**            draw strategy default by: *randomize* Avaiable strategy list :
 
@@ -171,8 +173,8 @@ The reverse parameters only work on the linear draw strategies (linear and quick
 
 # Update bot with last changes
 ### Clear local changes (if you changes source code)
-* git reset --hard
+* `git reset --hard`
 ### Update lastest changes from server
-* git pull -ff
+* `git pull -ff`
 # External: thanks for reference
 https://github.com/possatti/pixelbot/blob/master/README.md
