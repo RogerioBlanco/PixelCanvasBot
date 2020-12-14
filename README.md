@@ -96,6 +96,18 @@ Note that the fingerprint is optional and just needed if pixelcanvas has reCaptc
 
     * *linear* :    line by line paint,
 
+    * *spiral* :    Inwards spiral. Will draw a 5x5 square in this order:
+
+            | 01 | 15 | 14 | 13 | 12 |
+            | 02 | 16 | 23 | 22 | 11 |
+            | 03 | 17 | 24 | 21 | 10 |
+            | 04 | 18 | 19 | 20 | 09 |
+            | 05 | 06 | 07 | 08 | 08 |
+
+        Keep it mind that the strategy actually starts at the center of the image and spirals out,
+        then starts backtracking inwards to draw from the edges in. As such the corner we start
+        drawing from will depend on the proportions of your image.
+
     * *qf* :        Quickfill line by line. Will draw a 5x5 square in this order:
 
             | 01 | 14 | 02 | 15 | 03 |
