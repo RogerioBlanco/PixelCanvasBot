@@ -85,8 +85,9 @@ class Bot(object):
             elif wait > 2:
                 wait -= 2
 
-            h0 = 0.11 + random.random() # Human reaction
-            wait += h0
+            if random.random() > 0.59 or (self.stealth and random.random() > 0.38):
+                h0 = 0.11 + random.random() # Human reaction
+                wait += h0
 
             niceWait = math.floor(wait*1000)/1000
             print(I18n.get('Waiting %s seconds') % str(niceWait))
