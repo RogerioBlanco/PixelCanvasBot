@@ -75,7 +75,7 @@ class Bot(object):
                 if random.random() > 0.82:
                     h2 = wait * random.random()/10
                     h3 = 3 + (random.random() * 30)
-                    wait += h1 + h3
+                    wait += h2 + h3
                 if random.random() > 0.98:
                     h4 = 15 + (random.random() * 150)
                     wait += h4
