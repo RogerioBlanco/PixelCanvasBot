@@ -18,20 +18,24 @@ class PixelCanvasIO(object):
     WS_URL = 'wss://ws.pixelcanvas.io:8443/'
     ORIGIN = 'https://pixelcanvas.io'
     HEADER_USER_AGENT = {
-            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
             'Origin': ORIGIN,
             'Referer': ORIGIN
             }
 
-    def headers(self, url):
+    def headers(self, url, contentLength):
         host = re.match('^[^/]+://([^/:]+)', url).groups()[0]
         return {
-            'User-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
-            'accept': 'application/json',
-            'content-type': 'application/json',
+            'Accept': '*/*',
+            'Accept-Encoding': 'g-zip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Connection': 'close',
+            'Content-Length': str(contentLength),
+            'Content-Type': 'application/json',
             'Host': host,
             'Origin': self.ORIGIN,
-            'Referer': self.ORIGIN
+            'TE': 'Trailers',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36'
         }
 
     def __init__(self, fingerprint, proxy=None):
@@ -41,7 +45,7 @@ class PixelCanvasIO(object):
         self.duck = 'wasabi'
 
     def post(self, url, payload):
-        return requests.request('POST', url, data=payload, headers=self.headers(url), proxies=self.proxy,
+        return requests.request('POST', url, data=payload, headers=self.headers(url,len(payload)), proxies=self.proxy,
                                 cookies=self.cookies)
 
     def get(self, url, stream=False):
