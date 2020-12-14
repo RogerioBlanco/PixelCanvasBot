@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import time, random
+import time, random, math
 from sys import stdout as out
 from .pixelcanvasio import PixelCanvasIO
 from .calc_axis import CalcAxis
@@ -69,10 +69,27 @@ class Bot(object):
         if data['waitSeconds'] is not None:
             wait = data['waitSeconds']
             if self.stealth:
-                wait += 0.33 + random.random()
+                if random.random() > 0.2:
+                    h1 = wait * random.random() / 5
+                    wait += h1
+                if random.random() > 0.82:
+                    h2 = wait * random.random()/10
+                    h3 = 3 + (random.random() * 30)
+                    wait += h1 + h3
+                if random.random() > 0.98:
+                    h4 = 15 + (random.random() * 150)
+                    wait += h4
+                if random.random() > 0.99:
+                    h5 = 15 + (random.random() * 250)
+                    wait += h5
             elif wait > 2:
                 wait -= 2
-            print(I18n.get('Waiting %s seconds') % str(wait))
+
+            h0 = 0.11 + random.random() # Human reaction
+            wait += h0
+
+            niceWait = math.floor(wait*1000)/1000
+            print(I18n.get('Waiting %s seconds') % str(niceWait))
 
             c = i = 0
             while c < 50:
